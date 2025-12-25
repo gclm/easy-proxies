@@ -47,6 +47,8 @@ multi_port:
   base_port: 24000      # 起始端口号
   username: mpuser      # 默认认证用户名
   password: mppass      # 默认认证密码
+  inbound_type: http    # "http"（默认）或 "ss"（Shadowsocks）
+  ss_method: aes-128-gcm  # Shadowsocks 加密方式（仅 inbound_type: ss 时生效）
 
 # ───────────────────────────────────────────────────────────────
 # 管理面板配置
