@@ -502,9 +502,9 @@
       box-shadow: var(--shadow-lg);
       display: none;
       align-items: center;
-      gap: 10px;
-      max-width: 380px;
-      z-index: 1000;
+      gap: 12px;
+      max-width: 420px;
+      z-index: 3000;
       animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -1349,10 +1349,108 @@
       }
     }
 
-    // 导出节点
-    async function exportNodes() {
+    // 显示导出格式选择弹窗
+    function showExportModal() {
+      document.getElementById('exportOverlay').classList.add('show');
+      // 加载订阅 URL
+      loadSubscriptionUrls();
+    }
+
+    // 加载订阅 URL
+    async function loadSubscriptionUrls() {
       try {
-        const res = await fetch('/api/export');
+        const res = await fetch('/api/settings');
+        if (!res.ok) {
+          throw new Error('获取设置失败');
+        }
+        const data = await res.json();
+
+        // 获取当前页面的 host
+        const currentHost = window.location.host;
+        const protocol = window.location.protocol;
+
+        // 构建订阅 URL
+        const apiKey = data.api_key || '';
+        const keyParam = apiKey ? `?key=${encodeURIComponent(apiKey)}` : '';
+
+        const httpUrl = `${protocol}//${currentHost}/api/export${keyParam}`;
+        const surgeUrl = `${protocol}//${currentHost}/api/export?format=surge${apiKey ? '&key=' + encodeURIComponent(apiKey) : ''}`;
+
+        // 更新输入框
+        document.getElementById('httpSubscriptionUrl').value = httpUrl;
+        document.getElementById('surgeSubscriptionUrl').value = surgeUrl;
+
+        // 如果没有配置 API Key，显示提示
+        if (!apiKey) {
+          const section = document.getElementById('subscriptionUrlSection');
+          const existingWarning = section.querySelector('.api-key-warning');
+          if (!existingWarning) {
+            const warning = document.createElement('div');
+            warning.className = 'api-key-warning';
+            warning.style.cssText = 'margin-top: 12px; padding: 8px 12px; background: rgba(255, 193, 7, 0.1); border: 1px solid rgba(255, 193, 7, 0.3); border-radius: 6px; font-size: 11px; color: #ffc107;';
+            warning.innerHTML = '⚠️ 未配置 API Key，订阅地址无认证保护。建议在配置文件中设置 <code style="background: rgba(0,0,0,0.2); padding: 2px 6px; border-radius: 3px;">management.api_key</code>';
+            section.appendChild(warning);
+          }
+        }
+      } catch (err) {
+        console.error('加载订阅 URL 失败:', err);
+        document.getElementById('httpSubscriptionUrl').value = '加载失败';
+        document.getElementById('surgeSubscriptionUrl').value = '加载失败';
+      }
+    }
+
+    // 复制订阅 URL
+    function copySubscriptionUrl(format) {
+      const inputId = format === 'surge' ? 'surgeSubscriptionUrl' : 'httpSubscriptionUrl';
+      const input = document.getElementById(inputId);
+      const url = input.value;
+
+      if (!url || url === '加载中...' || url === '加载失败') {
+        showToast('订阅地址未就绪', 'error');
+        return;
+      }
+
+      const formatName = format === 'surge' ? 'Surge' : 'HTTP';
+
+      // 尝试使用现代 API
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast(`${formatName} 订阅地址已复制到剪贴板`, 'success');
+        }).catch(() => {
+          fallbackCopy(url, formatName);
+        });
+      } else {
+        fallbackCopy(url, formatName);
+      }
+    }
+
+    // 降级复制方案
+    function fallbackCopy(text, formatName) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      const success = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      if (success) {
+        showToast(`${formatName} 订阅地址已复制到剪贴板`, 'success');
+      } else {
+        showToast('复制失败，请手动复制', 'error');
+      }
+    }
+
+    // 隐藏导出格式选择弹窗
+    function hideExportModal() {
+      document.getElementById('exportOverlay').classList.remove('show');
+    }
+
+    // 导出节点
+    async function exportNodes(format = 'http') {
+      try {
+        const url = format === 'surge' ? '/api/export?format=surge' : '/api/export';
+        const res = await fetch(url);
         if (res.status === 401) {
           showToast('请先登录', 'error');
           document.getElementById('loginOverlay').classList.add('show');
@@ -1366,13 +1464,14 @@
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'nodes.txt';
+        a.download = format === 'surge' ? 'surge_proxies.conf' : 'nodes.txt';
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
 
-        showToast('节点导出成功！', 'success');
+        hideExportModal();
+        showToast(format === 'surge' ? 'Surge 格式导出成功！' : 'HTTP 格式导出成功！', 'success');
       } catch (err) {
         showToast('导出失败: ' + err.message, 'error');
       }
