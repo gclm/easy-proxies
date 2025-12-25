@@ -32,6 +32,8 @@ func Run(ctx context.Context, cfg *config.Config) error {
 		ProxyUsername: proxyUsername,
 		ProxyPassword: proxyPassword,
 		ExternalIP:    cfg.ExternalIP,
+		InboundType:   cfg.MultiPort.InboundType,
+		SSMethod:      cfg.MultiPort.SSMethod,
 	}
 
 	// Create and start BoxManager
