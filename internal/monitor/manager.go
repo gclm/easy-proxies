@@ -18,16 +18,17 @@ import (
 
 // Config mirrors user settings needed by the monitoring server.
 type Config struct {
-	Enabled        bool
-	Listen         string
-	ProbeTarget    string
-	Password       string
-	ProxyUsername  string // 代理池的用户名（用于导出）
-	ProxyPassword  string // 代理池的密码（用于导出）
-	ExternalIP     string // 外部 IP 地址，用于导出时替换 0.0.0.0
-	SkipCertVerify bool   // 全局跳过 SSL 证书验证
-	InboundType    string // multi-port inbound 类型: "http" 或 "ss"
-	SSMethod       string // Shadowsocks 加密方法
+	Enabled         bool
+	Listen          string
+	ProbeTarget     string
+	Password        string
+	ProxyUsername   string // 代理池的用户名（用于导出）
+	ProxyPassword   string // 代理池的密码（用于导出）
+	ExternalIP      string // 外部 IP 地址，用于导出时替换 0.0.0.0
+	SkipCertVerify  bool   // 全局跳过 SSL 证书验证
+	InboundType     string // multi-port inbound 类型: "http" 或 "ss"
+	SSMethod        string // Shadowsocks 加密方法
+	HideUnavailable bool   // 是否隐藏不可用节点，默认 true
 }
 
 // NodeInfo is static metadata about a proxy entry.

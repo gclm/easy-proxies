@@ -56,6 +56,8 @@ management:
   listen: 0.0.0.0:9091                               # 监听地址
   probe_target: http://cp.cloudflare.com/generate_204  # 健康检查目标
   password: ""                                       # WebUI 访问密码，为空则不需要密码
+  api_key: ""                                        # 订阅 API Key，可通过 /api/export?key=xxx 访问
+  hide_unavailable: true                             # 是否隐藏不可用节点（默认 true）
 
 # ───────────────────────────────────────────────────────────────
 # DNS 配置（用于节点域名解析，尤其是 VMess）

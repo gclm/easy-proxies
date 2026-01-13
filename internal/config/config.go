@@ -74,11 +74,12 @@ type MultiPortConfig struct {
 
 // ManagementConfig controls the monitoring HTTP endpoint.
 type ManagementConfig struct {
-	Enabled     *bool  `yaml:"enabled"`
-	Listen      string `yaml:"listen"`
-	ProbeTarget string `yaml:"probe_target"`
-	Password    string `yaml:"password"` // WebUI 访问密码，为空则不需要密码
-	APIKey      string `yaml:"api_key"`  // API 订阅密钥，用于 URL 参数认证
+	Enabled         *bool  `yaml:"enabled"`
+	Listen          string `yaml:"listen"`
+	ProbeTarget     string `yaml:"probe_target"`
+	Password        string `yaml:"password"`         // WebUI 访问密码，为空则不需要密码
+	APIKey          string `yaml:"api_key"`          // API 订阅密钥，用于 URL 参数认证
+	HideUnavailable *bool  `yaml:"hide_unavailable"` // 是否隐藏不可用节点，默认 true
 }
 
 // SubscriptionRefreshConfig controls subscription auto-refresh and reload settings.
@@ -110,9 +111,13 @@ type NodeConfig struct {
 	Source   NodeSource `yaml:"-" json:"source,omitempty"` // Runtime only, not persisted
 }
 
-// NodeKey returns a unique identifier for the node based on its URI.
-// This is used to preserve port assignments across reloads.
+// NodeKey returns a unique identifier for the node.
+// Prefers name for port preservation across subscription updates.
+// Falls back to URI if name is empty.
 func (n *NodeConfig) NodeKey() string {
+	if n.Name != "" {
+		return n.Name
+	}
 	return n.URI
 }
 
