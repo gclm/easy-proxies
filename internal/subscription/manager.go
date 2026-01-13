@@ -409,9 +409,22 @@ func (m *Manager) fetchAllSubscriptions() ([]config.NodeConfig, error) {
 			lastErr = err
 			continue
 		}
-		// 添加订阅前缀区分不同来源
+		// 先从 URI fragment 提取名称，再添加订阅前缀
 		prefix := fmt.Sprintf("[%d] ", i+1)
 		for j := range nodes {
+			// 从 URI fragment 提取名称
+			if nodes[j].Name == "" {
+				if parsed, err := url.Parse(nodes[j].URI); err == nil && parsed.Fragment != "" {
+					if decoded, err := url.QueryUnescape(parsed.Fragment); err == nil {
+						nodes[j].Name = decoded
+					} else {
+						nodes[j].Name = parsed.Fragment
+					}
+				}
+			}
+			if nodes[j].Name == "" {
+				nodes[j].Name = fmt.Sprintf("node-%d", j)
+			}
 			nodes[j].Name = prefix + nodes[j].Name
 		}
 		m.logger.Infof("fetched %d nodes from subscription %d", len(nodes), i+1)
