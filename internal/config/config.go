@@ -234,13 +234,18 @@ func (c *Config) normalize() error {
 	if len(c.Subscriptions) > 0 {
 		var subNodes []NodeConfig
 		subTimeout := c.SubscriptionRefresh.Timeout
-		for _, subURL := range c.Subscriptions {
+		for i, subURL := range c.Subscriptions {
 			nodes, err := loadNodesFromSubscription(subURL, subTimeout)
 			if err != nil {
 				log.Printf("⚠️ Failed to load subscription %q: %v (skipping)", subURL, err)
 				continue
 			}
-			log.Printf("✅ Loaded %d nodes from subscription", len(nodes))
+			// 添加订阅前缀区分不同来源
+			prefix := fmt.Sprintf("[%d] ", i+1)
+			for j := range nodes {
+				nodes[j].Name = prefix + nodes[j].Name
+			}
+			log.Printf("✅ Loaded %d nodes from subscription %d", len(nodes), i+1)
 			subNodes = append(subNodes, nodes...)
 		}
 		// Mark subscription nodes and write to nodes.txt

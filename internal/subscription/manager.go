@@ -402,14 +402,19 @@ func (m *Manager) fetchAllSubscriptions() ([]config.NodeConfig, error) {
 		timeout = 30 * time.Second
 	}
 
-	for _, subURL := range m.baseCfg.Subscriptions {
+	for i, subURL := range m.baseCfg.Subscriptions {
 		nodes, err := m.fetchSubscription(subURL, timeout)
 		if err != nil {
 			m.logger.Warnf("failed to fetch %s: %v", subURL, err)
 			lastErr = err
 			continue
 		}
-		m.logger.Infof("fetched %d nodes from subscription", len(nodes))
+		// 添加订阅前缀区分不同来源
+		prefix := fmt.Sprintf("[%d] ", i+1)
+		for j := range nodes {
+			nodes[j].Name = prefix + nodes[j].Name
+		}
+		m.logger.Infof("fetched %d nodes from subscription %d", len(nodes), i+1)
 		allNodes = append(allNodes, nodes...)
 	}
 
