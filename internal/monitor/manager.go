@@ -299,6 +299,13 @@ func (m *Manager) Register(info NodeInfo) *EntryHandle {
 	return &EntryHandle{ref: e}
 }
 
+// Clear removes all registered nodes.
+func (m *Manager) Clear() {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	m.nodes = make(map[string]*entry)
+}
+
 // DestinationForProbe exposes the configured destination for health checks.
 func (m *Manager) DestinationForProbe() (M.Socksaddr, bool) {
 	if !m.probeReady {

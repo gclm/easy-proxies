@@ -197,6 +197,11 @@ func (m *Manager) Reload(newCfg *config.Config) error {
 	// Reset shared state store to ensure clean state for new config
 	pool.ResetSharedStateStore()
 
+	// Clear old nodes from monitor to ensure fresh state
+	if m.monitorMgr != nil {
+		m.monitorMgr.Clear()
+	}
+
 	// Create and start new box instance with automatic port conflict resolution
 	var instance *box.Box
 	maxRetries := 10
