@@ -258,8 +258,8 @@ func Build(cfg *config.Config) (option.Options, error) {
 			perOptions := poolout.Options{
 				Mode:              "sequential",
 				Members:           []string{tag},
-				FailureThreshold:  cfg.Pool.FailureThreshold,
-				BlacklistDuration: cfg.Pool.BlacklistDuration,
+				FailureThreshold:  0, // 禁用拉黑，multi-port 模式下用户自己选择节点
+				BlacklistDuration: 0,
 				Metadata:          perMeta,
 			}
 			perPool := option.Outbound{
