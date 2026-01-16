@@ -89,6 +89,8 @@ func Build(cfg *config.Config) (option.Options, error) {
 			Name: node.Name,
 			URI:  node.URI,
 			Mode: cfg.Mode,
+			// Preserve original node order (important for monitor/UI/export ordering in multi-port/hybrid modes).
+			Index: i,
 		}
 		// For multi-port and hybrid modes, use per-node port
 		if cfg.Mode == "multi-port" || cfg.Mode == "hybrid" {

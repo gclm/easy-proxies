@@ -52,6 +52,8 @@ type MemberMeta struct {
 	Port          uint16
 	Region        string // GeoIP region code: "jp", "kr", "us", "hk", "tw", "other"
 	Country       string // Full country name from GeoIP
+	// Index is the original node order from config (used for stable ordering in monitor/UI/export).
+	Index int
 }
 
 // Register wires the pool outbound into the registry.
@@ -116,7 +118,11 @@ func newPool(ctx context.Context, _ adapter.Router, logger log.ContextLogger, ta
 			// Acquire shared state for this tag (creates if not exists)
 			state := acquireSharedState(memberTag)
 
-			meta := normalized.Metadata[memberTag]
+			meta, ok := normalized.Metadata[memberTag]
+			orderIndex := idx
+			if ok {
+				orderIndex = meta.Index
+			}
 			info := monitor.NodeInfo{
 				Tag:           memberTag,
 				Name:          meta.Name,
@@ -126,7 +132,7 @@ func newPool(ctx context.Context, _ adapter.Router, logger log.ContextLogger, ta
 				Port:          meta.Port,
 				Region:        meta.Region,
 				Country:       meta.Country,
-				Index:         idx,
+				Index:         orderIndex,
 			}
 			entry := monitorMgr.Register(info)
 			if entry != nil {
@@ -212,7 +218,11 @@ func (p *poolOutbound) initializeMembersLocked() error {
 
 		// Connect to existing monitor entry if available
 		if p.monitor != nil {
-			meta := p.options.Metadata[tag]
+			meta, ok := p.options.Metadata[tag]
+			orderIndex := idx
+			if ok {
+				orderIndex = meta.Index
+			}
 			info := monitor.NodeInfo{
 				Tag:           tag,
 				Name:          meta.Name,
@@ -222,7 +232,7 @@ func (p *poolOutbound) initializeMembersLocked() error {
 				Port:          meta.Port,
 				Region:        meta.Region,
 				Country:       meta.Country,
-				Index:         idx,
+				Index:         orderIndex,
 			}
 			entry := p.monitor.Register(info)
 			if entry != nil {

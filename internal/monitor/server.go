@@ -664,6 +664,8 @@ func (s *Server) handleExport(w http.ResponseWriter, r *http.Request) {
 func (s *Server) formatSurge(snap Snapshot, listenAddr string) string {
 	// 根据 inbound 类型生成不同格式
 	inboundType := strings.ToLower(s.cfg.InboundType)
+	// Subscription manager prefixes node names with "[n] " (e.g. "[1] ") to keep keys stable.
+	// Surge export should keep that prefix so proxies remain distinguishable across subscriptions.
 	nodeName := sanitizeNodeName(snap.Name)
 
 	if inboundType == "ss" {
