@@ -1304,6 +1304,29 @@
     </div>
   </div>
 
+  <!-- 登录弹窗 -->
+  <div id="loginOverlay" class="login-overlay">
+    <div class="login-modal">
+      <div class="login-header">
+        <h2>🔐 身份验证</h2>
+        <p>请输入访问密码</p>
+      </div>
+      <form class="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label" for="password">密码</label>
+          <input
+            type="password"
+            id="password"
+            class="form-input"
+            placeholder="请输入密码"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+        <div id="loginError" class="login-error">密码错误，请重试</div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          登录
+        </button>
       </form>
     </div>
   </div>
