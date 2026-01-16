@@ -1,6 +1,7 @@
 package config
 
 import (
+	"bytes"
 	"encoding/base64"
 	"errors"
 	"fmt"
@@ -30,7 +31,7 @@ type Config struct {
 	Nodes               []NodeConfig              `yaml:"nodes"`
 	NodesFile           string                    `yaml:"nodes_file"`    // 节点文件路径，每行一个 URI
 	Subscriptions       []string                  `yaml:"subscriptions"` // 订阅链接列表
-	ExternalIP          string                    `yaml:"external_ip"`      // 外部 IP 地址，用于导出时替换 0.0.0.0
+	ExternalIP          string                    `yaml:"external_ip"`   // 外部 IP 地址，用于导出时替换 0.0.0.0
 	LogLevel            string                    `yaml:"log_level"`
 	SkipCertVerify      bool                      `yaml:"skip_cert_verify"` // 全局跳过 SSL 证书验证
 
@@ -691,27 +692,27 @@ type clashConfig struct {
 }
 
 type clashProxy struct {
-	Name           string                 `yaml:"name"`
-	Type           string                 `yaml:"type"`
-	Server         string                 `yaml:"server"`
-	Port           int                    `yaml:"port"`
-	UUID           string                 `yaml:"uuid"`
-	Password       string                 `yaml:"password"`
-	Cipher         string                 `yaml:"cipher"`
-	AlterId        int                    `yaml:"alterId"`
-	Network        string                 `yaml:"network"`
-	TLS            bool                   `yaml:"tls"`
-	SkipCertVerify bool                   `yaml:"skip-cert-verify"`
-	ServerName     string                 `yaml:"servername"`
-	SNI            string                 `yaml:"sni"`
-	Flow           string                 `yaml:"flow"`
-	UDP            bool                   `yaml:"udp"`
-	WSOpts         *clashWSOptions        `yaml:"ws-opts"`
-	GrpcOpts       *clashGrpcOptions      `yaml:"grpc-opts"`
-	RealityOpts    *clashRealityOptions   `yaml:"reality-opts"`
-	ClientFingerprint string              `yaml:"client-fingerprint"`
-	Plugin         string                 `yaml:"plugin"`
-	PluginOpts     map[string]interface{} `yaml:"plugin-opts"`
+	Name              string                 `yaml:"name"`
+	Type              string                 `yaml:"type"`
+	Server            string                 `yaml:"server"`
+	Port              int                    `yaml:"port"`
+	UUID              string                 `yaml:"uuid"`
+	Password          string                 `yaml:"password"`
+	Cipher            string                 `yaml:"cipher"`
+	AlterId           int                    `yaml:"alterId"`
+	Network           string                 `yaml:"network"`
+	TLS               bool                   `yaml:"tls"`
+	SkipCertVerify    bool                   `yaml:"skip-cert-verify"`
+	ServerName        string                 `yaml:"servername"`
+	SNI               string                 `yaml:"sni"`
+	Flow              string                 `yaml:"flow"`
+	UDP               bool                   `yaml:"udp"`
+	WSOpts            *clashWSOptions        `yaml:"ws-opts"`
+	GrpcOpts          *clashGrpcOptions      `yaml:"grpc-opts"`
+	RealityOpts       *clashRealityOptions   `yaml:"reality-opts"`
+	ClientFingerprint string                 `yaml:"client-fingerprint"`
+	Plugin            string                 `yaml:"plugin"`
+	PluginOpts        map[string]interface{} `yaml:"plugin-opts"`
 }
 
 type clashWSOptions struct {
@@ -1007,6 +1008,187 @@ func (c *Config) SaveNodes() error {
 	}
 
 	return nil
+}
+
+// Subscription CRUD sentinel errors (used by monitoring API handlers).
+var (
+	ErrSubscriptionNotFound  = errors.New("订阅不存在")
+	ErrInvalidSubscription   = errors.New("无效的订阅链接")
+	ErrSubscriptionDuplicate = errors.New("订阅已存在")
+)
+
+const maxSubscriptionURLLength = 2048
+
+// AddSubscription appends a subscription URL to config and persists it to disk.
+// Returns the index of the newly-added subscription.
+func (c *Config) AddSubscription(subURL string) (int, error) {
+	if c == nil {
+		return -1, errors.New("config is nil")
+	}
+	subURL = strings.TrimSpace(subURL)
+	if err := validateSubscriptionURL(subURL); err != nil {
+		return -1, err
+	}
+	for _, existing := range c.Subscriptions {
+		if existing == subURL {
+			return -1, ErrSubscriptionDuplicate
+		}
+	}
+	c.Subscriptions = append(c.Subscriptions, subURL)
+	if err := c.SaveSubscriptions(); err != nil {
+		// Roll back in-memory state on persist failure.
+		c.Subscriptions = c.Subscriptions[:len(c.Subscriptions)-1]
+		return -1, err
+	}
+	return len(c.Subscriptions) - 1, nil
+}
+
+// UpdateSubscription updates the subscription URL at the given index and persists it to disk.
+func (c *Config) UpdateSubscription(index int, subURL string) error {
+	if c == nil {
+		return errors.New("config is nil")
+	}
+	if index < 0 || index >= len(c.Subscriptions) {
+		return ErrSubscriptionNotFound
+	}
+	subURL = strings.TrimSpace(subURL)
+	if err := validateSubscriptionURL(subURL); err != nil {
+		return err
+	}
+	// Prevent exact duplicates to avoid redundant fetch work.
+	for i, existing := range c.Subscriptions {
+		if i != index && existing == subURL {
+			return ErrSubscriptionDuplicate
+		}
+	}
+	old := c.Subscriptions[index]
+	c.Subscriptions[index] = subURL
+	if err := c.SaveSubscriptions(); err != nil {
+		c.Subscriptions[index] = old
+		return err
+	}
+	return nil
+}
+
+// DeleteSubscription removes the subscription URL at the given index and persists it to disk.
+func (c *Config) DeleteSubscription(index int) error {
+	if c == nil {
+		return errors.New("config is nil")
+	}
+	if index < 0 || index >= len(c.Subscriptions) {
+		return ErrSubscriptionNotFound
+	}
+	old := c.Subscriptions[index]
+	c.Subscriptions = append(c.Subscriptions[:index], c.Subscriptions[index+1:]...)
+	if err := c.SaveSubscriptions(); err != nil {
+		// Restore the deleted element on failure.
+		c.Subscriptions = append(c.Subscriptions[:index], append([]string{old}, c.Subscriptions[index:]...)...)
+		return err
+	}
+	return nil
+}
+
+// SaveSubscriptions updates only the subscriptions field in the on-disk YAML config.
+// Other fields (including comments and unknown keys) are preserved as much as possible.
+func (c *Config) SaveSubscriptions() error {
+	if c == nil {
+		return errors.New("config is nil")
+	}
+	if c.filePath == "" {
+		return errors.New("config file path is unknown")
+	}
+
+	// Validate and normalize in-memory list before persisting.
+	subs := make([]string, 0, len(c.Subscriptions))
+	for _, raw := range c.Subscriptions {
+		raw = strings.TrimSpace(raw)
+		if raw == "" {
+			return ErrInvalidSubscription
+		}
+		if err := validateSubscriptionURL(raw); err != nil {
+			return err
+		}
+		subs = append(subs, raw)
+	}
+	c.Subscriptions = subs
+
+	data, err := os.ReadFile(c.filePath)
+	if err != nil {
+		return fmt.Errorf("read config: %w", err)
+	}
+
+	var doc yaml.Node
+	if err := yaml.Unmarshal(data, &doc); err != nil {
+		return fmt.Errorf("decode config: %w", err)
+	}
+	if doc.Kind != yaml.DocumentNode || len(doc.Content) == 0 {
+		return errors.New("invalid yaml document")
+	}
+	root := doc.Content[0]
+	if root.Kind != yaml.MappingNode {
+		return errors.New("invalid yaml root (expected mapping)")
+	}
+
+	seq := &yaml.Node{Kind: yaml.SequenceNode, Tag: "!!seq"}
+	for _, u := range subs {
+		seq.Content = append(seq.Content, &yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Value: u})
+	}
+
+	// Find existing "subscriptions" key.
+	found := false
+	for i := 0; i+1 < len(root.Content); i += 2 {
+		k := root.Content[i]
+		if k.Kind == yaml.ScalarNode && k.Value == "subscriptions" {
+			v := root.Content[i+1]
+			// Preserve comments attached to the existing node when possible.
+			seq.HeadComment = v.HeadComment
+			seq.LineComment = v.LineComment
+			seq.FootComment = v.FootComment
+			root.Content[i+1] = seq
+			found = true
+			break
+		}
+	}
+	if !found {
+		root.Content = append(root.Content,
+			&yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Value: "subscriptions"},
+			seq,
+		)
+	}
+
+	var buf bytes.Buffer
+	enc := yaml.NewEncoder(&buf)
+	enc.SetIndent(2)
+	if err := enc.Encode(root); err != nil {
+		_ = enc.Close()
+		return fmt.Errorf("encode config: %w", err)
+	}
+	if err := enc.Close(); err != nil {
+		return fmt.Errorf("encode config: %w", err)
+	}
+	if err := os.WriteFile(c.filePath, buf.Bytes(), 0o644); err != nil {
+		return fmt.Errorf("write config: %w", err)
+	}
+	return nil
+}
+
+func validateSubscriptionURL(subURL string) error {
+	if subURL == "" {
+		return ErrInvalidSubscription
+	}
+	if len(subURL) > maxSubscriptionURLLength {
+		return ErrInvalidSubscription
+	}
+	parsed, err := url.Parse(subURL)
+	if err != nil || parsed.Scheme == "" || parsed.Host == "" {
+		return ErrInvalidSubscription
+	}
+	switch strings.ToLower(parsed.Scheme) {
+	case "http", "https":
+		return nil
+	default:
+		return ErrInvalidSubscription
+	}
 }
 
 // Save is deprecated, use SaveNodes instead.

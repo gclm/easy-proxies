@@ -12,6 +12,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -54,6 +55,11 @@ type Manager struct {
 	// Track nodes.txt content hash to detect modifications
 	lastSubHash      string    // Hash of nodes.txt content after last subscription refresh
 	lastNodesModTime time.Time // Last known modification time of nodes.txt
+
+	// Cached active nodes by subscription index (0-based). This represents the currently applied
+	// subscription nodes set, used to support per-subscription refresh without re-fetching others.
+	subNodesByIndex [][]config.NodeConfig
+	subURLsSnapshot []string
 }
 
 // New creates a SubscriptionManager.
@@ -299,6 +305,142 @@ func (m *Manager) doRefresh() {
 	m.logger.Infof("subscription refresh completed, %d nodes active", len(nodes))
 }
 
+// FetchSubscriptionNodes returns the currently cached (active) nodes for a single subscription index.
+// If the subscription has never been refreshed (and cannot be inferred from startup config),
+// it returns an empty slice.
+func (m *Manager) FetchSubscriptionNodes(index int) ([]config.NodeConfig, error) {
+	subs := m.getSubscriptions()
+	if index < 0 || index >= len(subs) {
+		return nil, fmt.Errorf("subscription index out of range")
+	}
+
+	m.mu.Lock()
+	m.ensureSubscriptionCacheLocked(subs)
+	nodes := cloneNodeSlice(m.subNodesByIndex[index])
+	m.mu.Unlock()
+	return nodes, nil
+}
+
+// RefreshSubscription refreshes a single subscription by index, updates nodes.txt, and reloads sing-box
+// while preserving existing port assignments. It returns the number of nodes fetched from that subscription.
+func (m *Manager) RefreshSubscription(index int) (int, error) {
+	if m.boxMgr == nil {
+		return 0, fmt.Errorf("box manager unavailable")
+	}
+
+	// Prevent concurrent refreshes (full or per-sub).
+	if !m.refreshMu.TryLock() {
+		return 0, fmt.Errorf("refresh already in progress")
+	}
+	defer m.refreshMu.Unlock()
+
+	subs := m.getSubscriptions()
+	if index < 0 || index >= len(subs) {
+		return 0, fmt.Errorf("subscription index out of range")
+	}
+
+	m.mu.Lock()
+	m.status.IsRefreshing = true
+	m.mu.Unlock()
+
+	defer func() {
+		m.mu.Lock()
+		m.status.IsRefreshing = false
+		m.status.RefreshCount++
+		m.mu.Unlock()
+	}()
+
+	timeout := m.baseCfg.SubscriptionRefresh.Timeout
+	if timeout <= 0 {
+		timeout = 30 * time.Second
+	}
+
+	subURL := subs[index]
+	nodes, err := m.fetchSubscription(subURL, timeout)
+	if err != nil {
+		m.mu.Lock()
+		m.status.LastError = err.Error()
+		m.status.LastRefresh = time.Now()
+		m.mu.Unlock()
+		return 0, err
+	}
+
+	// Apply name extraction + subscription prefix so node keys stay stable for port preservation.
+	prefix := fmt.Sprintf("[%d] ", index+1)
+	for j := range nodes {
+		if nodes[j].Name == "" {
+			if parsed, err := url.Parse(nodes[j].URI); err == nil && parsed.Fragment != "" {
+				if decoded, err := url.QueryUnescape(parsed.Fragment); err == nil {
+					nodes[j].Name = decoded
+				} else {
+					nodes[j].Name = parsed.Fragment
+				}
+			}
+		}
+		if nodes[j].Name == "" {
+			nodes[j].Name = fmt.Sprintf("node-%d", j)
+		}
+		nodes[j].Name = prefix + nodes[j].Name
+	}
+
+	// Update cached active nodes for this subscription, then merge all cached nodes in order.
+	m.mu.Lock()
+	m.ensureSubscriptionCacheLocked(subs)
+	m.subNodesByIndex[index] = cloneNodeSlice(nodes)
+	merged := m.mergeCachedSubscriptionNodesLocked()
+	m.mu.Unlock()
+
+	if len(merged) == 0 {
+		err := fmt.Errorf("no nodes available after refresh")
+		m.mu.Lock()
+		m.status.LastError = err.Error()
+		m.status.LastRefresh = time.Now()
+		m.mu.Unlock()
+		return 0, err
+	}
+
+	// Write subscription nodes to nodes.txt
+	nodesFilePath := m.getNodesFilePath()
+	if err := m.writeNodesToFile(nodesFilePath, merged); err != nil {
+		m.mu.Lock()
+		m.status.LastError = fmt.Sprintf("write nodes.txt: %v", err)
+		m.status.LastRefresh = time.Now()
+		m.mu.Unlock()
+		return 0, err
+	}
+
+	// Update hash and mod time after writing
+	newHash := m.computeNodesHash(merged)
+	m.mu.Lock()
+	m.lastSubHash = newHash
+	if info, err := os.Stat(nodesFilePath); err == nil {
+		m.lastNodesModTime = info.ModTime()
+	} else {
+		m.lastNodesModTime = time.Now()
+	}
+	m.status.NodesModified = false
+	m.mu.Unlock()
+
+	// Preserve existing port mapping.
+	portMap := m.boxMgr.CurrentPortMap()
+	newCfg := m.createNewConfig(merged)
+	if err := m.boxMgr.ReloadWithPortMap(newCfg, portMap); err != nil {
+		m.mu.Lock()
+		m.status.LastError = err.Error()
+		m.status.LastRefresh = time.Now()
+		m.mu.Unlock()
+		return 0, err
+	}
+
+	m.mu.Lock()
+	m.status.LastRefresh = time.Now()
+	m.status.NodeCount = len(merged)
+	m.status.LastError = ""
+	m.mu.Unlock()
+
+	return len(nodes), nil
+}
+
 // getNodesFilePath returns the path to nodes.txt.
 func (m *Manager) getNodesFilePath() string {
 	if m.baseCfg.NodesFile != "" {
@@ -392,6 +534,103 @@ func (m *Manager) MarkNodesModified() {
 	m.mu.Unlock()
 }
 
+func (m *Manager) getSubscriptions() []string {
+	// Copy slice to avoid external mutation during iteration.
+	if m.baseCfg == nil || len(m.baseCfg.Subscriptions) == 0 {
+		return nil
+	}
+	return append([]string(nil), m.baseCfg.Subscriptions...)
+}
+
+func cloneNodeSlice(in []config.NodeConfig) []config.NodeConfig {
+	if len(in) == 0 {
+		return nil
+	}
+	out := make([]config.NodeConfig, len(in))
+	copy(out, in)
+	return out
+}
+
+func parseSubscriptionPrefixIndex(name string) (int, bool) {
+	// Expected format: "[<1-based-index>] ..."
+	if !strings.HasPrefix(name, "[") {
+		return -1, false
+	}
+	end := strings.Index(name, "]")
+	if end <= 1 {
+		return -1, false
+	}
+	n, err := strconv.Atoi(strings.TrimSpace(name[1:end]))
+	if err != nil || n <= 0 {
+		return -1, false
+	}
+	return n - 1, true
+}
+
+// ensureSubscriptionCacheLocked initializes and reconciles the per-subscription active nodes cache.
+// m.mu must be held for writing.
+func (m *Manager) ensureSubscriptionCacheLocked(subs []string) {
+	if m.subNodesByIndex == nil {
+		m.subNodesByIndex = make([][]config.NodeConfig, len(subs))
+		m.subURLsSnapshot = append([]string(nil), subs...)
+
+		// Best-effort initialization from startup config nodes.
+		for _, node := range m.baseCfg.Nodes {
+			idx, ok := parseSubscriptionPrefixIndex(node.Name)
+			if !ok || idx < 0 || idx >= len(subs) {
+				continue
+			}
+			m.subNodesByIndex[idx] = append(m.subNodesByIndex[idx], node)
+		}
+		return
+	}
+
+	oldSubs := m.subURLsSnapshot
+	oldNodes := m.subNodesByIndex
+
+	newNodes := make([][]config.NodeConfig, len(subs))
+	usedOld := make([]bool, len(oldSubs))
+	oldIndexByURL := make(map[string]int, len(oldSubs))
+	for i, u := range oldSubs {
+		oldIndexByURL[u] = i
+	}
+
+	// First pass: preserve nodes by matching URLs (handles deletes/reorders).
+	for i, u := range subs {
+		if j, ok := oldIndexByURL[u]; ok && j >= 0 && j < len(oldNodes) {
+			newNodes[i] = oldNodes[j]
+			usedOld[j] = true
+		}
+	}
+
+	// Second pass: for remaining unmatched slots, preserve by index when possible (handles updates).
+	for i := range subs {
+		if newNodes[i] != nil {
+			continue
+		}
+		if i < len(oldNodes) && !usedOld[i] {
+			newNodes[i] = oldNodes[i]
+			usedOld[i] = true
+		}
+	}
+
+	m.subNodesByIndex = newNodes
+	m.subURLsSnapshot = append([]string(nil), subs...)
+}
+
+// mergeCachedSubscriptionNodesLocked merges cached nodes from all subscriptions in order.
+// m.mu must be held for writing.
+func (m *Manager) mergeCachedSubscriptionNodesLocked() []config.NodeConfig {
+	var merged []config.NodeConfig
+	for i := range m.subNodesByIndex {
+		if len(m.subNodesByIndex[i]) == 0 {
+			continue
+		}
+		merged = append(merged, m.subNodesByIndex[i]...)
+	}
+	return merged
+}
+
 // fetchAllSubscriptions fetches nodes from all configured subscription URLs.
 func (m *Manager) fetchAllSubscriptions() ([]config.NodeConfig, error) {
 	var allNodes []config.NodeConfig
@@ -402,11 +641,19 @@ func (m *Manager) fetchAllSubscriptions() ([]config.NodeConfig, error) {
 		timeout = 30 * time.Second
 	}
 
-	for i, subURL := range m.baseCfg.Subscriptions {
+	subs := m.getSubscriptions()
+	for i, subURL := range subs {
 		nodes, err := m.fetchSubscription(subURL, timeout)
 		if err != nil {
 			m.logger.Warnf("failed to fetch %s: %v", subURL, err)
 			lastErr = err
+			// Keep cache consistent with what will be applied: drop nodes for this subscription on failure.
+			m.mu.Lock()
+			m.ensureSubscriptionCacheLocked(subs)
+			if i >= 0 && i < len(m.subNodesByIndex) {
+				m.subNodesByIndex[i] = nil
+			}
+			m.mu.Unlock()
 			continue
 		}
 		// 先从 URI fragment 提取名称，再添加订阅前缀
@@ -429,6 +676,14 @@ func (m *Manager) fetchAllSubscriptions() ([]config.NodeConfig, error) {
 		}
 		m.logger.Infof("fetched %d nodes from subscription %d", len(nodes), i+1)
 		allNodes = append(allNodes, nodes...)
+
+		// Update cache for per-subscription refresh support.
+		m.mu.Lock()
+		m.ensureSubscriptionCacheLocked(subs)
+		if i >= 0 && i < len(m.subNodesByIndex) {
+			m.subNodesByIndex[i] = cloneNodeSlice(nodes)
+		}
+		m.mu.Unlock()
 	}
 
 	if len(allNodes) == 0 && lastErr != nil {

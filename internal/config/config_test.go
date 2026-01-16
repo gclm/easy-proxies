@@ -1,12 +1,16 @@
 package config
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"path/filepath"
 	"reflect"
 	"testing"
 	"time"
+
+	"gopkg.in/yaml.v3"
 )
 
 func TestParseNodesFromContent_PreservesOrder(t *testing.T) {
@@ -84,6 +88,165 @@ func TestNormalize_SubscriptionPrefixAndFragment(t *testing.T) {
 		}
 		if node.URI != wantURIs[i] {
 			t.Fatalf("node %d uri mismatch: want %q, got %q", i, wantURIs[i], node.URI)
+		}
+	}
+}
+
+func TestSaveSubscriptions_PreservesOtherFields(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "config.yaml")
+
+	original := "" +
+		"mode: pool\n" +
+		"listener:\n" +
+		"  address: 127.0.0.1\n" +
+		"  port: 2323\n" +
+		"nodes_file: nodes.txt\n" +
+		"subscriptions:\n" +
+		"  - https://old.example.com/sub\n" +
+		"external_ip: \"1.2.3.4\"\n"
+
+	if err := os.WriteFile(path, []byte(original), 0o644); err != nil {
+		t.Fatalf("write config fixture: %v", err)
+	}
+
+	cfg := &Config{Subscriptions: []string{"https://new.example.com/sub1", "https://new.example.com/sub2"}}
+	cfg.SetFilePath(path)
+
+	if err := cfg.SaveSubscriptions(); err != nil {
+		t.Fatalf("SaveSubscriptions returned error: %v", err)
+	}
+
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("read config: %v", err)
+	}
+
+	var got map[string]any
+	if err := yaml.Unmarshal(data, &got); err != nil {
+		t.Fatalf("unmarshal config: %v", err)
+	}
+
+	if got["mode"] != "pool" {
+		t.Fatalf("mode changed: got %v", got["mode"])
+	}
+	if got["nodes_file"] != "nodes.txt" {
+		t.Fatalf("nodes_file changed: got %v", got["nodes_file"])
+	}
+	if got["external_ip"] != "1.2.3.4" {
+		t.Fatalf("external_ip changed: got %v", got["external_ip"])
+	}
+
+	listener, ok := got["listener"].(map[string]any)
+	if !ok {
+		// yaml.v3 may decode to map[string]interface{} depending on Go version; handle both.
+		if m, ok2 := got["listener"].(map[string]interface{}); ok2 {
+			listener = make(map[string]any, len(m))
+			for k, v := range m {
+				listener[k] = v
+			}
+			ok = true
+		}
+	}
+	if !ok {
+		t.Fatalf("listener type unexpected: %T", got["listener"])
+	}
+	if listener["address"] != "127.0.0.1" {
+		t.Fatalf("listener.address changed: got %v", listener["address"])
+	}
+	if listener["port"] != 2323 {
+		t.Fatalf("listener.port changed: got %v", listener["port"])
+	}
+
+	subsRaw, ok := got["subscriptions"].([]any)
+	if !ok {
+		if s2, ok2 := got["subscriptions"].([]interface{}); ok2 {
+			subsRaw = make([]any, len(s2))
+			for i := range s2 {
+				subsRaw[i] = s2[i]
+			}
+			ok = true
+		}
+	}
+	if !ok {
+		t.Fatalf("subscriptions type unexpected: %T", got["subscriptions"])
+	}
+	subs := make([]string, 0, len(subsRaw))
+	for _, v := range subsRaw {
+		s, ok := v.(string)
+		if !ok {
+			t.Fatalf("subscription item type unexpected: %T", v)
+		}
+		subs = append(subs, s)
+	}
+	want := []string{"https://new.example.com/sub1", "https://new.example.com/sub2"}
+	if !reflect.DeepEqual(subs, want) {
+		t.Fatalf("subscriptions mismatch\nwant: %v\n got: %v", want, subs)
+	}
+}
+
+func TestSubscriptionCRUD_ValidatesAndPersists(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "config.yaml")
+
+	// Minimal but valid mapping config.
+	if err := os.WriteFile(path, []byte("mode: pool\n"), 0o644); err != nil {
+		t.Fatalf("write config fixture: %v", err)
+	}
+
+	cfg := &Config{}
+	cfg.SetFilePath(path)
+
+	if _, err := cfg.AddSubscription("not-a-url"); err == nil {
+		t.Fatalf("expected invalid url error")
+	} else if !errors.Is(err, ErrInvalidSubscription) {
+		t.Fatalf("expected ErrInvalidSubscription, got %v", err)
+	}
+
+	idx, err := cfg.AddSubscription("https://example.com/sub")
+	if err != nil {
+		t.Fatalf("AddSubscription returned error: %v", err)
+	}
+	if idx != 0 {
+		t.Fatalf("unexpected index: %d", idx)
+	}
+
+	if _, err := cfg.AddSubscription("https://example.com/sub"); err == nil {
+		t.Fatalf("expected duplicate error")
+	} else if !errors.Is(err, ErrSubscriptionDuplicate) {
+		t.Fatalf("expected ErrSubscriptionDuplicate, got %v", err)
+	}
+
+	if err := cfg.UpdateSubscription(1, "https://example.com/other"); err == nil {
+		t.Fatalf("expected not found error")
+	} else if !errors.Is(err, ErrSubscriptionNotFound) {
+		t.Fatalf("expected ErrSubscriptionNotFound, got %v", err)
+	}
+
+	if err := cfg.UpdateSubscription(0, "https://example.com/other"); err != nil {
+		t.Fatalf("UpdateSubscription returned error: %v", err)
+	}
+
+	if err := cfg.DeleteSubscription(0); err != nil {
+		t.Fatalf("DeleteSubscription returned error: %v", err)
+	}
+
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatalf("read config: %v", err)
+	}
+	var got map[string]any
+	if err := yaml.Unmarshal(data, &got); err != nil {
+		t.Fatalf("unmarshal config: %v", err)
+	}
+
+	if got["mode"] != "pool" {
+		t.Fatalf("mode changed: got %v", got["mode"])
+	}
+	if subs, ok := got["subscriptions"]; ok && subs != nil {
+		// After deletion we still expect an empty list (not a scalar).
+		if v, ok := subs.([]interface{}); ok && len(v) != 0 {
+			t.Fatalf("expected empty subscriptions, got %v", subs)
 		}
 	}
 }

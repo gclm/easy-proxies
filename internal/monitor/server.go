@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"net/url"
 	"runtime"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -52,6 +53,8 @@ var (
 type SubscriptionRefresher interface {
 	RefreshNow() error
 	Status() SubscriptionStatus
+	FetchSubscriptionNodes(index int) ([]config.NodeConfig, error)
+	RefreshSubscription(index int) (int, error)
 }
 
 // SubscriptionStatus represents subscription refresh status.
@@ -126,6 +129,8 @@ func NewServer(cfg Config, mgr *Manager, logger *log.Logger) *Server {
 	mux.HandleFunc("/api/export", s.withAuth(s.handleExport))
 	mux.HandleFunc("/api/subscription/status", s.withAuth(s.handleSubscriptionStatus))
 	mux.HandleFunc("/api/subscription/refresh", s.withAuth(s.handleSubscriptionRefresh))
+	mux.HandleFunc("/api/subscriptions", s.withAuth(s.handleSubscriptions))
+	mux.HandleFunc("/api/subscriptions/", s.withAuth(s.handleSubscriptionItem))
 	mux.HandleFunc("/api/reload", s.withAuth(s.handleReload))
 	s.srv = &http.Server{Addr: cfg.Listen, Handler: mux}
 	return s
@@ -800,6 +805,200 @@ func (s *Server) handleSubscriptionRefresh(w http.ResponseWriter, r *http.Reques
 	})
 }
 
+// handleSubscriptions handles GET (list) and POST (create) for subscription URLs.
+func (s *Server) handleSubscriptions(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		s.cfgMu.RLock()
+		cfg := s.cfgSrc
+		var subs []string
+		if cfg != nil {
+			subs = append([]string(nil), cfg.Subscriptions...)
+		}
+		s.cfgMu.RUnlock()
+
+		if cfg == nil {
+			w.WriteHeader(http.StatusServiceUnavailable)
+			writeJSON(w, map[string]any{"error": "配置存储未初始化"})
+			return
+		}
+
+		type item struct {
+			Index     int    `json:"index"`
+			URL       string `json:"url"`
+			NodeCount int    `json:"node_count"`
+		}
+		items := make([]item, 0, len(subs))
+		for i, u := range subs {
+			nodeCount := 0
+			if s.subRefresher != nil {
+				if nodes, err := s.subRefresher.FetchSubscriptionNodes(i); err == nil {
+					nodeCount = len(nodes)
+				}
+			}
+			items = append(items, item{Index: i, URL: u, NodeCount: nodeCount})
+		}
+		writeJSON(w, map[string]any{"subscriptions": items})
+	case http.MethodPost:
+		var req struct {
+			URL string `json:"url"`
+		}
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			writeJSON(w, map[string]any{"error": "请求格式错误"})
+			return
+		}
+
+		s.cfgMu.Lock()
+		cfg := s.cfgSrc
+		if cfg == nil {
+			s.cfgMu.Unlock()
+			w.WriteHeader(http.StatusServiceUnavailable)
+			writeJSON(w, map[string]any{"error": "配置存储未初始化"})
+			return
+		}
+		idx, err := cfg.AddSubscription(req.URL)
+		s.cfgMu.Unlock()
+		if err != nil {
+			s.respondSubscriptionError(w, err)
+			return
+		}
+		writeJSON(w, map[string]any{
+			"message": "订阅已添加，请点击刷新订阅使配置生效",
+			"index":   idx,
+		})
+	default:
+		w.WriteHeader(http.StatusMethodNotAllowed)
+	}
+}
+
+// handleSubscriptionItem handles PUT (update) and DELETE for a specific subscription by index.
+func (s *Server) handleSubscriptionItem(w http.ResponseWriter, r *http.Request) {
+	rest := strings.TrimPrefix(r.URL.Path, "/api/subscriptions/")
+	rest = strings.Trim(rest, "/")
+	if rest == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		writeJSON(w, map[string]any{"error": "订阅索引无效"})
+		return
+	}
+
+	parts := strings.Split(rest, "/")
+	if len(parts) > 2 {
+		w.WriteHeader(http.StatusBadRequest)
+		writeJSON(w, map[string]any{"error": "订阅索引无效"})
+		return
+	}
+
+	index, err := strconv.Atoi(parts[0])
+	if err != nil || index < 0 {
+		w.WriteHeader(http.StatusBadRequest)
+		writeJSON(w, map[string]any{"error": "订阅索引无效"})
+		return
+	}
+
+	// Sub-resource handlers: /api/subscriptions/{index}/nodes and /api/subscriptions/{index}/refresh
+	if len(parts) == 2 {
+		switch parts[1] {
+		case "nodes":
+			if r.Method != http.MethodGet {
+				w.WriteHeader(http.StatusMethodNotAllowed)
+				return
+			}
+			if s.subRefresher == nil {
+				w.WriteHeader(http.StatusServiceUnavailable)
+				writeJSON(w, map[string]any{"error": "订阅刷新未启用"})
+				return
+			}
+			nodes, err := s.subRefresher.FetchSubscriptionNodes(index)
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				writeJSON(w, map[string]any{"error": err.Error()})
+				return
+			}
+			uris := make([]string, 0, len(nodes))
+			for _, n := range nodes {
+				if strings.TrimSpace(n.URI) == "" {
+					continue
+				}
+				uris = append(uris, n.URI)
+			}
+			writeJSON(w, map[string]any{"nodes": uris, "count": len(uris)})
+			return
+		case "refresh":
+			if r.Method != http.MethodPost {
+				w.WriteHeader(http.StatusMethodNotAllowed)
+				return
+			}
+			if s.subRefresher == nil {
+				w.WriteHeader(http.StatusServiceUnavailable)
+				writeJSON(w, map[string]any{"error": "订阅刷新未启用"})
+				return
+			}
+			nodeCount, err := s.subRefresher.RefreshSubscription(index)
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				writeJSON(w, map[string]any{"error": err.Error()})
+				return
+			}
+			writeJSON(w, map[string]any{
+				"message":    "订阅已刷新",
+				"node_count": nodeCount,
+			})
+			return
+		default:
+			w.WriteHeader(http.StatusBadRequest)
+			writeJSON(w, map[string]any{"error": "订阅索引无效"})
+			return
+		}
+	}
+
+	switch r.Method {
+	case http.MethodPut:
+		var req struct {
+			URL string `json:"url"`
+		}
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			writeJSON(w, map[string]any{"error": "请求格式错误"})
+			return
+		}
+
+		s.cfgMu.Lock()
+		cfg := s.cfgSrc
+		if cfg == nil {
+			s.cfgMu.Unlock()
+			w.WriteHeader(http.StatusServiceUnavailable)
+			writeJSON(w, map[string]any{"error": "配置存储未初始化"})
+			return
+		}
+		err := cfg.UpdateSubscription(index, req.URL)
+		s.cfgMu.Unlock()
+		if err != nil {
+			s.respondSubscriptionError(w, err)
+			return
+		}
+		writeJSON(w, map[string]any{"message": "订阅已更新，请点击刷新订阅使配置生效"})
+	case http.MethodDelete:
+		s.cfgMu.Lock()
+		cfg := s.cfgSrc
+		if cfg == nil {
+			s.cfgMu.Unlock()
+			w.WriteHeader(http.StatusServiceUnavailable)
+			writeJSON(w, map[string]any{"error": "配置存储未初始化"})
+			return
+		}
+		err := cfg.DeleteSubscription(index)
+		s.cfgMu.Unlock()
+		if err != nil {
+			s.respondSubscriptionError(w, err)
+			return
+		}
+		writeJSON(w, map[string]any{"message": "订阅已删除，请点击刷新订阅使配置生效"})
+	default:
+		w.WriteHeader(http.StatusMethodNotAllowed)
+	}
+}
+
 // nodePayload is the JSON request body for node CRUD operations.
 type nodePayload struct {
 	Name     string `json:"name"`
@@ -1003,4 +1202,18 @@ func (s *Server) cleanupExpiredSessions() {
 // secureCompareStrings performs constant-time string comparison to prevent timing attacks.
 func secureCompareStrings(a, b string) bool {
 	return subtle.ConstantTimeCompare([]byte(a), []byte(b)) == 1
+}
+
+func (s *Server) respondSubscriptionError(w http.ResponseWriter, err error) {
+	status := http.StatusInternalServerError
+	switch {
+	case errors.Is(err, config.ErrSubscriptionNotFound):
+		status = http.StatusNotFound
+	case errors.Is(err, config.ErrInvalidSubscription):
+		status = http.StatusBadRequest
+	case errors.Is(err, config.ErrSubscriptionDuplicate):
+		status = http.StatusConflict
+	}
+	w.WriteHeader(status)
+	writeJSON(w, map[string]any{"error": err.Error()})
 }

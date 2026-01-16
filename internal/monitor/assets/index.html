@@ -994,6 +994,7 @@
       <button class="tab active" onclick="switchTab('monitor')">📊 节点监控</button>
       <button class="tab" onclick="switchTab('manage')">⚙️ 节点管理</button>
       <button class="tab" onclick="switchTab('debug')">🐞 调试面板</button>
+      <button class="tab" onclick="switchTab('subscriptions')">📡 订阅管理</button>
     </div>
 
     <!-- 监控页面 -->
@@ -1182,6 +1183,40 @@
         <p>节点使用后将显示统计信息</p>
       </div>
     </div><!-- end debugTab -->
+
+    <!-- 订阅管理页面 -->
+    <div id="subscriptionsTab" class="tab-content">
+      <div class="manage-header">
+        <h2>订阅配置管理</h2>
+        <p class="manage-desc">管理节点订阅源。添加订阅后需点击"刷新订阅"获取最新节点。</p>
+      </div>
+
+      <div class="manage-actions">
+        <button class="btn btn-primary" onclick="showAddSubscriptionModal()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          添加订阅
+        </button>
+        <button class="btn btn-warning" onclick="refreshSubscription()" id="subManageRefreshBtn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M13.65 2.35A7.958 7.958 0 0 0 8 0C3.58 0 0 3.58 0 8s3.58 8 8 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L9 7h7V0l-2.35 2.35z" fill="currentColor"/>
+          </svg>
+          刷新订阅
+        </button>
+      </div>
+
+      <div id="subscriptionsContainer" class="config-nodes-grid"></div>
+
+      <div id="subscriptionsEmptyState" class="empty" style="display: none;">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" opacity="0.2">
+          <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="4"/>
+          <path d="M32 16v32M16 32h32" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <h3>暂无订阅</h3>
+        <p>点击"添加订阅"开始配置</p>
+      </div>
+    </div><!-- end subscriptionsTab -->
   </div>
 
   <div id="toast" class="toast">
@@ -1269,29 +1304,28 @@
     </div>
   </div>
 
-  <!-- 登录弹窗 -->
-  <div id="loginOverlay" class="login-overlay">
+      </form>
+    </div>
+  </div>
+
+  <!-- 订阅编辑弹窗 -->
+  <div id="subscriptionModalOverlay" class="login-overlay">
     <div class="login-modal">
       <div class="login-header">
-        <h2>🔐 身份验证</h2>
-        <p>请输入访问密码</p>
+        <h2 id="subModalTitle">➕ 添加订阅</h2>
+        <p id="subModalDesc">输入订阅链接</p>
       </div>
-      <form class="login-form" onsubmit="handleLogin(event)">
+      <form class="login-form" onsubmit="handleSubscriptionSubmit(event)">
         <div class="form-group">
-          <label class="form-label" for="password">密码</label>
-          <input
-            type="password"
-            id="password"
-            class="form-input"
-            placeholder="请输入密码"
-            autocomplete="current-password"
-            required
-          />
+          <label class="form-label" for="subUrl">订阅地址 <span style="color: var(--error);">*</span></label>
+          <input type="text" id="subUrl" class="form-input" placeholder="http(s)://..." required />
         </div>
-        <div id="loginError" class="login-error">密码错误，请重试</div>
-        <button type="submit" class="btn btn-primary" style="width: 100%;">
-          登录
-        </button>
+        <input type="hidden" id="subIndex" />
+        <div id="subModalError" class="login-error"></div>
+        <div class="modal-buttons">
+          <button type="button" class="btn btn-secondary" onclick="hideSubscriptionModal()">取消</button>
+          <button type="submit" class="btn btn-primary" id="subSubmitBtn">保存</button>
+        </div>
       </form>
     </div>
   </div>
@@ -1300,6 +1334,7 @@
     let autoRefreshInterval = null;
     let isAutoRefresh = true;
     let isAuthenticated = false;
+    const MAX_URL_DISPLAY_LENGTH = 60;
 
     // 检查是否需要登录
     async function checkAuth() {
@@ -2151,6 +2186,10 @@
         loadConfigNodes();
       } else if (tabName === 'debug') {
         loadDebugData();
+      } else if (tabName === 'subscriptions') {
+        loadSubscriptions();
+      } else if (tabName === 'debug') {
+        loadDebugData();
       }
     }
 
@@ -2194,7 +2233,7 @@
 
       emptyState.style.display = 'none';
       container.innerHTML = configNodes.map((node, index) => {
-        const truncatedUri = node.uri.length > 60 ? node.uri.substring(0, 60) + '...' : node.uri;
+        const truncatedUri = node.uri.length > MAX_URL_DISPLAY_LENGTH ? node.uri.substring(0, MAX_URL_DISPLAY_LENGTH) + '...' : node.uri;
         return `
           <div class="config-node-card" data-index="${index}">
             <div class="config-node-info">
@@ -2374,6 +2413,221 @@
           </svg>
           重载配置
         `;
+      }
+    }
+
+    // ========== 订阅管理功能 ==========
+
+    let subscriptions = [];
+    let isSubEditMode = false;
+
+    async function loadSubscriptions() {
+      try {
+        const res = await fetch('/api/subscriptions');
+        if (res.status === 401) {
+          showToast('请先登录', 'error');
+          document.getElementById('loginOverlay').classList.add('show');
+          return;
+        }
+        if (!res.ok) throw new Error('加载失败');
+        const data = await res.json();
+        subscriptions = data.subscriptions || [];
+        renderSubscriptions();
+      } catch (err) {
+        showToast('加载订阅失败: ' + err.message, 'error');
+      }
+    }
+
+    function renderSubscriptions() {
+      const container = document.getElementById('subscriptionsContainer');
+      const emptyState = document.getElementById('subscriptionsEmptyState');
+
+      if (subscriptions.length === 0) {
+        container.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      container.innerHTML = subscriptions.map((sub) => {
+        const truncatedUrl = sub.url.length > MAX_URL_DISPLAY_LENGTH ? sub.url.substring(0, MAX_URL_DISPLAY_LENGTH) + '...' : sub.url;
+        const nodeCount = sub.node_count !== undefined ? sub.node_count : '-';
+        return `
+          <div class="config-node-card" data-index="${sub.index}">
+            <div class="config-node-info">
+              <div class="config-node-name">
+                订阅 #${sub.index + 1}
+                <span class="status-badge healthy" style="margin-left: 8px; font-size: 12px; padding: 2px 8px;">${nodeCount} 节点</span>
+              </div>
+              <div class="config-node-uri" title="${escapeHtml(sub.url)}">${escapeHtml(truncatedUrl)}</div>
+            </div>
+            <div class="config-node-actions">
+              <button class="btn btn-primary btn-sm" data-action="refresh" data-index="${sub.index}">
+                🔄 刷新
+              </button>
+              <button class="btn btn-secondary btn-sm" data-action="edit" data-index="${sub.index}">
+                ✏️ 编辑
+              </button>
+              <button class="btn btn-danger btn-sm" data-action="delete" data-index="${sub.index}">
+                🗑️ 删除
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // 写入 data-url，避免在 HTML/onclick 中拼接 URL
+      container.querySelectorAll('button[data-action="edit"]').forEach(btn => {
+        const index = parseInt(btn.dataset.index);
+        const sub = subscriptions.find(s => s.index === index);
+        if (sub) {
+          btn.dataset.url = sub.url;
+        }
+      });
+
+      // 使用事件委托处理按钮点击
+      container.querySelectorAll('button[data-action]').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const index = parseInt(this.dataset.index);
+          const action = this.dataset.action;
+
+          if (action === 'refresh') {
+            refreshSingleSubscription(index, this);
+            return;
+          }
+          if (action === 'edit') {
+            showEditSubscriptionModal(this);
+            return;
+          }
+          if (action === 'delete') {
+            deleteSubscription(index);
+          }
+        });
+      });
+    }
+
+    async function refreshSingleSubscription(index, btn) {
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '⏳...';
+
+      try {
+        const res = await fetch('/api/subscriptions/' + index + '/refresh', { method: 'POST' });
+        const data = await res.json();
+        
+        if (!res.ok) {
+          showToast(data.error || '刷新失败', 'error');
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+        } else {
+          showToast(`刷新成功: ${data.node_count} 个节点`, 'success');
+          // Update local data
+          const sub = subscriptions.find(s => s.index === index);
+          if (sub) {
+            sub.node_count = data.node_count;
+          }
+          // Reload all subscriptions to ensure consistency or just re-render
+          renderSubscriptions();
+        }
+      } catch (err) {
+        showToast('刷新失败: ' + err.message, 'error');
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    }
+
+    function showAddSubscriptionModal() {
+      isSubEditMode = false;
+      document.getElementById('subModalTitle').textContent = '➕ 添加订阅';
+      document.getElementById('subSubmitBtn').textContent = '添加';
+      document.getElementById('subUrl').value = '';
+      document.getElementById('subIndex').value = '';
+      document.getElementById('subModalError').classList.remove('show');
+      document.getElementById('subscriptionModalOverlay').classList.add('show');
+    }
+
+    function showEditSubscriptionModal(btn) {
+      const index = parseInt(btn.dataset.index);
+      const url = btn.dataset.url || '';
+
+      isSubEditMode = true;
+      document.getElementById('subModalTitle').textContent = '✏️ 编辑订阅';
+      document.getElementById('subSubmitBtn').textContent = '保存';
+      document.getElementById('subUrl').value = url;
+      document.getElementById('subIndex').value = index;
+      document.getElementById('subModalError').classList.remove('show');
+      document.getElementById('subscriptionModalOverlay').classList.add('show');
+    }
+
+    function hideSubscriptionModal() {
+      document.getElementById('subscriptionModalOverlay').classList.remove('show');
+    }
+
+    async function handleSubscriptionSubmit(event) {
+      event.preventDefault();
+      const errorEl = document.getElementById('subModalError');
+      errorEl.classList.remove('show');
+
+      const url = document.getElementById('subUrl').value.trim();
+      if (!url) {
+        errorEl.textContent = '订阅地址不能为空';
+        errorEl.classList.add('show');
+        return;
+      }
+
+      try {
+        let res;
+        if (isSubEditMode) {
+          const index = document.getElementById('subIndex').value;
+          res = await fetch('/api/subscriptions/' + index, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url })
+          });
+        } else {
+          res = await fetch('/api/subscriptions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url })
+          });
+        }
+
+        const data = await res.json();
+        if (!res.ok) {
+          errorEl.textContent = data.error || '操作失败';
+          errorEl.classList.add('show');
+          return;
+        }
+
+        hideSubscriptionModal();
+        showToast(data.message || (isSubEditMode ? '订阅已更新' : '订阅已添加'), 'success');
+        loadSubscriptions();
+        
+        // 提示用户刷新订阅
+        showToast('请点击"刷新订阅"使更改生效', 'warning');
+      } catch (err) {
+        errorEl.textContent = '操作失败: ' + err.message;
+        errorEl.classList.add('show');
+      }
+    }
+
+    async function deleteSubscription(index) {
+      if (!confirm('确定要删除该订阅吗？')) return;
+
+      try {
+        const res = await fetch('/api/subscriptions/' + index, {
+          method: 'DELETE'
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          showToast(data.error || '删除失败', 'error');
+          return;
+        }
+        showToast(data.message || '订阅已删除', 'success');
+        loadSubscriptions();
+        showToast('请点击"刷新订阅"使更改生效', 'warning');
+      } catch (err) {
+        showToast('删除失败: ' + err.message, 'error');
       }
     }
 
