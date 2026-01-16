@@ -36,11 +36,13 @@ const (
 
 // Options controls pool outbound behaviour.
 type Options struct {
-	Mode              string
-	Members           []string
-	FailureThreshold  int
-	BlacklistDuration time.Duration
-	Metadata          map[string]MemberMeta
+	Mode               string
+	Members            []string
+	FailureThreshold   int
+	BlacklistDuration  time.Duration
+	DisableHealthCheck bool
+	DisableBlacklist   bool
+	Metadata           map[string]MemberMeta
 }
 
 // MemberMeta carries optional descriptive information for monitoring UI.
@@ -156,11 +158,16 @@ func newPool(ctx context.Context, _ adapter.Router, logger log.ContextLogger, ta
 }
 
 func normalizeOptions(options Options) Options {
-	if options.FailureThreshold <= 0 {
-		options.FailureThreshold = 3
-	}
-	if options.BlacklistDuration <= 0 {
-		options.BlacklistDuration = 24 * time.Hour
+	if options.DisableBlacklist {
+		options.FailureThreshold = 0
+		options.BlacklistDuration = 0
+	} else {
+		if options.FailureThreshold <= 0 {
+			options.FailureThreshold = 3
+		}
+		if options.BlacklistDuration <= 0 {
+			options.BlacklistDuration = 24 * time.Hour
+		}
 	}
 	if options.Metadata == nil {
 		options.Metadata = make(map[string]MemberMeta)
@@ -187,7 +194,7 @@ func (p *poolOutbound) Start(stage adapter.StartStage) error {
 		return err
 	}
 	// 在初始化完成后，立即在后台触发健康检查
-	if p.monitor != nil {
+	if p.monitor != nil && !p.options.DisableHealthCheck {
 		go p.probeAllMembersOnStartup()
 	}
 	return nil
@@ -457,6 +464,11 @@ func (p *poolOutbound) selectMember(candidates []*memberState) *memberState {
 func (p *poolOutbound) recordFailure(member *memberState, cause error) {
 	if member.shared == nil {
 		p.logger.Warn("proxy ", member.tag, " failure (no shared state): ", cause)
+		return
+	}
+	if p.options.DisableBlacklist || p.options.FailureThreshold <= 0 || p.options.BlacklistDuration <= 0 {
+		member.shared.recordFailure(cause, 0, 0)
+		p.logger.Warn("proxy ", member.tag, " failure (blacklist disabled): ", cause)
 		return
 	}
 	failures, blacklisted, _ := member.shared.recordFailure(cause, p.options.FailureThreshold, p.options.BlacklistDuration)

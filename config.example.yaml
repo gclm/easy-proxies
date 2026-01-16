@@ -49,6 +49,8 @@ multi_port:
   password: mppass      # 默认认证密码
   inbound_type: http    # "http"（默认）或 "ss"（Shadowsocks）
   ss_method: aes-128-gcm  # Shadowsocks 加密方式（仅 inbound_type: ss 时生效）
+  disable_health_check: false  # multi-port 模式下关闭健康探测（默认 false）
+  disable_blacklist: false     # multi-port 模式下关闭拉黑（默认 false）
 
 # ───────────────────────────────────────────────────────────────
 # 管理面板配置

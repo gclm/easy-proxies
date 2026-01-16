@@ -62,6 +62,18 @@ func (s *sharedMemberState) entryHandle() *monitor.EntryHandle {
 // recordFailure increments failure count and triggers blacklist if threshold reached.
 // Returns: (current failures, blacklisted, blacklist until time)
 func (s *sharedMemberState) recordFailure(cause error, threshold int, duration time.Duration) (int, bool, time.Time) {
+	if threshold <= 0 || duration <= 0 {
+		s.mu.Lock()
+		s.failures++
+		count := s.failures
+		s.mu.Unlock()
+
+		if entry := s.entry.Load(); entry != nil {
+			entry.RecordFailure(cause)
+		}
+		return count, false, time.Time{}
+	}
+
 	s.mu.Lock()
 	s.failures++
 	count := s.failures

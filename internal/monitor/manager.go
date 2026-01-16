@@ -107,7 +107,10 @@ type Manager struct {
 	nodes      map[string]*entry
 	ctx        context.Context
 	cancel     context.CancelFunc
-	logger     Logger
+	periodicMu sync.Mutex
+	// periodicCancel controls the periodic health-check goroutine only (not manual probes).
+	periodicCancel context.CancelFunc
+	logger         Logger
 }
 
 // Logger interface for logging
@@ -171,19 +174,28 @@ func (m *Manager) StartPeriodicHealthCheck(interval, timeout time.Duration) {
 		return
 	}
 
+	m.periodicMu.Lock()
+	if m.periodicCancel != nil {
+		m.periodicMu.Unlock()
+		return
+	}
+	periodicCtx, cancel := context.WithCancel(m.ctx)
+	m.periodicCancel = cancel
+	m.periodicMu.Unlock()
+
 	go func() {
 		// 启动后立即进行一次检查
-		m.probeAllNodes(timeout)
+		m.probeAllNodes(periodicCtx, timeout)
 
 		ticker := time.NewTicker(interval)
 		defer ticker.Stop()
 
 		for {
 			select {
-			case <-m.ctx.Done():
+			case <-periodicCtx.Done():
 				return
 			case <-ticker.C:
-				m.probeAllNodes(timeout)
+				m.probeAllNodes(periodicCtx, timeout)
 			}
 		}
 	}()
@@ -194,7 +206,7 @@ func (m *Manager) StartPeriodicHealthCheck(interval, timeout time.Duration) {
 }
 
 // probeAllNodes checks all registered nodes concurrently.
-func (m *Manager) probeAllNodes(timeout time.Duration) {
+func (m *Manager) probeAllNodes(base context.Context, timeout time.Duration) {
 	m.mu.RLock()
 	entries := make([]*entry, 0, len(m.nodes))
 	for _, e := range m.nodes {
@@ -235,7 +247,7 @@ func (m *Manager) probeAllNodes(timeout time.Duration) {
 			defer wg.Done()
 			defer func() { <-sem }()
 
-			ctx, cancel := context.WithTimeout(m.ctx, timeout)
+			ctx, cancel := context.WithTimeout(base, timeout)
 			latency, err := probe(ctx)
 			cancel()
 
@@ -267,8 +279,20 @@ func (m *Manager) probeAllNodes(timeout time.Duration) {
 	}
 }
 
+// StopPeriodicHealthCheck stops the periodic health check loop (manual probe still available).
+func (m *Manager) StopPeriodicHealthCheck() {
+	m.periodicMu.Lock()
+	cancel := m.periodicCancel
+	m.periodicCancel = nil
+	m.periodicMu.Unlock()
+	if cancel != nil {
+		cancel()
+	}
+}
+
 // Stop stops the periodic health check.
 func (m *Manager) Stop() {
+	m.StopPeriodicHealthCheck()
 	if m.cancel != nil {
 		m.cancel()
 	}

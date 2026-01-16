@@ -65,12 +65,14 @@ type PoolConfig struct {
 
 // MultiPortConfig defines address/credential defaults for multi-port mode.
 type MultiPortConfig struct {
-	Address     string `yaml:"address"`
-	BasePort    uint16 `yaml:"base_port"`
-	Username    string `yaml:"username"`
-	Password    string `yaml:"password"`
-	InboundType string `yaml:"inbound_type"` // "http" (default) or "ss" (shadowsocks)
-	SSMethod    string `yaml:"ss_method"`    // Shadowsocks encryption method, default "aes-128-gcm"
+	Address            string `yaml:"address"`
+	BasePort           uint16 `yaml:"base_port"`
+	Username           string `yaml:"username"`
+	Password           string `yaml:"password"`
+	InboundType        string `yaml:"inbound_type"` // "http" (default) or "ss" (shadowsocks)
+	SSMethod           string `yaml:"ss_method"`    // Shadowsocks encryption method, default "aes-128-gcm"
+	DisableHealthCheck bool   `yaml:"disable_health_check"`
+	DisableBlacklist   bool   `yaml:"disable_blacklist"`
 }
 
 // ManagementConfig controls the monitoring HTTP endpoint.

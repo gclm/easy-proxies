@@ -255,12 +255,28 @@ func Build(cfg *config.Config) (option.Options, error) {
 			meta := metadata[tag]
 			perMeta := map[string]poolout.MemberMeta{tag: meta}
 			poolTag := fmt.Sprintf("%s-%s", poolout.Tag, tag)
+
+			disableBlacklist := cfg.Mode == "multi-port" && cfg.MultiPort.DisableBlacklist
+			disableHealthCheck := cfg.Mode == "multi-port" && cfg.MultiPort.DisableHealthCheck
+
+			failureThreshold := 0
+			blacklistDuration := time.Duration(0)
+			if disableBlacklist {
+				failureThreshold = 0
+				blacklistDuration = 0
+			} else if cfg.Mode == "multi-port" {
+				failureThreshold = cfg.Pool.FailureThreshold
+				blacklistDuration = cfg.Pool.BlacklistDuration
+			}
+
 			perOptions := poolout.Options{
-				Mode:              "sequential",
-				Members:           []string{tag},
-				FailureThreshold:  0, // 禁用拉黑，multi-port 模式下用户自己选择节点
-				BlacklistDuration: 0,
-				Metadata:          perMeta,
+				Mode:               "sequential",
+				Members:            []string{tag},
+				FailureThreshold:   failureThreshold,
+				BlacklistDuration:  blacklistDuration,
+				DisableBlacklist:   disableBlacklist,
+				DisableHealthCheck: disableHealthCheck,
+				Metadata:           perMeta,
 			}
 			perPool := option.Outbound{
 				Type:    poolout.Type,

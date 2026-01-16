@@ -137,14 +137,15 @@ func (m *Manager) Start(ctx context.Context) error {
 
 	// Start periodic health check after nodes are registered
 	m.mu.Lock()
-	if m.monitorMgr != nil && !m.healthCheckStarted {
+	disableHealthCheck := cfg.Mode == "multi-port" && cfg.MultiPort.DisableHealthCheck
+	if m.monitorMgr != nil && !m.healthCheckStarted && !disableHealthCheck {
 		m.monitorMgr.StartPeriodicHealthCheck(periodicHealthInterval, periodicHealthTimeout)
 		m.healthCheckStarted = true
 	}
 	m.mu.Unlock()
 
 	// Wait for initial health check if min nodes configured
-	if cfg.SubscriptionRefresh.MinAvailableNodes > 0 {
+	if cfg.SubscriptionRefresh.MinAvailableNodes > 0 && !disableHealthCheck {
 		timeout := cfg.SubscriptionRefresh.HealthCheckTimeout
 		if timeout <= 0 {
 			timeout = defaultHealthCheckTimeout
@@ -230,9 +231,20 @@ func (m *Manager) Reload(newCfg *config.Config) error {
 
 	m.applyConfigSettings(newCfg)
 
+	disableHealthCheck := newCfg.Mode == "multi-port" && newCfg.MultiPort.DisableHealthCheck
+
 	m.mu.Lock()
 	m.currentBox = instance
 	m.cfg = newCfg
+	if m.monitorMgr != nil {
+		if disableHealthCheck {
+			m.monitorMgr.StopPeriodicHealthCheck()
+			m.healthCheckStarted = false
+		} else if !m.healthCheckStarted {
+			m.monitorMgr.StartPeriodicHealthCheck(periodicHealthInterval, periodicHealthTimeout)
+			m.healthCheckStarted = true
+		}
+	}
 	m.mu.Unlock()
 
 	m.logger.Infof("reload completed successfully with %d nodes", len(newCfg.Nodes))
