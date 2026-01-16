@@ -51,7 +51,9 @@ func Run(ctx context.Context, cfg *config.Config) error {
 
 	// Create and start SubscriptionManager if enabled
 	var subMgr *subscription.Manager
-	if cfg.SubscriptionRefresh.Enabled && len(cfg.Subscriptions) > 0 {
+	// Always wire the subscription manager when enabled, even if there are no subscriptions yet.
+	// Subscriptions can be added later via the management API.
+	if cfg.SubscriptionRefresh.Enabled {
 		subMgr = subscription.New(cfg, boxMgr)
 		subMgr.Start()
 		defer subMgr.Stop()

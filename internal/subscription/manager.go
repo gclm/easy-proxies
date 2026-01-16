@@ -110,13 +110,12 @@ func (m *Manager) Start() {
 		m.logger.Infof("subscription refresh disabled")
 		return
 	}
-	if len(m.baseCfg.Subscriptions) == 0 {
-		m.logger.Infof("no subscriptions configured, refresh disabled")
-		return
-	}
 
 	interval := m.baseCfg.SubscriptionRefresh.Interval
 	m.logger.Infof("starting subscription refresh, interval: %s", interval)
+	if len(m.baseCfg.Subscriptions) == 0 {
+		m.logger.Infof("no subscriptions configured yet; waiting for subscriptions to be added")
+	}
 
 	go m.refreshLoop(interval)
 }
@@ -135,6 +134,10 @@ func (m *Manager) Stop() {
 
 // RefreshNow triggers an immediate refresh.
 func (m *Manager) RefreshNow() error {
+	if len(m.getSubscriptions()) == 0 {
+		return fmt.Errorf("no subscriptions configured")
+	}
+
 	select {
 	case m.manualRefresh <- struct{}{}:
 	default:
@@ -214,6 +217,12 @@ func (m *Manager) refreshLoop(interval time.Duration) {
 
 // doRefresh performs a single refresh operation.
 func (m *Manager) doRefresh() {
+	// If there are no subscriptions configured, do nothing (and avoid turning this into an error state).
+	// Subscriptions can be added later via the management API.
+	if len(m.getSubscriptions()) == 0 {
+		return
+	}
+
 	// Prevent concurrent refreshes
 	if !m.refreshMu.TryLock() {
 		m.logger.Warnf("refresh already in progress, skipping")
