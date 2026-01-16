@@ -1942,7 +1942,7 @@
     // 订阅状态相关
     async function fetchSubscriptionStatus() {
       try {
-        const res = await fetch('/api/subscription/status');
+        const res = await fetch('/api/subscription/status', { credentials: 'include' });
         if (!res.ok) return;
         const data = await res.json();
         updateSubscriptionUI(data);
@@ -1991,7 +1991,7 @@
     async function refreshSubscription() {
       // Check if nodes have been modified since last refresh
       try {
-        const statusRes = await fetch('/api/subscription/status');
+        const statusRes = await fetch('/api/subscription/status', { credentials: 'include' });
         if (statusRes.ok) {
           const status = await statusRes.json();
           if (status.nodes_modified) {
@@ -2016,7 +2016,7 @@
       text.textContent = '刷新中...';
 
       try {
-        const res = await fetch('/api/subscription/refresh', { method: 'POST' });
+        const res = await fetch('/api/subscription/refresh', { method: 'POST', credentials: 'include' });
         const data = await res.json();
 
         if (!res.ok) {
@@ -2446,7 +2446,7 @@
 
     async function loadSubscriptions() {
       try {
-        const res = await fetch('/api/subscriptions');
+        const res = await fetch('/api/subscriptions', { credentials: 'include' });
         if (res.status === 401) {
           showToast('请先登录', 'error');
           document.getElementById('loginOverlay').classList.add('show');
@@ -2535,7 +2535,7 @@
       btn.innerHTML = '⏳...';
 
       try {
-        const res = await fetch('/api/subscriptions/' + index + '/refresh', { method: 'POST' });
+        const res = await fetch('/api/subscriptions/' + index + '/refresh', { method: 'POST', credentials: 'include' });
         const data = await res.json();
         
         if (!res.ok) {
@@ -2605,13 +2605,15 @@
           res = await fetch('/api/subscriptions/' + index, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url })
+            body: JSON.stringify({ url }),
+            credentials: 'include'
           });
         } else {
           res = await fetch('/api/subscriptions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url })
+            body: JSON.stringify({ url }),
+            credentials: 'include'
           });
         }
 
@@ -2639,7 +2641,8 @@
 
       try {
         const res = await fetch('/api/subscriptions/' + index, {
-          method: 'DELETE'
+          method: 'DELETE',
+          credentials: 'include'
         });
         const data = await res.json();
         if (!res.ok) {
