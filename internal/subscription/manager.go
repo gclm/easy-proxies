@@ -654,13 +654,17 @@ func (m *Manager) fetchAllSubscriptions() ([]config.NodeConfig, error) {
 	for i, subURL := range subs {
 		nodes, err := m.fetchSubscription(subURL, timeout)
 		if err != nil {
-			m.logger.Warnf("failed to fetch %s: %v", subURL, err)
+			m.logger.Warnf("failed to fetch %s: %v, keeping existing nodes", subURL, err)
 			lastErr = err
-			// Keep cache consistent with what will be applied: drop nodes for this subscription on failure.
+			// On failure, preserve existing cached nodes for this subscription instead of clearing them.
+			// This ensures that a temporary network issue doesn't wipe out working nodes.
 			m.mu.Lock()
 			m.ensureSubscriptionCacheLocked(subs)
-			if i >= 0 && i < len(m.subNodesByIndex) {
-				m.subNodesByIndex[i] = nil
+			// Keep existing nodes in cache (don't set to nil)
+			if i >= 0 && i < len(m.subNodesByIndex) && len(m.subNodesByIndex[i]) > 0 {
+				// Existing nodes are preserved, add them to allNodes
+				allNodes = append(allNodes, m.subNodesByIndex[i]...)
+				m.logger.Infof("preserved %d existing nodes for subscription %d", len(m.subNodesByIndex[i]), i+1)
 			}
 			m.mu.Unlock()
 			continue
