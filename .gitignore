@@ -40,3 +40,4 @@ coverage.html
 .qodo/
 .gocache/
 .claude/
+/dist/
