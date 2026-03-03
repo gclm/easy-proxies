@@ -1,41 +1,41 @@
 {
-  "candidate_total": 84,
-  "candidate_unique": 83,
+  "candidate_total": 79,
+  "candidate_unique": 78,
   "duplicate_candidates": 1,
-  "valid_subscriptions": 18,
+  "valid_subscriptions": 19,
   "total_nodes": 79,
   "gist": {
     "search_hits": 197,
-    "gists_scanned": 57,
-    "files_scanned": 122,
-    "non_target_files": 116,
-    "candidate_files": 6,
+    "gists_scanned": 38,
+    "files_scanned": 75,
+    "non_target_files": 73,
+    "candidate_files": 2,
     "invalid_raw_urls": 0,
     "duplicate_urls": 0,
-    "fetch_errors": 140
+    "fetch_errors": 159
   },
   "seeds": {
-    "input_lines": 69,
-    "expanded_candidates": 78,
+    "input_lines": 68,
+    "expanded_candidates": 77,
     "invalid_lines": 0,
     "github_x_resolved": 0,
     "github_x_errors": 1,
     "fallback_x_expanded": 10
   },
   "validation": {
-    "validated_files": 57,
-    "valid_urls": 18,
+    "validated_files": 54,
+    "valid_urls": 19,
     "invalid_urls": 0,
-    "fetch_errors": 25,
+    "fetch_errors": 23,
     "parse_errors": 1,
-    "too_small_node_sets": 38,
+    "too_small_node_sets": 34,
     "too_large_files": 1,
     "fetch_samples": [
-      "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",
-      "https://mxlsub.me/newfull (Get \"https://mxlsub.me/newfull\": dial tcp: lookup mxlsub.me on 127.0.0.53:53: no such host)",
       "https://raw.githubusercontent.com/aiboboxx/clashfree/refs/heads/main/clash.yml (raw file status 404)",
       "https://raw.githubusercontent.com/ljlfct01/ljlfct01.github.io/refs/heads/main/节点 (raw file status 404)",
-      "https://raw.githubusercontent.com/mai19950/clashgithub_com/refs/heads/main/site (raw file status 404)"
+      "https://raw.githubusercontent.com/mai19950/clashgithub_com/refs/heads/main/site (raw file status 404)",
+      "https://raw.githubusercontent.com/xiaoer8867785/jddy5/refs/heads/main/data/2026_03_03/0.yaml (raw file status 404)",
+      "https://raw.githubusercontent.com/xiaoer8867785/jddy5/refs/heads/main/data/2026_03_03/1.yaml (raw file status 404)"
     ],
     "parse_samples": [
       "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml (parse clash yaml: yaml: line 56: did not find expected ',' or '}')"
