@@ -1,31 +1,27 @@
 {
-  "used_since": "2026-03-03T05:38:06Z",
-  "next_since": "2026-03-03T05:42:03Z",
-  "started_at": "2026-03-03T05:50:44Z",
-  "finished_at": "2026-03-03T05:52:03Z",
+  "used_since": "2026-03-03T05:42:03Z",
+  "next_since": "2026-03-03T05:45:25Z",
+  "started_at": "2026-03-03T05:54:43Z",
+  "finished_at": "2026-03-03T05:55:25Z",
   "overlap": "10m0s",
   "stats": {
-    "candidate_total": 72,
-    "candidate_unique": 71,
+    "candidate_total": 66,
+    "candidate_unique": 65,
     "duplicate_candidates": 1,
     "valid_subscriptions": 35,
     "total_nodes": 79,
+    "collector_errors": {
+      "gist": "gist search status 429: \u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n  \u003chead\u003e\n    \u003cmeta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"\u003e\n    \u003cmeta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; img-src 'self' data:; script-src 'self'; style-src 'unsafe-inline'\"\u003e\n    \u003cmeta content=\"origin\" name=\"referrer\"\u003e\n    \u003ctitle\u003eToo many requests \u0026middot; GitHub\u003c/title\u003e\n    \u003cmeta name=\"viewport\" content=\"width=device-width\"\u003e\n    \u003cstyle type=\"text/css\" media=\"screen\"\u003e\n      body {\n        background-color: #f6f8fa;\n        color: #24292e;\n        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;\n        font-size: 14px;\n        line-height: 1.5;\n        margin: 0;\n      }\n\n      .container { margin: 50px auto; max-width: 600px; text-align: center; padding: 0 24px; }\n\n      a { color: #0366d6; text-decoration: none; }\n      a:hover { text-decoration: underline; }\n\n      h1 { line-height: 60px; font-si"
+    },
     "gist": {
-      "search_hits": 196,
-      "gists_scanned": 58,
-      "files_scanned": 123,
-      "non_target_files": 117,
-      "candidate_files": 6,
+      "search_hits": 99,
+      "gists_scanned": 99,
+      "files_scanned": 213,
+      "non_target_files": 206,
+      "candidate_files": 7,
       "invalid_raw_urls": 0,
       "duplicate_urls": 0,
-      "fetch_errors": 138,
-      "fetch_samples": [
-        "gist=a261f62dcf2fd71aee48959d0c749e1d (github api status 403: {\"message\":\"API rate limit exceeded for 13.83.161.17. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
-        "gist=464cd8f91e709a57f0079b4e63d1bb80 (github api status 403: {\"message\":\"API rate limit exceeded for 13.83.161.17. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
-        "gist=f183cf24cd9b0b4560b76007dc660318 (github api status 403: {\"message\":\"API rate limit exceeded for 13.83.161.17. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
-        "gist=8d9030c174b4a2fcaba134f9e053cb65 (github api status 403: {\"message\":\"API rate limit exceeded for 13.83.161.17. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
-        "gist=4d419fb56d0de67ef68f406438a9e27e (github api status 403: {\"message\":\"API rate limit exceeded for 13.83.161.17. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})"
-      ]
+      "fetch_errors": 1
     },
     "seeds": {
       "input_lines": 66,
@@ -36,19 +32,19 @@
       "fallback_x_expanded": 0
     },
     "validation": {
-      "validated_files": 58,
+      "validated_files": 53,
       "valid_urls": 35,
       "invalid_urls": 0,
-      "fetch_errors": 12,
+      "fetch_errors": 11,
       "parse_errors": 5,
-      "too_small_node_sets": 18,
+      "too_small_node_sets": 13,
       "too_large_files": 1,
       "fetch_samples": [
-        "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",
         "https://raw.githubusercontent.com/aiboboxx/clashfree/refs/heads/main/clash.yml (raw file status 404)",
         "https://sub.fqzsnai.ggff.net/auto (Get \"https://sub.fqzsnai.ggff.net/auto\": dial tcp: lookup sub.fqzsnai.ggff.net on 127.0.0.53:53: no such host)",
         "https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb (Get \"https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb\": dial tcp: lookup sub.mikeone.ggff.net on 127.0.0.53:53: server misbehaving)",
-        "https://v1.mk/HuaplNe (raw file status 404)"
+        "https://v1.mk/HuaplNe (raw file status 404)",
+        "https://raw.githubusercontent.com/aiboboxx/v2rayfree/main/v2 (raw file status 404)"
       ],
       "parse_samples": [
         "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 48: cannot unmarshal !!str `64` into int\n  line 60: cannot unmarshal !!str `64` into int\n  line 311: cannot unmarshal !!str `0` into int\n  line 331: cannot unmarshal !!str `0` into int\n  line 427: cannot unmarshal !!str `0` into int\n  line 535: cannot unmarshal !!str `0` into int\n  line 642: cannot unmarshal !!str `2` into int\n  line 789: cannot unmarshal !!str `2` into int\n  line 809: cannot unmarshal !!str `2` into int\n  line 884: cannot unmarshal !!str `2` into int\n  line 977: cannot unmarshal !!str `2` into int\n  line 1051: cannot unmarshal !!str `2` into int\n  line 1557: cannot unmarshal !!str `2` into int\n  line 1575: cannot unmarshal !!str `2` into int\n  line 1791: cannot unmarshal !!str `2` into int\n  line 1834: cannot unmarshal !!str `2` into int\n  line 1866: cannot unmarshal !!str `0` into int\n  line 1996: cannot unmarshal !!str `2` into int\n  line 2392: cannot unmarshal !!str `0` into int\n  line 2436: cannot unmarshal !!str `0` into int\n  line 2450: cannot unmarshal !!str `2` into int\n  line 2653: cannot unmarshal !!str `0` into int\n  line 2706: cannot unmarshal !!str `0` into int)",
