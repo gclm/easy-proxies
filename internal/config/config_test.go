@@ -2,11 +2,13 @@ package config
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 	"time"
 
@@ -248,5 +250,28 @@ func TestSubscriptionCRUD_ValidatesAndPersists(t *testing.T) {
 		if v, ok := subs.([]interface{}); ok && len(v) != 0 {
 			t.Fatalf("expected empty subscriptions, got %v", subs)
 		}
+	}
+}
+
+func TestParseSubscriptionContent_ClashYAMLProxiesAfter200Bytes(t *testing.T) {
+	var b strings.Builder
+	for i := 0; i < 40; i++ {
+		fmt.Fprintf(&b, "preface_key_%d: value_%d\n", i, i)
+	}
+	b.WriteString("" +
+		"proxies:\n" +
+		"  - name: test-ss\n" +
+		"    type: ss\n" +
+		"    server: 1.1.1.1\n" +
+		"    port: 8388\n" +
+		"    cipher: aes-128-gcm\n" +
+		"    password: pass\n")
+
+	nodes, err := ParseSubscriptionContent(b.String())
+	if err != nil {
+		t.Fatalf("ParseSubscriptionContent returned error: %v", err)
+	}
+	if len(nodes) != 1 {
+		t.Fatalf("expected 1 node, got %d", len(nodes))
 	}
 }

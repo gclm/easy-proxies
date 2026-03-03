@@ -589,12 +589,8 @@ func loadNodesFromSubscription(subURL string, timeout time.Duration) ([]NodeConf
 func parseSubscriptionContent(content string) ([]NodeConfig, error) {
 	content = strings.TrimSpace(content)
 
-	// Quick check for YAML format (check first 200 chars for "proxies:")
-	sampleSize := 200
-	if len(content) < sampleSize {
-		sampleSize = len(content)
-	}
-	if strings.Contains(content[:sampleSize], "proxies:") {
+	// Detect Clash YAML by top-level proxies key.
+	if isLikelyClashYAML(content) {
 		return parseClashYAML(content)
 	}
 
@@ -614,6 +610,17 @@ func parseSubscriptionContent(content string) ([]NodeConfig, error) {
 
 	// Parse as plain text (one URI per line)
 	return parseNodesFromContent(content)
+}
+
+func isLikelyClashYAML(content string) bool {
+	content = strings.TrimSpace(content)
+	if content == "" {
+		return false
+	}
+	if strings.HasPrefix(content, "proxies:") {
+		return true
+	}
+	return strings.Contains(content, "\nproxies:")
 }
 
 // ParseSubscriptionContent parses subscription content in various formats (base64, plain text, Clash YAML).
