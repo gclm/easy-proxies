@@ -2,7 +2,7 @@ package gist
 
 import (
 	"context"
-	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -13,9 +13,10 @@ func TestIsTargetClashFilename(t *testing.T) {
 		name string
 		want bool
 	}{
-		{name: "all.yaml", want: true},
+		{name: "all.yaml", want: false},
 		{name: "clash.yaml", want: true},
 		{name: "my-clash.yaml", want: true},
+		{name: "clash_lite.txt", want: true},
 		{name: "nodes.txt", want: false},
 	}
 	for _, tc := range cases {
@@ -33,17 +34,25 @@ func TestCanonicalizeRawURL(t *testing.T) {
 	}
 }
 
-func TestCollectCandidatesFallbackToAnonymous(t *testing.T) {
+func TestCollectCandidatesKeywordSearchWithAnonymousRetry(t *testing.T) {
 	mux := http.NewServeMux()
 	ts := httptest.NewServer(mux)
 	defer ts.Close()
 
+	gistID := "1c0d9c1679c8df4a35986c21233c1c2a"
+	mux.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
+		if got := r.URL.Query().Get("q"); got != "clash" {
+			t.Fatalf("search keyword=%q, want clash", got)
+		}
+		_, _ = w.Write([]byte(fmt.Sprintf(`<a href="/viertagius/%s">match</a>`, gistID)))
+	})
+
 	requestCount := 0
-	mux.HandleFunc("/gists/public", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/gists/"+gistID, func(w http.ResponseWriter, r *http.Request) {
 		requestCount++
 		if requestCount == 1 {
 			if r.Header.Get("Authorization") == "" {
-				t.Fatalf("first request should include auth")
+				t.Fatalf("first request should include auth header")
 			}
 			w.WriteHeader(http.StatusForbidden)
 			_, _ = w.Write([]byte(`{"message":"Resource not accessible by integration"}`))
@@ -52,36 +61,36 @@ func TestCollectCandidatesFallbackToAnonymous(t *testing.T) {
 		if r.Header.Get("Authorization") != "" {
 			t.Fatalf("retry should be anonymous")
 		}
-		_ = json.NewEncoder(w).Encode([]map[string]any{
-			{
-				"id": "g1",
-				"files": map[string]any{
-					"all.yaml": map[string]any{
-						"filename": "all.yaml",
-						"raw_url":  "https://gist.githubusercontent.com/u/g/raw/all.yaml",
-					},
-				},
-			},
-		})
+		_, _ = w.Write([]byte(`{
+  "id":"` + gistID + `",
+  "files":{
+    "clash_lite.txt":{
+      "filename":"clash_lite.txt",
+      "raw_url":"https://gist.githubusercontent.com/viertagius/` + gistID + `/raw/abc/clash_lite.txt"
+    }
+  }
+}`))
 	})
 
 	urls, stats, err := CollectCandidates(context.Background(), ts.Client(), Options{
-		APIBaseURL: ts.URL,
-		PerPage:    20,
-		Pages:      1,
-		Token:      "integration-token",
-		UserAgent:  "test",
+		APIBaseURL:    ts.URL,
+		SearchBaseURL: ts.URL + "/search",
+		Keyword:       "clash",
+		Pages:         1,
+		Token:         "integration-token",
+		UserAgent:     "test",
 	})
 	if err != nil {
 		t.Fatalf("CollectCandidates error: %v", err)
 	}
-	if requestCount != 2 {
-		t.Fatalf("requestCount=%d, want 2", requestCount)
-	}
 	if len(urls) != 1 {
 		t.Fatalf("len(urls)=%d, want 1", len(urls))
 	}
-	if stats.CandidateFiles != 1 {
-		t.Fatalf("candidate_files=%d, want 1", stats.CandidateFiles)
+	want := "https://gist.githubusercontent.com/viertagius/" + gistID + "/raw/clash_lite.txt"
+	if urls[0] != want {
+		t.Fatalf("url=%q, want %q", urls[0], want)
+	}
+	if stats.SearchHits != 1 {
+		t.Fatalf("search_hits=%d, want 1", stats.SearchHits)
 	}
 }

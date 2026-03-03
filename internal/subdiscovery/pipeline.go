@@ -60,9 +60,9 @@ func Run(ctx context.Context, client *http.Client, opts Options) (Result, error)
 			logf(opts, "collector=gist status=error err=%v elapsed=%s", err, time.Since(started).Round(time.Millisecond))
 		} else {
 			gistCandidates = urls
-			logf(opts, "collector=gist status=ok candidates=%d gists=%d files=%d non_target=%d invalid_raw=%d elapsed=%s", len(urls), gistStats.GistsScanned, gistStats.FilesScanned, gistStats.NonTargetFiles, gistStats.InvalidRawURLs, time.Since(started).Round(time.Millisecond))
+			logf(opts, "collector=gist status=ok candidates=%d search_hits=%d gists=%d files=%d non_target=%d invalid_raw=%d elapsed=%s", len(urls), gistStats.SearchHits, gistStats.GistsScanned, gistStats.FilesScanned, gistStats.NonTargetFiles, gistStats.InvalidRawURLs, time.Since(started).Round(time.Millisecond))
 			if gistStats.GistsScanned > 0 && len(urls) == 0 {
-				logf(opts, "collector=gist note=no candidate files matched target filename patterns (all.yaml/clash*.yml/*.yaml with clash)")
+				logf(opts, "collector=gist note=no candidate files matched target pattern: filename contains 'clash' and suffix is .yaml/.yml/.txt")
 			}
 		}
 	} else {

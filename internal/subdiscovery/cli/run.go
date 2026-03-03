@@ -33,6 +33,7 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 		statsOutPath      string
 		stateOutPath      string
 		apiBaseURL        string
+		gistKeyword       string
 		userAgent         string
 		since             string
 		overlap           time.Duration
@@ -57,6 +58,7 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	fs.StringVar(&statsOutPath, "stats-out", "subscriptions.stats.json", "stats output path")
 	fs.StringVar(&stateOutPath, "state-out", "subscriptions.state.json", "state output path")
 	fs.StringVar(&apiBaseURL, "api-base", "", "GitHub API base URL (optional)")
+	fs.StringVar(&gistKeyword, "gist-keyword", "clash", "keyword used for gist search")
 	fs.StringVar(&userAgent, "user-agent", "", "HTTP User-Agent for API/raw requests (optional)")
 	fs.StringVar(&since, "since", "", "only fetch gists updated since RFC3339 time")
 	fs.DurationVar(&overlap, "overlap", 10*time.Minute, "overlap duration when calculating next_since")
@@ -101,7 +103,7 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 		}
 		fmt.Fprintf(stderr, "[subscription_discovery] "+format+"\n", args...)
 	}
-	logger("config since=%q pages=%d per_page=%d seeds_file=%t extra_urls=%d timeout=%ds", since, pages, perPage, strings.TrimSpace(seedsFile) != "", len(splitCSV(extraURLs)), timeoutSec)
+	logger("config since=%q gist_keyword=%q pages=%d per_page=%d seeds_file=%t extra_urls=%d timeout=%ds", since, strings.TrimSpace(gistKeyword), pages, perPage, strings.TrimSpace(seedsFile) != "", len(splitCSV(extraURLs)), timeoutSec)
 
 	runOpts := subdiscovery.Options{
 		StartedAt:       startedAt,
@@ -115,6 +117,7 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 		DisableProxy:    disableProxyShare,
 		Gist: gist.Options{
 			APIBaseURL:    apiBaseURL,
+			Keyword:       gistKeyword,
 			Since:         since,
 			Pages:         pages,
 			PerPage:       perPage,

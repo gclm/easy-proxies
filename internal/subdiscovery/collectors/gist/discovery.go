@@ -8,12 +8,15 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"regexp"
 	"sort"
 	"strings"
 )
 
 const (
 	defaultAPIBaseURL    = "https://api.github.com"
+	defaultSearchBaseURL = "https://gist.github.com/search"
+	defaultKeyword       = "clash"
 	defaultPages         = 5
 	defaultPerPage       = 100
 	defaultMaxCandidates = 400
@@ -21,9 +24,13 @@ const (
 	DefaultUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36"
 )
 
-// Options controls public gist scanning.
+var gistIDFromSearchPattern = regexp.MustCompile(`href="/[A-Za-z0-9][A-Za-z0-9_-]*/([0-9a-f]{32})"`)
+
+// Options controls gist keyword search behavior.
 type Options struct {
 	APIBaseURL    string
+	SearchBaseURL string
+	Keyword       string
 	Since         string
 	Pages         int
 	PerPage       int
@@ -34,6 +41,7 @@ type Options struct {
 
 // Stats summarizes gist candidate collection.
 type Stats struct {
+	SearchHits     int `json:"search_hits"`
 	GistsScanned   int `json:"gists_scanned"`
 	FilesScanned   int `json:"files_scanned"`
 	NonTargetFiles int `json:"non_target_files"`
@@ -67,6 +75,13 @@ func normalizeOptions(opts Options) Options {
 		opts.APIBaseURL = defaultAPIBaseURL
 	}
 	opts.APIBaseURL = strings.TrimRight(opts.APIBaseURL, "/")
+	if opts.SearchBaseURL == "" {
+		opts.SearchBaseURL = defaultSearchBaseURL
+	}
+	opts.SearchBaseURL = strings.TrimRight(opts.SearchBaseURL, "/")
+	if strings.TrimSpace(opts.Keyword) == "" {
+		opts.Keyword = defaultKeyword
+	}
 	if opts.Pages <= 0 {
 		opts.Pages = defaultPages
 	}
@@ -82,7 +97,7 @@ func normalizeOptions(opts Options) Options {
 	return opts
 }
 
-// CollectCandidates fetches public gists and returns candidate raw subscription URLs.
+// CollectCandidates searches gists by keyword and returns candidate raw subscription URLs.
 func CollectCandidates(ctx context.Context, client *http.Client, opts Options) ([]string, Stats, error) {
 	opts = normalizeOptions(opts)
 	if client == nil {
@@ -95,17 +110,24 @@ func CollectCandidates(ctx context.Context, client *http.Client, opts Options) (
 
 outer:
 	for page := 1; page <= opts.Pages; page++ {
-		items, err := listPublicGists(ctx, client, opts, page)
+		ids, err := searchGistIDsByKeyword(ctx, client, opts, page)
 		if err != nil {
 			stats.FetchErrors++
 			return nil, stats, err
 		}
-		if len(items) == 0 {
+		if len(ids) == 0 {
 			break
 		}
+		stats.SearchHits += len(ids)
 
-		stats.GistsScanned += len(items)
-		for _, item := range items {
+		for _, id := range ids {
+			item, err := getGistByID(ctx, client, opts, id)
+			if err != nil {
+				stats.FetchErrors++
+				continue
+			}
+			stats.GistsScanned++
+
 			filenames := make([]string, 0, len(item.Files))
 			for name := range item.Files {
 				filenames = append(filenames, name)
@@ -146,19 +168,16 @@ outer:
 	return candidates, stats, nil
 }
 
-// IsTargetClashFilename reports whether filename matches desired clash config patterns.
+// IsTargetClashFilename accepts files containing clash keyword with yaml/yml/txt suffix.
 func IsTargetClashFilename(name string) bool {
 	n := strings.ToLower(strings.TrimSpace(name))
 	if n == "" {
 		return false
 	}
-	if n == "all.yaml" || n == "all.yml" || n == "clash.yaml" || n == "clash.yml" {
-		return true
+	if !strings.Contains(n, "clash") {
+		return false
 	}
-	if (strings.HasSuffix(n, ".yaml") || strings.HasSuffix(n, ".yml")) && strings.Contains(n, "clash") {
-		return true
-	}
-	return false
+	return strings.HasSuffix(n, ".yaml") || strings.HasSuffix(n, ".yml") || strings.HasSuffix(n, ".txt")
 }
 
 // CanonicalizeRawURL rewrites gist raw URLs to stable latest-form URL.
@@ -188,33 +207,76 @@ func CanonicalizeRawURL(rawURL, filename string) string {
 	return u.String()
 }
 
-func listPublicGists(ctx context.Context, client *http.Client, opts Options, page int) ([]gistItem, error) {
-	items, err := listPublicGistsOnce(ctx, client, opts, page)
+func searchGistIDsByKeyword(ctx context.Context, client *http.Client, opts Options, page int) ([]string, error) {
+	params := url.Values{}
+	params.Set("q", strings.TrimSpace(opts.Keyword))
+	params.Set("p", fmt.Sprintf("%d", page))
+	searchURL := fmt.Sprintf("%s?%s", opts.SearchBaseURL, params.Encode())
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, searchURL, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("User-Agent", opts.UserAgent)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(io.LimitReader(resp.Body, 1024))
+		return nil, fmt.Errorf("gist search status %d: %s", resp.StatusCode, strings.TrimSpace(string(body)))
+	}
+
+	data, err := io.ReadAll(io.LimitReader(resp.Body, 2*1024*1024))
+	if err != nil {
+		return nil, err
+	}
+	matches := gistIDFromSearchPattern.FindAllStringSubmatch(string(data), -1)
+	if len(matches) == 0 {
+		return nil, nil
+	}
+
+	ids := make([]string, 0, len(matches))
+	seen := make(map[string]struct{}, len(matches))
+	for _, m := range matches {
+		if len(m) < 2 {
+			continue
+		}
+		id := strings.TrimSpace(m[1])
+		if id == "" {
+			continue
+		}
+		if _, ok := seen[id]; ok {
+			continue
+		}
+		seen[id] = struct{}{}
+		ids = append(ids, id)
+	}
+	return ids, nil
+}
+
+func getGistByID(ctx context.Context, client *http.Client, opts Options, id string) (gistItem, error) {
+	item, err := getGistByIDOnce(ctx, client, opts, id)
 	if err == nil {
-		return items, nil
+		return item, nil
 	}
 
 	var apiErr *githubAPIError
 	if opts.Token != "" && errors.As(err, &apiErr) && (apiErr.StatusCode == http.StatusUnauthorized || apiErr.StatusCode == http.StatusForbidden) {
-		retryOpts := opts
-		retryOpts.Token = ""
-		return listPublicGistsOnce(ctx, client, retryOpts, page)
+		retry := opts
+		retry.Token = ""
+		return getGistByIDOnce(ctx, client, retry, id)
 	}
-	return nil, err
+	return gistItem{}, err
 }
 
-func listPublicGistsOnce(ctx context.Context, client *http.Client, opts Options, page int) ([]gistItem, error) {
-	params := url.Values{}
-	params.Set("per_page", fmt.Sprintf("%d", opts.PerPage))
-	params.Set("page", fmt.Sprintf("%d", page))
-	if strings.TrimSpace(opts.Since) != "" {
-		params.Set("since", strings.TrimSpace(opts.Since))
-	}
-
-	apiURL := fmt.Sprintf("%s/gists/public?%s", opts.APIBaseURL, params.Encode())
+func getGistByIDOnce(ctx context.Context, client *http.Client, opts Options, id string) (gistItem, error) {
+	apiURL := fmt.Sprintf("%s/gists/%s", opts.APIBaseURL, url.PathEscape(id))
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, apiURL, nil)
 	if err != nil {
-		return nil, err
+		return gistItem{}, err
 	}
 	req.Header.Set("Accept", "application/vnd.github+json")
 	req.Header.Set("User-Agent", opts.UserAgent)
@@ -224,18 +286,17 @@ func listPublicGistsOnce(ctx context.Context, client *http.Client, opts Options,
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil, err
+		return gistItem{}, err
 	}
 	defer resp.Body.Close()
-
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(io.LimitReader(resp.Body, 1024))
-		return nil, &githubAPIError{StatusCode: resp.StatusCode, Message: strings.TrimSpace(string(body))}
+		return gistItem{}, &githubAPIError{StatusCode: resp.StatusCode, Message: strings.TrimSpace(string(body))}
 	}
 
-	var items []gistItem
-	if err := json.NewDecoder(resp.Body).Decode(&items); err != nil {
-		return nil, err
+	var item gistItem
+	if err := json.NewDecoder(resp.Body).Decode(&item); err != nil {
+		return gistItem{}, err
 	}
-	return items, nil
+	return item, nil
 }
