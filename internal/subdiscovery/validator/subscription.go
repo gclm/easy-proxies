@@ -31,13 +31,17 @@ type Options struct {
 
 // Stats summarizes validation outcomes.
 type Stats struct {
-	ValidatedFiles   int `json:"validated_files"`
-	ValidURLs        int `json:"valid_urls"`
-	InvalidURLs      int `json:"invalid_urls"`
-	FetchErrors      int `json:"fetch_errors"`
-	ParseErrors      int `json:"parse_errors"`
-	TooSmallNodeSets int `json:"too_small_node_sets"`
-	TooLargeFiles    int `json:"too_large_files"`
+	ValidatedFiles   int      `json:"validated_files"`
+	ValidURLs        int      `json:"valid_urls"`
+	InvalidURLs      int      `json:"invalid_urls"`
+	FetchErrors      int      `json:"fetch_errors"`
+	ParseErrors      int      `json:"parse_errors"`
+	TooSmallNodeSets int      `json:"too_small_node_sets"`
+	TooLargeFiles    int      `json:"too_large_files"`
+	FetchSamples     []string `json:"fetch_samples,omitempty"`
+	ParseSamples     []string `json:"parse_samples,omitempty"`
+	TooSmallSamples  []string `json:"too_small_samples,omitempty"`
+	TooLargeSamples  []string `json:"too_large_samples,omitempty"`
 }
 
 func normalizeOptions(opts Options) Options {
@@ -77,8 +81,10 @@ func ValidateSubscriptionURLs(ctx context.Context, client *http.Client, urls []s
 		if err != nil {
 			if errors.Is(err, ErrBodyTooLarge) {
 				stats.TooLargeFiles++
+				stats.TooLargeSamples = appendSample(stats.TooLargeSamples, rawURL)
 			} else {
 				stats.FetchErrors++
+				stats.FetchSamples = appendSample(stats.FetchSamples, fmt.Sprintf("%s (%v)", rawURL, err))
 			}
 			continue
 		}
@@ -87,16 +93,26 @@ func ValidateSubscriptionURLs(ctx context.Context, client *http.Client, urls []s
 		nodes, err := config.ParseSubscriptionContent(content)
 		if err != nil {
 			stats.ParseErrors++
+			stats.ParseSamples = appendSample(stats.ParseSamples, fmt.Sprintf("%s (%v)", rawURL, err))
 			continue
 		}
 		if len(nodes) < opts.MinNodes {
 			stats.TooSmallNodeSets++
+			stats.TooSmallSamples = appendSample(stats.TooSmallSamples, fmt.Sprintf("%s (nodes=%d)", rawURL, len(nodes)))
 			continue
 		}
 		valid = append(valid, rawURL)
 	}
 	stats.ValidURLs = len(valid)
 	return valid, stats
+}
+
+func appendSample(samples []string, entry string) []string {
+	const maxSamples = 5
+	if len(samples) >= maxSamples {
+		return samples
+	}
+	return append(samples, entry)
 }
 
 func fetchRawContent(ctx context.Context, client *http.Client, rawURL string, opts Options) (string, error) {

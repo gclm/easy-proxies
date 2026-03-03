@@ -35,7 +35,10 @@ type Options struct {
 // Stats summarizes gist candidate collection.
 type Stats struct {
 	GistsScanned   int `json:"gists_scanned"`
+	FilesScanned   int `json:"files_scanned"`
+	NonTargetFiles int `json:"non_target_files"`
 	CandidateFiles int `json:"candidate_files"`
+	InvalidRawURLs int `json:"invalid_raw_urls"`
 	DuplicateURLs  int `json:"duplicate_urls"`
 	FetchErrors    int `json:"fetch_errors"`
 }
@@ -111,7 +114,9 @@ outer:
 
 			for _, name := range filenames {
 				file := item.Files[name]
+				stats.FilesScanned++
 				if !IsTargetClashFilename(file.Filename) {
+					stats.NonTargetFiles++
 					continue
 				}
 				rawURL := strings.TrimSpace(file.RawURL)
@@ -121,6 +126,7 @@ outer:
 				rawURL = CanonicalizeRawURL(rawURL, file.Filename)
 				u, err := url.Parse(rawURL)
 				if err != nil || u.Scheme != "https" {
+					stats.InvalidRawURLs++
 					continue
 				}
 				stats.CandidateFiles++

@@ -60,7 +60,10 @@ func Run(ctx context.Context, client *http.Client, opts Options) (Result, error)
 			logf(opts, "collector=gist status=error err=%v elapsed=%s", err, time.Since(started).Round(time.Millisecond))
 		} else {
 			gistCandidates = urls
-			logf(opts, "collector=gist status=ok candidates=%d gists=%d elapsed=%s", len(urls), gistStats.GistsScanned, time.Since(started).Round(time.Millisecond))
+			logf(opts, "collector=gist status=ok candidates=%d gists=%d files=%d non_target=%d invalid_raw=%d elapsed=%s", len(urls), gistStats.GistsScanned, gistStats.FilesScanned, gistStats.NonTargetFiles, gistStats.InvalidRawURLs, time.Since(started).Round(time.Millisecond))
+			if gistStats.GistsScanned > 0 && len(urls) == 0 {
+				logf(opts, "collector=gist note=no candidate files matched target filename patterns (all.yaml/clash*.yml/*.yaml with clash)")
+			}
 		}
 	} else {
 		logf(opts, "collector=gist status=disabled")
@@ -73,6 +76,18 @@ func Run(ctx context.Context, client *http.Client, opts Options) (Result, error)
 	stats.Validation = vstats
 	stats.ValidSubscriptions = len(valid)
 	logf(opts, "validator status=done validated=%d valid=%d fetch_errors=%d parse_errors=%d too_small=%d elapsed=%s", vstats.ValidatedFiles, vstats.ValidURLs, vstats.FetchErrors, vstats.ParseErrors, vstats.TooSmallNodeSets, time.Since(validateStarted).Round(time.Millisecond))
+	for _, sample := range vstats.FetchSamples {
+		logf(opts, "validator sample_fetch_error=%s", sample)
+	}
+	for _, sample := range vstats.ParseSamples {
+		logf(opts, "validator sample_parse_error=%s", sample)
+	}
+	for _, sample := range vstats.TooSmallSamples {
+		logf(opts, "validator sample_too_small=%s", sample)
+	}
+	for _, sample := range vstats.TooLargeSamples {
+		logf(opts, "validator sample_too_large=%s", sample)
+	}
 
 	if len(valid) == 0 && !opts.AllowEmpty {
 		return Result{}, errors.New("discover failed: no valid subscription urls found")
