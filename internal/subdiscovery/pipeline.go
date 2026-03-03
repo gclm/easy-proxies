@@ -64,6 +64,9 @@ func Run(ctx context.Context, client *http.Client, opts Options) (Result, error)
 			if gistStats.GistsScanned > 0 && len(urls) == 0 {
 				logf(opts, "collector=gist note=no candidate files matched target pattern: filename contains 'clash' and suffix is .yaml/.yml/.txt")
 			}
+			for _, sample := range gistStats.FetchSamples {
+				logf(opts, "collector=gist sample_fetch_error=%s", sample)
+			}
 		}
 	} else {
 		logf(opts, "collector=gist status=disabled")
@@ -113,7 +116,12 @@ func Run(ctx context.Context, client *http.Client, opts Options) (Result, error)
 	stats.TotalNodes = len(nodes)
 	if len(stats.CollectorErrors) == 0 {
 		stats.CollectorErrors = nil
+	} else {
+		for name, msg := range stats.CollectorErrors {
+			logf(opts, "collector_error %s=%s", name, msg)
+		}
 	}
+	logf(opts, "summary subscriptions=%d nodes=%d candidates=%d", stats.ValidSubscriptions, stats.TotalNodes, stats.CandidateUnique)
 
 	finishedAt := time.Now().UTC()
 	nextSince := finishedAt.Add(-opts.Overlap).Format(time.RFC3339)

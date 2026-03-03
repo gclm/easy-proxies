@@ -41,14 +41,15 @@ type Options struct {
 
 // Stats summarizes gist candidate collection.
 type Stats struct {
-	SearchHits     int `json:"search_hits"`
-	GistsScanned   int `json:"gists_scanned"`
-	FilesScanned   int `json:"files_scanned"`
-	NonTargetFiles int `json:"non_target_files"`
-	CandidateFiles int `json:"candidate_files"`
-	InvalidRawURLs int `json:"invalid_raw_urls"`
-	DuplicateURLs  int `json:"duplicate_urls"`
-	FetchErrors    int `json:"fetch_errors"`
+	SearchHits     int      `json:"search_hits"`
+	GistsScanned   int      `json:"gists_scanned"`
+	FilesScanned   int      `json:"files_scanned"`
+	NonTargetFiles int      `json:"non_target_files"`
+	CandidateFiles int      `json:"candidate_files"`
+	InvalidRawURLs int      `json:"invalid_raw_urls"`
+	DuplicateURLs  int      `json:"duplicate_urls"`
+	FetchErrors    int      `json:"fetch_errors"`
+	FetchSamples   []string `json:"fetch_samples,omitempty"`
 }
 
 type gistFile struct {
@@ -124,6 +125,7 @@ outer:
 			item, err := getGistByID(ctx, client, opts, id)
 			if err != nil {
 				stats.FetchErrors++
+				stats.FetchSamples = appendSample(stats.FetchSamples, fmt.Sprintf("gist=%s (%v)", id, err))
 				continue
 			}
 			stats.GistsScanned++
@@ -166,6 +168,14 @@ outer:
 	}
 
 	return candidates, stats, nil
+}
+
+func appendSample(samples []string, entry string) []string {
+	const maxSamples = 5
+	if len(samples) >= maxSamples {
+		return samples
+	}
+	return append(samples, entry)
 }
 
 // IsTargetClashFilename accepts files containing clash keyword with yaml/yml/txt suffix.
