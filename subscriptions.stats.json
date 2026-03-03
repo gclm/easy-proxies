@@ -1,51 +1,65 @@
 {
-  "candidate_total": 79,
-  "candidate_unique": 78,
+  "candidate_total": 66,
+  "candidate_unique": 65,
   "duplicate_candidates": 1,
-  "valid_subscriptions": 19,
+  "valid_subscriptions": 34,
   "total_nodes": 79,
+  "collector_errors": {
+    "gist": "gist search status 429: \u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n  \u003chead\u003e\n    \u003cmeta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"\u003e\n    \u003cmeta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; img-src 'self' data:; script-src 'self'; style-src 'unsafe-inline'\"\u003e\n    \u003cmeta content=\"origin\" name=\"referrer\"\u003e\n    \u003ctitle\u003eToo many requests \u0026middot; GitHub\u003c/title\u003e\n    \u003cmeta name=\"viewport\" content=\"width=device-width\"\u003e\n    \u003cstyle type=\"text/css\" media=\"screen\"\u003e\n      body {\n        background-color: #f6f8fa;\n        color: #24292e;\n        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;\n        font-size: 14px;\n        line-height: 1.5;\n        margin: 0;\n      }\n\n      .container { margin: 50px auto; max-width: 600px; text-align: center; padding: 0 24px; }\n\n      a { color: #0366d6; text-decoration: none; }\n      a:hover { text-decoration: underline; }\n\n      h1 { line-height: 60px; font-si"
+  },
   "gist": {
-    "search_hits": 197,
-    "gists_scanned": 38,
-    "files_scanned": 75,
-    "non_target_files": 73,
-    "candidate_files": 2,
+    "search_hits": 96,
+    "gists_scanned": 56,
+    "files_scanned": 104,
+    "non_target_files": 100,
+    "candidate_files": 4,
     "invalid_raw_urls": 0,
     "duplicate_urls": 0,
-    "fetch_errors": 159
+    "fetch_errors": 41,
+    "fetch_samples": [
+      "gist=ae8bafb99ae69aaf42ab89026b51ba0f (github api status 403: {\"message\":\"API rate limit exceeded for 74.249.78.36. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
+      "gist=b8533ac9abc80cf18f5fdb629769b104 (github api status 403: {\"message\":\"API rate limit exceeded for 74.249.78.36. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
+      "gist=6f6205ff9164f14fb337b517d0e97725 (github api status 403: {\"message\":\"API rate limit exceeded for 74.249.78.36. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
+      "gist=e9b89a8313cc566644a51463bec3d08f (github api status 403: {\"message\":\"API rate limit exceeded for 74.249.78.36. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
+      "gist=1dce2b46e81ec5c2eeafa42d1f9cc693 (github api status 403: {\"message\":\"API rate limit exceeded for 74.249.78.36. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})"
+    ]
   },
   "seeds": {
-    "input_lines": 68,
-    "expanded_candidates": 77,
+    "input_lines": 66,
+    "expanded_candidates": 66,
     "invalid_lines": 0,
     "github_x_resolved": 0,
-    "github_x_errors": 1,
-    "fallback_x_expanded": 10
+    "github_x_errors": 0,
+    "fallback_x_expanded": 0
   },
   "validation": {
-    "validated_files": 54,
-    "valid_urls": 19,
+    "validated_files": 52,
+    "valid_urls": 34,
     "invalid_urls": 0,
-    "fetch_errors": 23,
-    "parse_errors": 1,
-    "too_small_node_sets": 34,
+    "fetch_errors": 12,
+    "parse_errors": 5,
+    "too_small_node_sets": 13,
     "too_large_files": 1,
     "fetch_samples": [
+      "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",
       "https://raw.githubusercontent.com/aiboboxx/clashfree/refs/heads/main/clash.yml (raw file status 404)",
-      "https://raw.githubusercontent.com/ljlfct01/ljlfct01.github.io/refs/heads/main/节点 (raw file status 404)",
-      "https://raw.githubusercontent.com/mai19950/clashgithub_com/refs/heads/main/site (raw file status 404)",
-      "https://raw.githubusercontent.com/xiaoer8867785/jddy5/refs/heads/main/data/2026_03_03/0.yaml (raw file status 404)",
-      "https://raw.githubusercontent.com/xiaoer8867785/jddy5/refs/heads/main/data/2026_03_03/1.yaml (raw file status 404)"
+      "https://sub.fqzsnai.ggff.net/auto (Get \"https://sub.fqzsnai.ggff.net/auto\": dial tcp: lookup sub.fqzsnai.ggff.net on 127.0.0.53:53: no such host)",
+      "https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb (Get \"https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb\": dial tcp: lookup sub.mikeone.ggff.net on 127.0.0.53:53: server misbehaving)",
+      "https://v1.mk/HuaplNe (raw file status 404)"
     ],
     "parse_samples": [
-      "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml (parse clash yaml: yaml: line 56: did not find expected ',' or '}')"
+      "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 48: cannot unmarshal !!str `64` into int\n  line 60: cannot unmarshal !!str `64` into int\n  line 311: cannot unmarshal !!str `0` into int\n  line 331: cannot unmarshal !!str `0` into int\n  line 427: cannot unmarshal !!str `0` into int\n  line 535: cannot unmarshal !!str `0` into int\n  line 642: cannot unmarshal !!str `2` into int\n  line 789: cannot unmarshal !!str `2` into int\n  line 809: cannot unmarshal !!str `2` into int\n  line 884: cannot unmarshal !!str `2` into int\n  line 977: cannot unmarshal !!str `2` into int\n  line 1051: cannot unmarshal !!str `2` into int\n  line 1557: cannot unmarshal !!str `2` into int\n  line 1575: cannot unmarshal !!str `2` into int\n  line 1791: cannot unmarshal !!str `2` into int\n  line 1834: cannot unmarshal !!str `2` into int\n  line 1866: cannot unmarshal !!str `0` into int\n  line 1996: cannot unmarshal !!str `2` into int\n  line 2392: cannot unmarshal !!str `0` into int\n  line 2436: cannot unmarshal !!str `0` into int\n  line 2450: cannot unmarshal !!str `2` into int\n  line 2653: cannot unmarshal !!str `0` into int\n  line 2706: cannot unmarshal !!str `0` into int)",
+      "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 136: cannot unmarshal !!str `30807` into int)",
+      "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml (parse clash yaml: yaml: line 57: did not find expected ',' or '}')",
+      "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 117: cannot unmarshal !!str `31350` into int\n  line 126: cannot unmarshal !!str `8443` into int\n  line 140: cannot unmarshal !!str `443` into int\n  line 154: cannot unmarshal !!str `443` into int\n  line 168: cannot unmarshal !!str `443` into int\n  line 182: cannot unmarshal !!str `443` into int\n  line 196: cannot unmarshal !!str `443` into int\n  line 210: cannot unmarshal !!str `12596` into int\n  line 224: cannot unmarshal !!str `443` into int\n  line 238: cannot unmarshal !!str `14670` into int\n  line 252: cannot unmarshal !!str `2087` into int\n  line 266: cannot unmarshal !!str `30809` into int\n  line 275: cannot unmarshal !!str `8443` into int\n  line 289: cannot unmarshal !!str `443` into int\n  line 303: cannot unmarshal !!str `41079` into int\n  line 317: cannot unmarshal !!str `443` into int\n  line 331: cannot unmarshal !!str `17534` into int\n  line 351: cannot unmarshal !!str `443` into int\n  line 641: cannot unmarshal !!str `30835` into int\n  line 650: cannot unmarshal !!str `180` into int\n  line 673: cannot unmarshal !!str `12887` into int\n  line 686: cannot unmarshal !!str `12889` into int\n  line 699: cannot unmarshal !!str `12901` into int\n  line 898: cannot unmarshal !!str `443` into int\n  line 954: cannot unmarshal !!str `8443` into int\n  line 1356: cannot unmarshal !!str `30807` into int)",
+      "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 117: cannot unmarshal !!str `31350` into int\n  line 126: cannot unmarshal !!str `8443` into int\n  line 140: cannot unmarshal !!str `443` into int\n  line 154: cannot unmarshal !!str `443` into int\n  line 168: cannot unmarshal !!str `443` into int\n  line 182: cannot unmarshal !!str `443` into int\n  line 196: cannot unmarshal !!str `443` into int\n  line 210: cannot unmarshal !!str `12596` into int\n  line 224: cannot unmarshal !!str `443` into int\n  line 238: cannot unmarshal !!str `14670` into int\n  line 252: cannot unmarshal !!str `2087` into int\n  line 266: cannot unmarshal !!str `30809` into int\n  line 275: cannot unmarshal !!str `8443` into int\n  line 289: cannot unmarshal !!str `443` into int\n  line 303: cannot unmarshal !!str `41079` into int\n  line 317: cannot unmarshal !!str `443` into int\n  line 331: cannot unmarshal !!str `17534` into int\n  line 345: cannot unmarshal !!str `443` into int\n  line 635: cannot unmarshal !!str `30835` into int\n  line 644: cannot unmarshal !!str `180` into int\n  line 667: cannot unmarshal !!str `12887` into int\n  line 680: cannot unmarshal !!str `12889` into int\n  line 693: cannot unmarshal !!str `12901` into int\n  line 822: cannot unmarshal !!str `443` into int\n  line 836: cannot unmarshal !!str `8443` into int\n  line 977: cannot unmarshal !!str `30807` into int)"
     ],
     "too_small_samples": [
-      "https://cdn.jsdelivr.net/gh/xiaoji235/airport-free/clash/naidounode.txt (nodes=0)",
-      "https://cdn.jsdelivr.net/gh/yangxiaoge/tvbox_cust@master/clash/Clash2.yml (nodes=0)",
       "https://gy.xiaozi.us.kg/sub?token=lzj666 (nodes=0)",
       "https://proxypool.link/ss/sub (nodes=0)",
-      "https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc0.yaml (nodes=0)"
+      "https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc4.yaml (nodes=0)",
+      "https://raw.githubusercontent.com/Roywaller/clash_subscription/refs/heads/main/clash_subscription.txt (nodes=0)",
+      "https://raw.githubusercontent.com/a2470982985/getNode/main/clash.yaml (nodes=0)"
     ],
     "too_large_samples": [
       "https://raw.githubusercontent.com/mahdibland/ShadowsocksAggregator/master/LogInfo.txt"
