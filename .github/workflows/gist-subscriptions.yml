@@ -1,0 +1,79 @@
+name: Update Gist Subscriptions
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */2 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Resolve since cursor from subscription branch
+        id: cursor
+        run: |
+          SINCE=""
+          if git ls-remote --exit-code --heads origin subscription >/dev/null 2>&1; then
+            git fetch origin subscription
+            if git show origin/subscription:subscriptions.gist.state.json > /tmp/prev-state.json 2>/dev/null; then
+              SINCE=$(jq -r '.next_since // empty' /tmp/prev-state.json)
+            fi
+          fi
+          echo "since=$SINCE" >> "$GITHUB_OUTPUT"
+
+      - name: Generate subscriptions.gist.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          go run ./cmd/gist_discovery \
+            -out /tmp/subscriptions.gist.txt \
+            -stats-out /tmp/subscriptions.gist.stats.json \
+            -state-out /tmp/subscriptions.gist.state.json \
+            -since "${{ steps.cursor.outputs.since }}" \
+            -pages 20 \
+            -per-page 100 \
+            -min-nodes 3 \
+            -max-file-bytes 2097152 \
+            -max-candidates 1200 \
+            -overlap 10m \
+            -allow-empty
+
+      - name: Switch to subscription branch
+        run: |
+          if git ls-remote --exit-code --heads origin subscription >/dev/null 2>&1; then
+            git fetch origin subscription
+            git switch -C subscription origin/subscription
+          else
+            git switch -c subscription
+          fi
+
+      - name: Update generated files
+        run: |
+          cp /tmp/subscriptions.gist.txt subscriptions.gist.txt
+          cp /tmp/subscriptions.gist.stats.json subscriptions.gist.stats.json
+          cp /tmp/subscriptions.gist.state.json subscriptions.gist.state.json
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add subscriptions.gist.txt subscriptions.gist.stats.json subscriptions.gist.state.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "chore(subscription): update gist subscriptions"
+          git push origin HEAD:subscription
