@@ -41,7 +41,7 @@ type NodeInfo struct {
 	Port          uint16 `json:"port,omitempty"`
 	Region        string `json:"region,omitempty"`  // GeoIP region code: "jp", "kr", "us", "hk", "tw", "other"
 	Country       string `json:"country,omitempty"` // Full country name from GeoIP
-	Index         int    `json:"index"` // 原始顺序索引
+	Index         int    `json:"index"`             // 原始顺序索引
 }
 
 // TimelineEvent represents a single usage event for debug tracking.
@@ -625,4 +625,14 @@ func (h *EntryHandle) MarkAvailable(available bool) {
 	h.ref.mu.Lock()
 	h.ref.available = available
 	h.ref.mu.Unlock()
+}
+
+// Availability returns (initialCheckDone, available).
+func (h *EntryHandle) Availability() (bool, bool) {
+	if h == nil || h.ref == nil {
+		return false, true
+	}
+	h.ref.mu.RLock()
+	defer h.ref.mu.RUnlock()
+	return h.ref.initialCheckDone, h.ref.available
 }

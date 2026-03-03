@@ -406,6 +406,14 @@ func (p *poolOutbound) availableMembersLocked(now time.Time, network string, buf
 		if member.shared != nil && member.shared.isBlacklisted(now) {
 			continue
 		}
+		// If health check is enabled, skip nodes that have completed checks and are currently unavailable.
+		// Nodes that have not completed any check yet are still eligible to avoid cold-start lockout.
+		if !p.options.DisableHealthCheck && member.entry != nil {
+			initialCheckDone, available := member.entry.Availability()
+			if initialCheckDone && !available {
+				continue
+			}
+		}
 		if network != "" && !common.Contains(member.outbound.Network(), network) {
 			continue
 		}
@@ -551,6 +559,7 @@ func (p *poolOutbound) makeProbeFunc(member *memberState) func(ctx context.Conte
 		if err != nil {
 			if member.entry != nil {
 				member.entry.RecordFailure(err)
+				member.entry.MarkInitialCheckDone(false)
 			}
 			return 0, err
 		}
@@ -561,6 +570,7 @@ func (p *poolOutbound) makeProbeFunc(member *memberState) func(ctx context.Conte
 		if err != nil {
 			if member.entry != nil {
 				member.entry.RecordFailure(err)
+				member.entry.MarkInitialCheckDone(false)
 			}
 			return 0, err
 		}
@@ -569,6 +579,7 @@ func (p *poolOutbound) makeProbeFunc(member *memberState) func(ctx context.Conte
 		duration := time.Since(start)
 		if member.entry != nil {
 			member.entry.RecordSuccessWithLatency(duration)
+			member.entry.MarkInitialCheckDone(true)
 		}
 		// Clear pool blacklist on successful probe — a node that passes
 		// health check should be available for selection immediately,
@@ -618,6 +629,7 @@ func (p *poolOutbound) makeProbeByTagFunc(tag string) func(ctx context.Context) 
 		if err != nil {
 			if member.entry != nil {
 				member.entry.RecordFailure(err)
+				member.entry.MarkInitialCheckDone(false)
 			}
 			return 0, err
 		}
@@ -628,6 +640,7 @@ func (p *poolOutbound) makeProbeByTagFunc(tag string) func(ctx context.Context) 
 		if err != nil {
 			if member.entry != nil {
 				member.entry.RecordFailure(err)
+				member.entry.MarkInitialCheckDone(false)
 			}
 			return 0, err
 		}
@@ -636,6 +649,7 @@ func (p *poolOutbound) makeProbeByTagFunc(tag string) func(ctx context.Context) 
 		duration := time.Since(start)
 		if member.entry != nil {
 			member.entry.RecordSuccessWithLatency(duration)
+			member.entry.MarkInitialCheckDone(true)
 		}
 		// Clear pool blacklist on successful probe (fixes #8, #9)
 		if member.shared != nil {
