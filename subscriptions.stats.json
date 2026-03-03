@@ -1,27 +1,24 @@
 {
-  "candidate_total": 66,
-  "candidate_unique": 65,
+  "candidate_total": 72,
+  "candidate_unique": 71,
   "duplicate_candidates": 1,
-  "valid_subscriptions": 34,
+  "valid_subscriptions": 35,
   "total_nodes": 79,
-  "collector_errors": {
-    "gist": "gist search status 429: \u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n  \u003chead\u003e\n    \u003cmeta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"\u003e\n    \u003cmeta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; img-src 'self' data:; script-src 'self'; style-src 'unsafe-inline'\"\u003e\n    \u003cmeta content=\"origin\" name=\"referrer\"\u003e\n    \u003ctitle\u003eToo many requests \u0026middot; GitHub\u003c/title\u003e\n    \u003cmeta name=\"viewport\" content=\"width=device-width\"\u003e\n    \u003cstyle type=\"text/css\" media=\"screen\"\u003e\n      body {\n        background-color: #f6f8fa;\n        color: #24292e;\n        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;\n        font-size: 14px;\n        line-height: 1.5;\n        margin: 0;\n      }\n\n      .container { margin: 50px auto; max-width: 600px; text-align: center; padding: 0 24px; }\n\n      a { color: #0366d6; text-decoration: none; }\n      a:hover { text-decoration: underline; }\n\n      h1 { line-height: 60px; font-si"
-  },
   "gist": {
-    "search_hits": 96,
-    "gists_scanned": 56,
-    "files_scanned": 104,
-    "non_target_files": 100,
-    "candidate_files": 4,
+    "search_hits": 196,
+    "gists_scanned": 58,
+    "files_scanned": 123,
+    "non_target_files": 117,
+    "candidate_files": 6,
     "invalid_raw_urls": 0,
     "duplicate_urls": 0,
-    "fetch_errors": 41,
+    "fetch_errors": 138,
     "fetch_samples": [
-      "gist=ae8bafb99ae69aaf42ab89026b51ba0f (github api status 403: {\"message\":\"API rate limit exceeded for 74.249.78.36. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
-      "gist=b8533ac9abc80cf18f5fdb629769b104 (github api status 403: {\"message\":\"API rate limit exceeded for 74.249.78.36. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
-      "gist=6f6205ff9164f14fb337b517d0e97725 (github api status 403: {\"message\":\"API rate limit exceeded for 74.249.78.36. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
-      "gist=e9b89a8313cc566644a51463bec3d08f (github api status 403: {\"message\":\"API rate limit exceeded for 74.249.78.36. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
-      "gist=1dce2b46e81ec5c2eeafa42d1f9cc693 (github api status 403: {\"message\":\"API rate limit exceeded for 74.249.78.36. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})"
+      "gist=a261f62dcf2fd71aee48959d0c749e1d (github api status 403: {\"message\":\"API rate limit exceeded for 13.83.161.17. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
+      "gist=464cd8f91e709a57f0079b4e63d1bb80 (github api status 403: {\"message\":\"API rate limit exceeded for 13.83.161.17. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
+      "gist=f183cf24cd9b0b4560b76007dc660318 (github api status 403: {\"message\":\"API rate limit exceeded for 13.83.161.17. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
+      "gist=8d9030c174b4a2fcaba134f9e053cb65 (github api status 403: {\"message\":\"API rate limit exceeded for 13.83.161.17. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})",
+      "gist=4d419fb56d0de67ef68f406438a9e27e (github api status 403: {\"message\":\"API rate limit exceeded for 13.83.161.17. (But here's the good news: Authenticated requests get a higher rate limit. Check out the documentation for more details.)\",\"documentation_url\":\"https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting\"})"
     ]
   },
   "seeds": {
@@ -33,12 +30,12 @@
     "fallback_x_expanded": 0
   },
   "validation": {
-    "validated_files": 52,
-    "valid_urls": 34,
+    "validated_files": 58,
+    "valid_urls": 35,
     "invalid_urls": 0,
     "fetch_errors": 12,
     "parse_errors": 5,
-    "too_small_node_sets": 13,
+    "too_small_node_sets": 18,
     "too_large_files": 1,
     "fetch_samples": [
       "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",

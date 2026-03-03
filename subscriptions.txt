@@ -32,3 +32,4 @@ https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub
 https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.txt
 https://raw.githubusercontent.com/firefoxmmx2/v2rayshare_subcription/main/subscription/clash_sub.yaml
 https://clashgithub.com/wp-content/uploads/rss/20260303.yml
+https://gist.githubusercontent.com/WuMengxian0/f2530a81c12aba404e635c68d3632107/raw/custom_clash_config.yaml
