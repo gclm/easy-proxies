@@ -78,10 +78,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add subscriptions.txt nodes.txt subscriptions.stats.json subscriptions.state.json
+          git add -f subscriptions.txt nodes.txt subscriptions.stats.json subscriptions.state.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
           fi
-          git commit -m "chore(subscription): update gist subscriptions"
+          git commit -m "chore(subscription): update subscriptions artifacts"
           git push origin HEAD:subscription

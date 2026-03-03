@@ -48,6 +48,7 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 		disableSeeds      bool
 		allowEmpty        bool
 		allowEmptyNodes   bool
+		quiet             bool
 		timeoutSec        int
 	)
 
@@ -71,6 +72,7 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	fs.BoolVar(&disableSeeds, "disable-seeds", false, "disable seeds collector")
 	fs.BoolVar(&allowEmpty, "allow-empty", false, "allow writing empty subscription result")
 	fs.BoolVar(&allowEmptyNodes, "allow-empty-nodes", true, "allow writing empty proxy_share node result")
+	fs.BoolVar(&quiet, "quiet", false, "disable progress logs")
 	fs.IntVar(&timeoutSec, "timeout", 20, "http timeout in seconds")
 
 	if err := fs.Parse(args); err != nil {
@@ -93,11 +95,19 @@ func Run(ctx context.Context, args []string, stdout, stderr io.Writer) int {
 	client := &http.Client{Timeout: time.Duration(timeoutSec) * time.Second}
 	token := strings.TrimSpace(os.Getenv("GIST_DISCOVERY_TOKEN"))
 	userAgent = strings.TrimSpace(userAgent)
+	logger := func(format string, args ...any) {
+		if quiet {
+			return
+		}
+		fmt.Fprintf(stderr, "[subscription_discovery] "+format+"\n", args...)
+	}
+	logger("config since=%q pages=%d per_page=%d seeds_file=%t extra_urls=%d timeout=%ds", since, pages, perPage, strings.TrimSpace(seedsFile) != "", len(splitCSV(extraURLs)), timeoutSec)
 
 	runOpts := subdiscovery.Options{
 		StartedAt:       startedAt,
 		Since:           since,
 		Overlap:         overlap,
+		Logf:            logger,
 		AllowEmpty:      allowEmpty,
 		AllowEmptyNodes: allowEmptyNodes,
 		DisableGist:     disableGist,

@@ -14,6 +14,7 @@ type Options struct {
 	StartedAt time.Time
 	Since     string
 	Overlap   time.Duration
+	Logf      func(format string, args ...any)
 
 	AllowEmpty      bool
 	AllowEmptyNodes bool
