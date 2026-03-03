@@ -21,7 +21,7 @@ It focuses on turning many upstream nodes into one stable local HTTP proxy entry
   - config node CRUD + reload
   - subscription status + manual refresh
 - Adds configurable DNS resolver for outbound domain resolution (important for VMess nodes with domain hosts).
-- Optional GeoIP labeling with auto-update and hot-reload (region/country metadata in dashboard, pool mode only).
+- Optional GeoIP labeling and group routing with auto-update and hot-reload (region/country metadata in dashboard; use `username-region` or `username_region` to select a region in pool mode).
 
 ## Quick Start
 
@@ -160,4 +160,3 @@ When `management.password` is empty, API/UI auth is bypassed.
 ```bash
 go test ./...
 ```
-

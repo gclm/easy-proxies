@@ -78,6 +78,7 @@ dns:
 # GeoIP 地域分区配置（可选）
 # ───────────────────────────────────────────────────────────────
 # 启用后会为节点打上地域标签（jp/kr/us/hk/tw/other），用于 WebUI 统计和筛选。
+# 若 listener.username 已配置，可用 username-us / username_us 方式按地域分组出站。
 geoip:
   enabled: false                                     # 是否启用 GeoIP 地域标记
   database_path: "./GeoLite2-Country.mmdb"           # GeoIP 数据库路径（首次启动时自动下载）

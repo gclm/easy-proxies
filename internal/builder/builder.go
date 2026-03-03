@@ -218,6 +218,18 @@ func Build(cfg *config.Config) (option.Options, error) {
 	// Determine which components to enable based on mode
 	enablePoolInbound := cfg.Mode == "pool" || cfg.Mode == "hybrid"
 	enableMultiPort := cfg.Mode == "multi-port" || cfg.Mode == "hybrid"
+	regionAuthUsers := make(map[string][]string)
+	if cfg.GeoIP.Enabled && enablePoolInbound && cfg.Listener.Username != "" {
+		for _, region := range geoip.AllRegions() {
+			if len(regionMembers[region]) == 0 {
+				continue
+			}
+			aliases := regionSelectorUsernames(cfg.Listener.Username, region)
+			if len(aliases) > 0 {
+				regionAuthUsers[region] = aliases
+			}
+		}
+	}
 
 	if !enablePoolInbound && !enableMultiPort {
 		return option.Options{}, fmt.Errorf("unsupported mode %s", cfg.Mode)
@@ -225,7 +237,7 @@ func Build(cfg *config.Config) (option.Options, error) {
 
 	// Build pool inbound (single entry point for all nodes)
 	if enablePoolInbound {
-		inbound, err := buildPoolInbound(cfg)
+		inbound, err := buildPoolInbound(cfg, regionAuthUsers)
 		if err != nil {
 			return option.Options{}, err
 		}
@@ -370,21 +382,40 @@ func Build(cfg *config.Config) (option.Options, error) {
 				Tag:     regionPoolTag,
 				Options: &regionPoolOptions,
 			})
+			if authUsers, ok := regionAuthUsers[region]; ok && len(authUsers) > 0 {
+				authUserList := append(badoption.Listable[string](nil), authUsers...)
+				route.Rules = append(route.Rules, option.Rule{
+					Type: C.RuleTypeDefault,
+					DefaultOptions: option.DefaultRule{
+						RawDefaultRule: option.RawDefaultRule{
+							Inbound:  badoption.Listable[string]{"http-in"},
+							AuthUser: authUserList,
+						},
+						RuleAction: option.RuleAction{
+							Action: C.RuleActionTypeRoute,
+							RouteOptions: option.RouteActionOptions{
+								Outbound: regionPoolTag,
+							},
+						},
+					},
+				})
+			}
 		}
 
 		// Log GeoIP routing info
-		geoipPort := cfg.GeoIP.Port
-		if geoipPort == 0 {
-			geoipPort = cfg.Listener.Port
-		}
-		geoipListen := cfg.GeoIP.Listen
-		if geoipListen == "" {
-			geoipListen = cfg.Listener.Address
-		}
 		log.Println("🌐 GeoIP Region Routing Enabled:")
-		log.Printf("   Access via: http://%s:%d/{region}", geoipListen, geoipPort)
-		log.Println("   Available regions: /jp, /kr, /us, /hk, /tw, /other")
-		log.Println("   Default (no path): all nodes pool")
+		log.Printf("   Pool endpoint: http://%s:%d", cfg.Listener.Address, cfg.Listener.Port)
+		if len(regionAuthUsers) > 0 {
+			log.Println("   Use region username suffix (same password):")
+			for _, region := range geoip.AllRegions() {
+				if aliases, ok := regionAuthUsers[region]; ok && len(aliases) > 0 {
+					log.Printf("   %s -> %s", region, strings.Join(aliases, " | "))
+				}
+			}
+			log.Println("   Default username routes to all nodes pool")
+		} else {
+			log.Println("   listener.username is empty, per-request region selection is disabled")
+		}
 	}
 
 	opts := option.Options{
@@ -396,7 +427,7 @@ func Build(cfg *config.Config) (option.Options, error) {
 	return opts, nil
 }
 
-func buildPoolInbound(cfg *config.Config) (option.Inbound, error) {
+func buildPoolInbound(cfg *config.Config, regionAuthUsers map[string][]string) (option.Inbound, error) {
 	listenAddr, err := parseAddr(cfg.Listener.Address)
 	if err != nil {
 		return option.Inbound{}, fmt.Errorf("parse listener address: %w", err)
@@ -408,10 +439,28 @@ func buildPoolInbound(cfg *config.Config) (option.Inbound, error) {
 		},
 	}
 	if cfg.Listener.Username != "" {
-		inboundOptions.Users = []auth.User{{
-			Username: cfg.Listener.Username,
-			Password: cfg.Listener.Password,
-		}}
+		seenUsers := make(map[string]struct{})
+		addUser := func(username string) {
+			username = strings.TrimSpace(username)
+			if username == "" {
+				return
+			}
+			if _, exists := seenUsers[username]; exists {
+				return
+			}
+			seenUsers[username] = struct{}{}
+			inboundOptions.Users = append(inboundOptions.Users, auth.User{
+				Username: username,
+				Password: cfg.Listener.Password,
+			})
+		}
+
+		addUser(cfg.Listener.Username)
+		for _, region := range geoip.AllRegions() {
+			for _, alias := range regionAuthUsers[region] {
+				addUser(alias)
+			}
+		}
 	}
 	inbound := option.Inbound{
 		Type:    C.TypeHTTP,
@@ -419,6 +468,18 @@ func buildPoolInbound(cfg *config.Config) (option.Inbound, error) {
 		Options: inboundOptions,
 	}
 	return inbound, nil
+}
+
+func regionSelectorUsernames(baseUsername, region string) []string {
+	baseUsername = strings.TrimSpace(baseUsername)
+	region = strings.ToLower(strings.TrimSpace(region))
+	if baseUsername == "" || region == "" {
+		return nil
+	}
+	return []string{
+		fmt.Sprintf("%s-%s", baseUsername, region),
+		fmt.Sprintf("%s_%s", baseUsername, region),
+	}
 }
 
 func buildNodeOutbound(tag, rawURI string, skipCertVerify bool) (option.Outbound, error) {
