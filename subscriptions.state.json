@@ -1,0 +1,51 @@
+{
+  "next_since": "2026-03-03T04:46:10Z",
+  "started_at": "2026-03-03T04:55:12Z",
+  "finished_at": "2026-03-03T04:56:10Z",
+  "overlap": "10m0s",
+  "stats": {
+    "candidate_total": 78,
+    "candidate_unique": 77,
+    "duplicate_candidates": 1,
+    "valid_subscriptions": 18,
+    "total_nodes": 79,
+    "gist": {
+      "gists_scanned": 2000,
+      "candidate_files": 0,
+      "duplicate_urls": 0,
+      "fetch_errors": 0
+    },
+    "seeds": {
+      "input_lines": 69,
+      "expanded_candidates": 78,
+      "invalid_lines": 0,
+      "github_x_resolved": 0,
+      "github_x_errors": 1,
+      "fallback_x_expanded": 10
+    },
+    "validation": {
+      "validated_files": 51,
+      "valid_urls": 18,
+      "invalid_urls": 0,
+      "fetch_errors": 25,
+      "parse_errors": 1,
+      "too_small_node_sets": 32,
+      "too_large_files": 1
+    },
+    "proxy_share": {
+      "sources_total": 6,
+      "sources_succeeded": 6,
+      "sources_failed": 0,
+      "source_nodes": {
+        "cnc07": 16,
+        "shadowshare_clash_http": 0,
+        "shadowshare_clash_https": 0,
+        "shadowshare_clash_socks5": 0,
+        "shadowshare_server": 39,
+        "v2nodes": 25
+      },
+      "duplicate_nodes": 1,
+      "total_nodes": 79
+    }
+  }
+}
