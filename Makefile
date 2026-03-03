@@ -15,7 +15,7 @@ endif
 
 HOST_BIN := $(DIST_DIR)/$(APP)-$(HOST_OS)-$(HOST_ARCH)$(HOST_EXT)
 
-.PHONY: help build test run fmt vet clean discover-gist \
+.PHONY: help build test run fmt vet clean discover-subscriptions discover-gist \
 	build-linux-amd64 build-linux-arm64 \
 	build-darwin-amd64 build-darwin-arm64 \
 	build-windows-amd64 build-all
@@ -25,7 +25,8 @@ help:
 	@echo "  make build               - Build current host binary to $(HOST_BIN)"
 	@echo "  make test                - Run all tests"
 	@echo "  make run                 - Run with config.yaml (with tags)"
-	@echo "  make discover-gist       - Generate subscriptions.gist.txt from latest public gists"
+	@echo "  make discover-subscriptions - Generate subscriptions.txt and nodes.txt"
+	@echo "  make discover-gist         - Alias of discover-subscriptions"
 	@echo "  make fmt                 - Format Go code"
 	@echo "  make vet                 - Run go vet"
 	@echo "  make clean               - Remove build artifacts"
@@ -46,8 +47,14 @@ test:
 run:
 	$(GO) run -tags "$(BUILD_TAGS)" $(CMD) -config config.yaml
 
-discover-gist:
-	$(GO) run ./cmd/gist_discovery -out subscriptions.gist.txt -stats-out subscriptions.gist.stats.json
+discover-subscriptions:
+	$(GO) run ./cmd/subscription_discovery \
+		-out subscriptions.txt \
+		-nodes-out nodes.txt \
+		-stats-out subscriptions.stats.json \
+		-state-out subscriptions.state.json
+
+discover-gist: discover-subscriptions
 
 fmt:
 	$(GO) fmt ./...

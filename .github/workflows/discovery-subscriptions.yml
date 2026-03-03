@@ -1,4 +1,4 @@
-name: Update Gist Subscriptions
+name: Discovery Subscriptions
 
 on:
   workflow_dispatch:
@@ -26,22 +26,29 @@ jobs:
         id: cursor
         run: |
           SINCE=""
+          SEEDS_FILE=""
           if git ls-remote --exit-code --heads origin subscription >/dev/null 2>&1; then
             git fetch origin subscription
-            if git show origin/subscription:subscriptions.gist.state.json > /tmp/prev-state.json 2>/dev/null; then
+            if git show origin/subscription:subscriptions.state.json > /tmp/prev-state.json 2>/dev/null; then
               SINCE=$(jq -r '.next_since // empty' /tmp/prev-state.json)
+            fi
+            if git show origin/subscription:seeds.txt > /tmp/seeds.txt 2>/dev/null; then
+              SEEDS_FILE=/tmp/seeds.txt
             fi
           fi
           echo "since=$SINCE" >> "$GITHUB_OUTPUT"
+          echo "seeds_file=$SEEDS_FILE" >> "$GITHUB_OUTPUT"
 
-      - name: Generate subscriptions.gist.txt
+      - name: Generate subscriptions.txt and nodes.txt
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIST_DISCOVERY_TOKEN: ${{ secrets.GIST_DISCOVERY_TOKEN }}
         run: |
-          go run ./cmd/gist_discovery \
-            -out /tmp/subscriptions.gist.txt \
-            -stats-out /tmp/subscriptions.gist.stats.json \
-            -state-out /tmp/subscriptions.gist.state.json \
+          go run ./cmd/subscription_discovery \
+            -out /tmp/subscriptions.txt \
+            -nodes-out /tmp/nodes.txt \
+            -stats-out /tmp/subscriptions.stats.json \
+            -state-out /tmp/subscriptions.state.json \
+            -seeds-file "${{ steps.cursor.outputs.seeds_file }}" \
             -since "${{ steps.cursor.outputs.since }}" \
             -pages 20 \
             -per-page 100 \
@@ -62,15 +69,16 @@ jobs:
 
       - name: Update generated files
         run: |
-          cp /tmp/subscriptions.gist.txt subscriptions.gist.txt
-          cp /tmp/subscriptions.gist.stats.json subscriptions.gist.stats.json
-          cp /tmp/subscriptions.gist.state.json subscriptions.gist.state.json
+          cp /tmp/subscriptions.txt subscriptions.txt
+          cp /tmp/nodes.txt nodes.txt
+          cp /tmp/subscriptions.stats.json subscriptions.stats.json
+          cp /tmp/subscriptions.state.json subscriptions.state.json
 
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add subscriptions.gist.txt subscriptions.gist.stats.json subscriptions.gist.state.json
+          git add subscriptions.txt nodes.txt subscriptions.stats.json subscriptions.state.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
