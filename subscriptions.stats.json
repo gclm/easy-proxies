@@ -2,13 +2,13 @@
   "candidate_total": 82,
   "candidate_unique": 81,
   "duplicate_candidates": 1,
-  "valid_subscriptions": 34,
-  "total_nodes": 79,
+  "valid_subscriptions": 35,
+  "total_nodes": 67,
   "gist": {
     "search_hits": 196,
     "gists_scanned": 196,
-    "files_scanned": 360,
-    "non_target_files": 344,
+    "files_scanned": 375,
+    "non_target_files": 359,
     "candidate_files": 16,
     "invalid_raw_urls": 0,
     "duplicate_urls": 0,
@@ -23,15 +23,15 @@
     "fallback_x_expanded": 0
   },
   "validation": {
-    "validated_files": 67,
-    "valid_urls": 34,
+    "validated_files": 68,
+    "valid_urls": 35,
     "invalid_urls": 0,
-    "fetch_errors": 13,
+    "fetch_errors": 12,
     "parse_errors": 5,
     "too_small_node_sets": 28,
     "too_large_files": 1,
     "fetch_samples": [
-      "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",
+      "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (raw file status 404)",
       "https://raw.githubusercontent.com/aiboboxx/clashfree/refs/heads/main/clash.yml (raw file status 404)",
       "https://sub.fqzsnai.ggff.net/auto (Get \"https://sub.fqzsnai.ggff.net/auto\": dial tcp: lookup sub.fqzsnai.ggff.net on 127.0.0.53:53: no such host)",
       "https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb (Get \"https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb\": dial tcp: lookup sub.mikeone.ggff.net on 127.0.0.53:53: server misbehaving)",
@@ -64,10 +64,10 @@
       "shadowshare_clash_http": 0,
       "shadowshare_clash_https": 0,
       "shadowshare_clash_socks5": 0,
-      "shadowshare_server": 39,
+      "shadowshare_server": 26,
       "v2nodes": 25
     },
-    "duplicate_nodes": 1,
-    "total_nodes": 79
+    "duplicate_nodes": 0,
+    "total_nodes": 67
   }
 }
