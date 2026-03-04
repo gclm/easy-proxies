@@ -1,23 +1,23 @@
 {
-  "used_since": "2026-03-04T04:59:49Z",
-  "next_since": "2026-03-04T06:41:24Z",
-  "started_at": "2026-03-04T06:49:59Z",
-  "finished_at": "2026-03-04T06:51:24Z",
+  "used_since": "2026-03-04T06:41:24Z",
+  "next_since": "2026-03-04T08:31:31Z",
+  "started_at": "2026-03-04T08:40:01Z",
+  "finished_at": "2026-03-04T08:41:31Z",
   "overlap": "10m0s",
   "stats": {
-    "candidate_total": 82,
-    "candidate_unique": 81,
+    "candidate_total": 83,
+    "candidate_unique": 82,
     "duplicate_candidates": 1,
-    "valid_subscriptions": 36,
+    "valid_subscriptions": 35,
     "total_nodes": 75,
     "gist": {
       "search_hits": 196,
       "gists_scanned": 196,
-      "files_scanned": 383,
-      "non_target_files": 366,
+      "files_scanned": 373,
+      "non_target_files": 356,
       "candidate_files": 17,
       "invalid_raw_urls": 0,
-      "duplicate_urls": 1,
+      "duplicate_urls": 0,
       "fetch_errors": 0
     },
     "seeds": {
@@ -30,18 +30,18 @@
     },
     "validation": {
       "validated_files": 69,
-      "valid_urls": 36,
+      "valid_urls": 35,
       "invalid_urls": 0,
-      "fetch_errors": 11,
-      "parse_errors": 6,
-      "too_small_node_sets": 27,
+      "fetch_errors": 12,
+      "parse_errors": 5,
+      "too_small_node_sets": 29,
       "too_large_files": 1,
       "fetch_samples": [
+        "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",
         "https://raw.githubusercontent.com/aiboboxx/clashfree/refs/heads/main/clash.yml (raw file status 404)",
         "https://sub.fqzsnai.ggff.net/auto (Get \"https://sub.fqzsnai.ggff.net/auto\": dial tcp: lookup sub.fqzsnai.ggff.net on 127.0.0.53:53: no such host)",
         "https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb (Get \"https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb\": dial tcp: lookup sub.mikeone.ggff.net on 127.0.0.53:53: server misbehaving)",
-        "https://v1.mk/HuaplNe (raw file status 404)",
-        "https://raw.githubusercontent.com/aiboboxx/v2rayfree/main/v2 (raw file status 404)"
+        "https://v1.mk/HuaplNe (raw file status 404)"
       ],
       "parse_samples": [
         "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 102: cannot unmarshal !!str `64` into int\n  line 114: cannot unmarshal !!str `64` into int\n  line 510: cannot unmarshal !!str `0` into int\n  line 561: cannot unmarshal !!str `0` into int\n  line 643: cannot unmarshal !!str `0` into int\n  line 912: cannot unmarshal !!str `0` into int\n  line 1227: cannot unmarshal !!str `0` into int\n  line 1283: cannot unmarshal !!str `2` into int\n  line 1799: cannot unmarshal !!str `2` into int\n  line 2093: cannot unmarshal !!str `2` into int\n  line 2167: cannot unmarshal !!str `2` into int\n  line 2363: cannot unmarshal !!str `2` into int\n  line 2377: cannot unmarshal !!str `2` into int\n  line 2443: cannot unmarshal !!str `2` into int\n  line 2563: cannot unmarshal !!str `2` into int\n  line 2684: cannot unmarshal !!str `2` into int\n  line 2928: cannot unmarshal !!str `0` into int\n  line 3031: cannot unmarshal !!str `2` into int\n  line 3096: cannot unmarshal !!str `2` into int\n  line 3155: cannot unmarshal !!str `2` into int\n  line 3247: cannot unmarshal !!str `0` into int\n  line 3297: cannot unmarshal !!str `0` into int)",
