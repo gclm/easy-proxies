@@ -1,21 +1,21 @@
 {
-  "used_since": "2026-03-05T12:52:54Z",
-  "next_since": "2026-03-05T14:36:23Z",
-  "started_at": "2026-03-05T14:45:03Z",
-  "finished_at": "2026-03-05T14:46:23Z",
+  "used_since": "2026-03-05T14:36:23Z",
+  "next_since": "2026-03-05T17:56:34Z",
+  "started_at": "2026-03-05T18:05:03Z",
+  "finished_at": "2026-03-05T18:06:34Z",
   "overlap": "10m0s",
   "stats": {
-    "candidate_total": 82,
-    "candidate_unique": 81,
+    "candidate_total": 83,
+    "candidate_unique": 82,
     "duplicate_candidates": 1,
     "valid_subscriptions": 35,
-    "total_nodes": 65,
+    "total_nodes": 69,
     "gist": {
-      "search_hits": 197,
-      "gists_scanned": 197,
-      "files_scanned": 407,
-      "non_target_files": 391,
-      "candidate_files": 16,
+      "search_hits": 196,
+      "gists_scanned": 196,
+      "files_scanned": 383,
+      "non_target_files": 366,
+      "candidate_files": 17,
       "invalid_raw_urls": 0,
       "duplicate_urls": 0,
       "fetch_errors": 0
@@ -29,12 +29,12 @@
       "fallback_x_expanded": 0
     },
     "validation": {
-      "validated_files": 67,
+      "validated_files": 69,
       "valid_urls": 35,
       "invalid_urls": 0,
-      "fetch_errors": 13,
-      "parse_errors": 6,
-      "too_small_node_sets": 26,
+      "fetch_errors": 12,
+      "parse_errors": 5,
+      "too_small_node_sets": 29,
       "too_large_files": 1,
       "fetch_samples": [
         "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (raw file status 404)",
@@ -70,11 +70,11 @@
         "shadowshare_clash_http": 0,
         "shadowshare_clash_https": 0,
         "shadowshare_clash_socks5": 0,
-        "shadowshare_server": 25,
+        "shadowshare_server": 28,
         "v2nodes": 25
       },
-      "duplicate_nodes": 1,
-      "total_nodes": 65
+      "duplicate_nodes": 0,
+      "total_nodes": 69
     }
   }
 }
