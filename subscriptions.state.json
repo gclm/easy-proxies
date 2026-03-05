@@ -1,21 +1,21 @@
 {
-  "used_since": "2026-03-05T14:36:23Z",
-  "next_since": "2026-03-05T17:56:34Z",
-  "started_at": "2026-03-05T18:05:03Z",
-  "finished_at": "2026-03-05T18:06:34Z",
+  "used_since": "2026-03-05T17:56:34Z",
+  "next_since": "2026-03-05T20:29:06Z",
+  "started_at": "2026-03-05T20:37:51Z",
+  "finished_at": "2026-03-05T20:39:06Z",
   "overlap": "10m0s",
   "stats": {
-    "candidate_total": 83,
-    "candidate_unique": 82,
+    "candidate_total": 81,
+    "candidate_unique": 80,
     "duplicate_candidates": 1,
     "valid_subscriptions": 35,
     "total_nodes": 69,
     "gist": {
       "search_hits": 196,
       "gists_scanned": 196,
-      "files_scanned": 383,
-      "non_target_files": 366,
-      "candidate_files": 17,
+      "files_scanned": 405,
+      "non_target_files": 390,
+      "candidate_files": 15,
       "invalid_raw_urls": 0,
       "duplicate_urls": 0,
       "fetch_errors": 0
@@ -29,12 +29,12 @@
       "fallback_x_expanded": 0
     },
     "validation": {
-      "validated_files": 69,
+      "validated_files": 67,
       "valid_urls": 35,
       "invalid_urls": 0,
       "fetch_errors": 12,
-      "parse_errors": 5,
-      "too_small_node_sets": 29,
+      "parse_errors": 6,
+      "too_small_node_sets": 26,
       "too_large_files": 1,
       "fetch_samples": [
         "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (raw file status 404)",
