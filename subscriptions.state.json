@@ -1,24 +1,24 @@
 {
-  "used_since": "2026-03-06T05:00:42Z",
-  "next_since": "2026-03-06T06:43:03Z",
-  "started_at": "2026-03-06T06:51:57Z",
-  "finished_at": "2026-03-06T06:53:03Z",
+  "used_since": "2026-03-06T06:43:03Z",
+  "next_since": "2026-03-06T08:30:06Z",
+  "started_at": "2026-03-06T08:38:56Z",
+  "finished_at": "2026-03-06T08:40:06Z",
   "overlap": "10m0s",
   "stats": {
     "candidate_total": 66,
     "candidate_unique": 65,
     "duplicate_candidates": 1,
-    "valid_subscriptions": 35,
+    "valid_subscriptions": 34,
     "total_nodes": 69,
     "collector_errors": {
       "gist": "gist search status 429: \u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n  \u003chead\u003e\n    \u003cmeta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"\u003e\n    \u003cmeta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; img-src 'self' data:; script-src 'self'; style-src 'unsafe-inline'\"\u003e\n    \u003cmeta content=\"origin\" name=\"referrer\"\u003e\n    \u003ctitle\u003eToo many requests \u0026middot; GitHub\u003c/title\u003e\n    \u003cmeta name=\"viewport\" content=\"width=device-width\"\u003e\n    \u003cstyle type=\"text/css\" media=\"screen\"\u003e\n      body {\n        background-color: #f6f8fa;\n        color: #24292e;\n        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;\n        font-size: 14px;\n        line-height: 1.5;\n        margin: 0;\n      }\n\n      .container { margin: 50px auto; max-width: 600px; text-align: center; padding: 0 24px; }\n\n      a { color: #0366d6; text-decoration: none; }\n      a:hover { text-decoration: underline; }\n\n      h1 { line-height: 60px; font-si"
     },
     "gist": {
-      "search_hits": 116,
-      "gists_scanned": 116,
-      "files_scanned": 217,
-      "non_target_files": 207,
-      "candidate_files": 10,
+      "search_hits": 135,
+      "gists_scanned": 135,
+      "files_scanned": 266,
+      "non_target_files": 255,
+      "candidate_files": 11,
       "invalid_raw_urls": 0,
       "duplicate_urls": 0,
       "fetch_errors": 1
@@ -33,18 +33,18 @@
     },
     "validation": {
       "validated_files": 52,
-      "valid_urls": 35,
+      "valid_urls": 34,
       "invalid_urls": 0,
       "fetch_errors": 12,
       "parse_errors": 5,
-      "too_small_node_sets": 12,
+      "too_small_node_sets": 13,
       "too_large_files": 1,
       "fetch_samples": [
+        "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",
         "https://raw.githubusercontent.com/aiboboxx/clashfree/refs/heads/main/clash.yml (raw file status 404)",
         "https://sub.fqzsnai.ggff.net/auto (Get \"https://sub.fqzsnai.ggff.net/auto\": dial tcp: lookup sub.fqzsnai.ggff.net on 127.0.0.53:53: no such host)",
-        "https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb (Get \"https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb\": dial tcp: lookup sub.mikeone.ggff.net on 127.0.0.53:53: read udp 127.0.0.1:56310-\u003e127.0.0.53:53: i/o timeout)",
-        "https://v1.mk/HuaplNe (raw file status 404)",
-        "https://raw.githubusercontent.com/aiboboxx/v2rayfree/main/v2 (raw file status 404)"
+        "https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb (Get \"https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb\": dial tcp: lookup sub.mikeone.ggff.net on 127.0.0.53:53: server misbehaving)",
+        "https://v1.mk/HuaplNe (raw file status 404)"
       ],
       "parse_samples": [
         "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 97: cannot unmarshal !!str `0` into int\n  line 113: cannot unmarshal !!str `64` into int\n  line 139: cannot unmarshal !!str `0` into int\n  line 155: cannot unmarshal !!str `0` into int\n  line 216: cannot unmarshal !!str `64` into int\n  line 249: cannot unmarshal !!str `0` into int\n  line 1095: cannot unmarshal !!str `0` into int\n  line 1295: cannot unmarshal !!str `0` into int\n  line 1679: cannot unmarshal !!str `0` into int\n  line 1816: cannot unmarshal !!str `0` into int\n  line 1861: cannot unmarshal !!str `0` into int\n  line 1877: cannot unmarshal !!str `0` into int\n  line 2042: cannot unmarshal !!str `0` into int\n  line 2239: cannot unmarshal !!str `0` into int\n  line 2344: cannot unmarshal !!str `0` into int\n  line 2407: cannot unmarshal !!str `2` into int\n  line 3542: cannot unmarshal !!str `2` into int\n  line 4099: cannot unmarshal !!str `0` into int\n  line 4936: cannot unmarshal !!str `2` into int\n  line 5439: cannot unmarshal !!str `2` into int\n  line 5537: cannot unmarshal !!str `2` into int\n  line 5714: cannot unmarshal !!str `2` into int\n  line 6082: cannot unmarshal !!str `2` into int\n  line 6309: cannot unmarshal !!str `2` into int\n  line 6746: cannot unmarshal !!str `0` into int)",
