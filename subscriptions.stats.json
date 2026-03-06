@@ -1,15 +1,15 @@
 {
-  "candidate_total": 80,
-  "candidate_unique": 79,
+  "candidate_total": 82,
+  "candidate_unique": 81,
   "duplicate_candidates": 1,
-  "valid_subscriptions": 35,
+  "valid_subscriptions": 36,
   "total_nodes": 73,
   "gist": {
     "search_hits": 196,
     "gists_scanned": 196,
-    "files_scanned": 380,
-    "non_target_files": 366,
-    "candidate_files": 14,
+    "files_scanned": 402,
+    "non_target_files": 386,
+    "candidate_files": 16,
     "invalid_raw_urls": 0,
     "duplicate_urls": 0,
     "fetch_errors": 0
@@ -23,11 +23,11 @@
     "fallback_x_expanded": 0
   },
   "validation": {
-    "validated_files": 66,
-    "valid_urls": 35,
+    "validated_files": 68,
+    "valid_urls": 36,
     "invalid_urls": 0,
     "fetch_errors": 12,
-    "parse_errors": 4,
+    "parse_errors": 5,
     "too_small_node_sets": 27,
     "too_large_files": 1,
     "fetch_samples": [
@@ -41,7 +41,8 @@
       "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 97: cannot unmarshal !!str `0` into int\n  line 127: cannot unmarshal !!str `0` into int\n  line 143: cannot unmarshal !!str `0` into int\n  line 155: cannot unmarshal !!str `64` into int\n  line 209: cannot unmarshal !!str `64` into int\n  line 249: cannot unmarshal !!str `0` into int\n  line 687: cannot unmarshal !!str `0` into int\n  line 1089: cannot unmarshal !!str `0` into int\n  line 1238: cannot unmarshal !!str `0` into int\n  line 1250: cannot unmarshal !!str `0` into int\n  line 1266: cannot unmarshal !!str `0` into int\n  line 1481: cannot unmarshal !!str `0` into int\n  line 1719: cannot unmarshal !!str `0` into int\n  line 1826: cannot unmarshal !!str `0` into int\n  line 2945: cannot unmarshal !!str `2` into int\n  line 3276: cannot unmarshal !!str `2` into int\n  line 3960: cannot unmarshal !!str `0` into int\n  line 4247: cannot unmarshal !!str `0` into int\n  line 4354: cannot unmarshal !!str `0` into int\n  line 4510: cannot unmarshal !!str `0` into int\n  line 4558: cannot unmarshal !!str `0` into int\n  line 4574: cannot unmarshal !!str `0` into int\n  line 4597: cannot unmarshal !!str `2` into int\n  line 4744: cannot unmarshal !!str `0` into int\n  line 4919: cannot unmarshal !!str `0` into int\n  line 5039: cannot unmarshal !!str `0` into int\n  line 5055: cannot unmarshal !!str `0` into int\n  line 5178: cannot unmarshal !!str `0` into int\n  line 5227: cannot unmarshal !!str `2` into int\n  line 6066: cannot unmarshal !!str `0` into int\n  line 6177: cannot unmarshal !!str `2` into int\n  line 6189: cannot unmarshal !!str `2` into int\n  line 6236: cannot unmarshal !!str `2` into int\n  line 6255: cannot unmarshal !!str `2` into int\n  line 6324: cannot unmarshal !!str `2` into int\n  line 6511: cannot unmarshal !!str `2` into int\n  line 6594: cannot unmarshal !!str `2` into int)",
       "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 136: cannot unmarshal !!str `30807` into int)",
       "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 413: cannot unmarshal !!str `30807` into int)",
-      "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 228: cannot unmarshal !!str `30807` into int)"
+      "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 228: cannot unmarshal !!str `30807` into int)",
+      "https://gist.githubusercontent.com/corvofeng/5782affb2d534af11f950fb887e570fa/raw/clash_base.yml (parse clash yaml: yaml: did not find expected ',' or '}')"
     ],
     "too_small_samples": [
       "https://gy.xiaozi.us.kg/sub?token=lzj666 (nodes=0)",
