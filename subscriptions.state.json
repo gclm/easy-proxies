@@ -1,8 +1,8 @@
 {
-  "used_since": "2026-03-06T14:30:03Z",
-  "next_since": "2026-03-06T16:33:46Z",
-  "started_at": "2026-03-06T16:42:00Z",
-  "finished_at": "2026-03-06T16:43:46Z",
+  "used_since": "2026-03-06T16:33:46Z",
+  "next_since": "2026-03-06T18:39:13Z",
+  "started_at": "2026-03-06T18:47:32Z",
+  "finished_at": "2026-03-06T18:49:13Z",
   "overlap": "10m0s",
   "stats": {
     "candidate_total": 82,
@@ -11,10 +11,10 @@
     "valid_subscriptions": 36,
     "total_nodes": 73,
     "gist": {
-      "search_hits": 196,
-      "gists_scanned": 196,
-      "files_scanned": 402,
-      "non_target_files": 386,
+      "search_hits": 194,
+      "gists_scanned": 194,
+      "files_scanned": 371,
+      "non_target_files": 355,
       "candidate_files": 16,
       "invalid_raw_urls": 0,
       "duplicate_urls": 0,
