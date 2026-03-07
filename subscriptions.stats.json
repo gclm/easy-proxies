@@ -3,16 +3,16 @@
   "candidate_unique": 65,
   "duplicate_candidates": 1,
   "valid_subscriptions": 35,
-  "total_nodes": 73,
+  "total_nodes": 78,
   "collector_errors": {
     "gist": "gist search status 429: \u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n  \u003chead\u003e\n    \u003cmeta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"\u003e\n    \u003cmeta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; img-src 'self' data:; script-src 'self'; style-src 'unsafe-inline'\"\u003e\n    \u003cmeta content=\"origin\" name=\"referrer\"\u003e\n    \u003ctitle\u003eToo many requests \u0026middot; GitHub\u003c/title\u003e\n    \u003cmeta name=\"viewport\" content=\"width=device-width\"\u003e\n    \u003cstyle type=\"text/css\" media=\"screen\"\u003e\n      body {\n        background-color: #f6f8fa;\n        color: #24292e;\n        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;\n        font-size: 14px;\n        line-height: 1.5;\n        margin: 0;\n      }\n\n      .container { margin: 50px auto; max-width: 600px; text-align: center; padding: 0 24px; }\n\n      a { color: #0366d6; text-decoration: none; }\n      a:hover { text-decoration: underline; }\n\n      h1 { line-height: 60px; font-si"
   },
   "gist": {
-    "search_hits": 128,
-    "gists_scanned": 128,
-    "files_scanned": 274,
-    "non_target_files": 266,
-    "candidate_files": 8,
+    "search_hits": 98,
+    "gists_scanned": 98,
+    "files_scanned": 199,
+    "non_target_files": 192,
+    "candidate_files": 7,
     "invalid_raw_urls": 0,
     "duplicate_urls": 0,
     "fetch_errors": 1
@@ -26,25 +26,25 @@
     "fallback_x_expanded": 0
   },
   "validation": {
-    "validated_files": 52,
+    "validated_files": 53,
     "valid_urls": 35,
     "invalid_urls": 0,
-    "fetch_errors": 12,
+    "fetch_errors": 11,
     "parse_errors": 4,
-    "too_small_node_sets": 13,
+    "too_small_node_sets": 14,
     "too_large_files": 1,
     "fetch_samples": [
-      "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (raw file status 404)",
       "https://raw.githubusercontent.com/aiboboxx/clashfree/refs/heads/main/clash.yml (raw file status 404)",
       "https://sub.fqzsnai.ggff.net/auto (Get \"https://sub.fqzsnai.ggff.net/auto\": dial tcp: lookup sub.fqzsnai.ggff.net on 127.0.0.53:53: no such host)",
       "https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb (Get \"https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb\": dial tcp: lookup sub.mikeone.ggff.net on 127.0.0.53:53: server misbehaving)",
-      "https://v1.mk/HuaplNe (raw file status 404)"
+      "https://v1.mk/HuaplNe (raw file status 404)",
+      "https://raw.githubusercontent.com/aiboboxx/v2rayfree/main/v2 (raw file status 404)"
     ],
     "parse_samples": [
-      "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 97: cannot unmarshal !!str `0` into int\n  line 127: cannot unmarshal !!str `0` into int\n  line 143: cannot unmarshal !!str `0` into int\n  line 155: cannot unmarshal !!str `64` into int\n  line 209: cannot unmarshal !!str `64` into int\n  line 249: cannot unmarshal !!str `0` into int\n  line 687: cannot unmarshal !!str `0` into int\n  line 1089: cannot unmarshal !!str `0` into int\n  line 1238: cannot unmarshal !!str `0` into int\n  line 1250: cannot unmarshal !!str `0` into int\n  line 1266: cannot unmarshal !!str `0` into int\n  line 1481: cannot unmarshal !!str `0` into int\n  line 1719: cannot unmarshal !!str `0` into int\n  line 1826: cannot unmarshal !!str `0` into int\n  line 2945: cannot unmarshal !!str `2` into int\n  line 3276: cannot unmarshal !!str `2` into int\n  line 3960: cannot unmarshal !!str `0` into int\n  line 4247: cannot unmarshal !!str `0` into int\n  line 4354: cannot unmarshal !!str `0` into int\n  line 4510: cannot unmarshal !!str `0` into int\n  line 4558: cannot unmarshal !!str `0` into int\n  line 4574: cannot unmarshal !!str `0` into int\n  line 4597: cannot unmarshal !!str `2` into int\n  line 4744: cannot unmarshal !!str `0` into int\n  line 4919: cannot unmarshal !!str `0` into int\n  line 5039: cannot unmarshal !!str `0` into int\n  line 5055: cannot unmarshal !!str `0` into int\n  line 5178: cannot unmarshal !!str `0` into int\n  line 5227: cannot unmarshal !!str `2` into int\n  line 6066: cannot unmarshal !!str `0` into int\n  line 6177: cannot unmarshal !!str `2` into int\n  line 6189: cannot unmarshal !!str `2` into int\n  line 6236: cannot unmarshal !!str `2` into int\n  line 6255: cannot unmarshal !!str `2` into int\n  line 6324: cannot unmarshal !!str `2` into int\n  line 6511: cannot unmarshal !!str `2` into int\n  line 6594: cannot unmarshal !!str `2` into int)",
+      "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 48: cannot unmarshal !!str `0` into int\n  line 64: cannot unmarshal !!str `64` into int\n  line 76: cannot unmarshal !!str `0` into int\n  line 92: cannot unmarshal !!str `0` into int\n  line 159: cannot unmarshal !!str `64` into int\n  line 219: cannot unmarshal !!str `0` into int\n  line 800: cannot unmarshal !!str `0` into int\n  line 981: cannot unmarshal !!str `2` into int\n  line 1138: cannot unmarshal !!str `0` into int\n  line 1171: cannot unmarshal !!str `0` into int\n  line 1381: cannot unmarshal !!str `0` into int\n  line 1409: cannot unmarshal !!str `0` into int\n  line 1458: cannot unmarshal !!str `2` into int\n  line 1478: cannot unmarshal !!str `0` into int\n  line 2111: cannot unmarshal !!str `0` into int\n  line 2248: cannot unmarshal !!str `0` into int\n  line 3553: cannot unmarshal !!str `2` into int\n  line 4882: cannot unmarshal !!str `0` into int\n  line 5092: cannot unmarshal !!str `2` into int\n  line 5193: cannot unmarshal !!str `0` into int\n  line 5209: cannot unmarshal !!str `0` into int\n  line 5384: cannot unmarshal !!str `2` into int\n  line 5412: cannot unmarshal !!str `0` into int\n  line 5445: cannot unmarshal !!str `0` into int\n  line 5550: cannot unmarshal !!str `0` into int\n  line 5768: cannot unmarshal !!str `2` into int\n  line 5809: cannot unmarshal !!str `0` into int\n  line 5908: cannot unmarshal !!str `0` into int\n  line 5924: cannot unmarshal !!str `2` into int\n  line 6043: cannot unmarshal !!str `0` into int\n  line 6260: cannot unmarshal !!str `0` into int\n  line 6276: cannot unmarshal !!str `2` into int)",
       "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 136: cannot unmarshal !!str `30807` into int)",
-      "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 413: cannot unmarshal !!str `30807` into int)",
-      "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 228: cannot unmarshal !!str `30807` into int)"
+      "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 401: cannot unmarshal !!str `30807` into int)",
+      "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 216: cannot unmarshal !!str `30807` into int)"
     ],
     "too_small_samples": [
       "https://gy.xiaozi.us.kg/sub?token=lzj666 (nodes=0)",
@@ -66,10 +66,10 @@
       "shadowshare_clash_http": 0,
       "shadowshare_clash_https": 0,
       "shadowshare_clash_socks5": 0,
-      "shadowshare_server": 32,
+      "shadowshare_server": 37,
       "v2nodes": 25
     },
     "duplicate_nodes": 0,
-    "total_nodes": 73
+    "total_nodes": 78
   }
 }
