@@ -1,8 +1,8 @@
 {
-  "used_since": "2026-03-07T18:26:20Z",
-  "next_since": "2026-03-07T20:17:23Z",
-  "started_at": "2026-03-07T20:26:44Z",
-  "finished_at": "2026-03-07T20:27:23Z",
+  "used_since": "2026-03-07T20:17:23Z",
+  "next_since": "2026-03-07T22:14:44Z",
+  "started_at": "2026-03-07T22:24:12Z",
+  "finished_at": "2026-03-07T22:24:44Z",
   "overlap": "10m0s",
   "stats": {
     "candidate_total": 66,
@@ -16,8 +16,8 @@
     "gist": {
       "search_hits": 98,
       "gists_scanned": 98,
-      "files_scanned": 205,
-      "non_target_files": 199,
+      "files_scanned": 200,
+      "non_target_files": 194,
       "candidate_files": 6,
       "invalid_raw_urls": 0,
       "duplicate_urls": 0,
@@ -49,7 +49,7 @@
       "parse_samples": [
         "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 48: cannot unmarshal !!str `0` into int\n  line 67: cannot unmarshal !!str `0` into int\n  line 83: cannot unmarshal !!str `0` into int\n  line 127: cannot unmarshal !!str `0` into int\n  line 181: cannot unmarshal !!str `0` into int\n  line 222: cannot unmarshal !!str `0` into int\n  line 367: cannot unmarshal !!str `2` into int\n  line 748: cannot unmarshal !!str `0` into int\n  line 1098: cannot unmarshal !!str `2` into int\n  line 1201: cannot unmarshal !!str `0` into int\n  line 1224: cannot unmarshal !!str `0` into int\n  line 1316: cannot unmarshal !!str `0` into int\n  line 1363: cannot unmarshal !!str `0` into int\n  line 1427: cannot unmarshal !!str `0` into int\n  line 2364: cannot unmarshal !!str `0` into int\n  line 2481: cannot unmarshal !!str `0` into int\n  line 4665: cannot unmarshal !!str `0` into int\n  line 4989: cannot unmarshal !!str `0` into int\n  line 5005: cannot unmarshal !!str `0` into int\n  line 5106: cannot unmarshal !!str `0` into int\n  line 5122: cannot unmarshal !!str `2` into int\n  line 5167: cannot unmarshal !!str `0` into int)",
         "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 136: cannot unmarshal !!str `30807` into int)",
-        "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml (parse clash yaml: yaml: line 86: did not find expected ',' or '}')",
+        "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml (parse clash yaml: yaml: line 87: did not find expected ',' or '}')",
         "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 123: cannot unmarshal !!str `30812` into int\n  line 132: cannot unmarshal !!str `180` into int\n  line 141: cannot unmarshal !!str `30804` into int\n  line 150: cannot unmarshal !!str `80` into int\n  line 165: cannot unmarshal !!str `443` into int\n  line 175: cannot unmarshal !!str `8443` into int\n  line 184: cannot unmarshal !!str `30824` into int\n  line 201: cannot unmarshal !!str `443` into int\n  line 241: cannot unmarshal !!str `30833` into int\n  line 250: cannot unmarshal !!str `30830` into int\n  line 578: cannot unmarshal !!str `30807` into int)",
         "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 117: cannot unmarshal !!str `30812` into int\n  line 126: cannot unmarshal !!str `180` into int\n  line 135: cannot unmarshal !!str `30804` into int\n  line 144: cannot unmarshal !!str `80` into int\n  line 159: cannot unmarshal !!str `443` into int\n  line 169: cannot unmarshal !!str `8443` into int\n  line 178: cannot unmarshal !!str `30824` into int\n  line 195: cannot unmarshal !!str `443` into int\n  line 235: cannot unmarshal !!str `30833` into int\n  line 244: cannot unmarshal !!str `30830` into int\n  line 364: cannot unmarshal !!str `30807` into int)"
       ],
