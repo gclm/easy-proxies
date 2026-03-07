@@ -18,13 +18,13 @@ https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml
 https://raw.githubusercontent.com/mahdibland/SSAggregator/master/sub/sub_merge_yaml.yml
 https://raw.githubusercontent.com/mahdibland/ShadowsocksAggregator/master/Eternity.yml
 https://raw.githubusercontent.com/mfbpn/tg_mfbpn_sub/main/trial.yaml
-https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml
 https://raw.githubusercontent.com/mgit0001/test_clash/refs/heads/main/heima.txt
 https://raw.githubusercontent.com/Pawdroid/Free-servers/refs/heads/main/sub
 https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash
 https://raw.githubusercontent.com/skka3134/Free-servers/refs/heads/main/README.md
 https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml
 https://raw.githubusercontent.com/vxiaov/free_proxies/main/clash/clash.provider.yaml
+https://raw.githubusercontent.com/xiaoji235/airport-free/refs/heads/main/clash/naidounode.txt
 https://raw.githubusercontent.com/zhangkaiitugithub/passcro/main/speednodes.yaml
 https://sub.reajason.eu.org/clash.yaml
 https://www.freeclashnode.com/uploads/2026/03/0-20260307.yaml
