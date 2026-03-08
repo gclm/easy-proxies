@@ -1,8 +1,8 @@
 {
-  "used_since": "2026-03-08T14:16:34Z",
-  "next_since": "2026-03-08T16:21:11Z",
-  "started_at": "2026-03-08T16:29:51Z",
-  "finished_at": "2026-03-08T16:31:11Z",
+  "used_since": "2026-03-08T16:21:11Z",
+  "next_since": "2026-03-08T18:27:02Z",
+  "started_at": "2026-03-08T18:35:38Z",
+  "finished_at": "2026-03-08T18:37:02Z",
   "overlap": "10m0s",
   "stats": {
     "candidate_total": 80,
