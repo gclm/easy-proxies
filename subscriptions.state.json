@@ -1,27 +1,24 @@
 {
-  "used_since": "2026-03-08T05:00:42Z",
-  "next_since": "2026-03-08T06:35:10Z",
-  "started_at": "2026-03-08T06:43:28Z",
-  "finished_at": "2026-03-08T06:45:10Z",
+  "used_since": "2026-03-08T06:35:10Z",
+  "next_since": "2026-03-08T08:24:15Z",
+  "started_at": "2026-03-08T08:32:39Z",
+  "finished_at": "2026-03-08T08:34:15Z",
   "overlap": "10m0s",
   "stats": {
-    "candidate_total": 83,
-    "candidate_unique": 82,
+    "candidate_total": 81,
+    "candidate_unique": 80,
     "duplicate_candidates": 1,
     "valid_subscriptions": 35,
     "total_nodes": 60,
     "gist": {
-      "search_hits": 195,
+      "search_hits": 194,
       "gists_scanned": 194,
-      "files_scanned": 369,
-      "non_target_files": 352,
-      "candidate_files": 17,
+      "files_scanned": 358,
+      "non_target_files": 343,
+      "candidate_files": 15,
       "invalid_raw_urls": 0,
       "duplicate_urls": 0,
-      "fetch_errors": 1,
-      "fetch_samples": [
-        "gist=5ab6cafc20c5f17d2897db2329a2feb3 (github api status 502: {\n  \"message\": \"Server Error\"\n})"
-      ]
+      "fetch_errors": 0
     },
     "seeds": {
       "input_lines": 66,
@@ -32,12 +29,12 @@
       "fallback_x_expanded": 0
     },
     "validation": {
-      "validated_files": 69,
+      "validated_files": 67,
       "valid_urls": 35,
       "invalid_urls": 0,
       "fetch_errors": 12,
       "parse_errors": 6,
-      "too_small_node_sets": 28,
+      "too_small_node_sets": 26,
       "too_large_files": 1,
       "fetch_samples": [
         "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",
