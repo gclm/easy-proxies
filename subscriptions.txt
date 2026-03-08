@@ -1,3 +1,4 @@
+https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash
 https://cdn.jsdelivr.net/gh/xiaoji235/airport-free/clash/naidounode.txt
 https://cdn.jsdelivr.net/gh/yangxiaoge/tvbox_cust@master/clash/Clash2.yml
 https://igdux.top/5Hna
@@ -23,12 +24,12 @@ https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash
 https://raw.githubusercontent.com/skka3134/Free-servers/refs/heads/main/README.md
 https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml
 https://raw.githubusercontent.com/vxiaov/free_proxies/main/clash/clash.provider.yaml
-https://raw.githubusercontent.com/xiaoji235/airport-free/refs/heads/main/clash/naidounode.txt
 https://raw.githubusercontent.com/zhangkaiitugithub/passcro/main/speednodes.yaml
 https://sub.reajason.eu.org/clash.yaml
-https://www.freeclashnode.com/uploads/2026/03/0-20260307.yaml
-https://www.freeclashnode.com/uploads/2026/03/1-20260307.yaml
+https://www.freeclashnode.com/uploads/2026/03/0-20260308.yaml
+https://www.freeclashnode.com/uploads/2026/03/1-20260308.yaml
 https://www.xrayvip.com/free.txt
 https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub
 https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.txt
 https://raw.githubusercontent.com/firefoxmmx2/v2rayshare_subcription/main/subscription/clash_sub.yaml
+https://gist.githubusercontent.com/WuMengxian0/f2530a81c12aba404e635c68d3632107/raw/custom_clash_config.yaml
