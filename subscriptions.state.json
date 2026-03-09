@@ -1,21 +1,21 @@
 {
-  "used_since": "2026-03-09T08:36:45Z",
-  "next_since": "2026-03-09T10:37:27Z",
-  "started_at": "2026-03-09T10:45:51Z",
-  "finished_at": "2026-03-09T10:47:27Z",
+  "used_since": "2026-03-09T10:37:27Z",
+  "next_since": "2026-03-09T12:56:35Z",
+  "started_at": "2026-03-09T13:05:03Z",
+  "finished_at": "2026-03-09T13:06:35Z",
   "overlap": "10m0s",
   "stats": {
-    "candidate_total": 77,
-    "candidate_unique": 76,
+    "candidate_total": 83,
+    "candidate_unique": 82,
     "duplicate_candidates": 1,
     "valid_subscriptions": 35,
     "total_nodes": 73,
     "gist": {
-      "search_hits": 197,
-      "gists_scanned": 197,
-      "files_scanned": 370,
-      "non_target_files": 359,
-      "candidate_files": 11,
+      "search_hits": 196,
+      "gists_scanned": 196,
+      "files_scanned": 391,
+      "non_target_files": 374,
+      "candidate_files": 17,
       "invalid_raw_urls": 0,
       "duplicate_urls": 0,
       "fetch_errors": 0
@@ -29,19 +29,19 @@
       "fallback_x_expanded": 0
     },
     "validation": {
-      "validated_files": 64,
+      "validated_files": 69,
       "valid_urls": 35,
       "invalid_urls": 0,
-      "fetch_errors": 11,
-      "parse_errors": 5,
-      "too_small_node_sets": 24,
+      "fetch_errors": 12,
+      "parse_errors": 6,
+      "too_small_node_sets": 28,
       "too_large_files": 1,
       "fetch_samples": [
+        "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (raw file status 404)",
         "https://raw.githubusercontent.com/aiboboxx/clashfree/refs/heads/main/clash.yml (raw file status 404)",
         "https://sub.fqzsnai.ggff.net/auto (Get \"https://sub.fqzsnai.ggff.net/auto\": dial tcp: lookup sub.fqzsnai.ggff.net on 127.0.0.53:53: no such host)",
         "https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb (Get \"https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb\": dial tcp: lookup sub.mikeone.ggff.net on 127.0.0.53:53: server misbehaving)",
-        "https://v1.mk/HuaplNe (raw file status 404)",
-        "https://raw.githubusercontent.com/aiboboxx/v2rayfree/main/v2 (raw file status 404)"
+        "https://v1.mk/HuaplNe (raw file status 404)"
       ],
       "parse_samples": [
         "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 70: cannot unmarshal !!str `64` into int\n  line 107: cannot unmarshal !!str `0` into int\n  line 126: cannot unmarshal !!str `64` into int\n  line 164: cannot unmarshal !!str `0` into int\n  line 382: cannot unmarshal !!str `2` into int\n  line 1253: cannot unmarshal !!str `2` into int\n  line 1481: cannot unmarshal !!str `0` into int\n  line 1508: cannot unmarshal !!str `0` into int\n  line 1605: cannot unmarshal !!str `0` into int\n  line 1825: cannot unmarshal !!str `0` into int\n  line 4414: cannot unmarshal !!str `2` into int)",
