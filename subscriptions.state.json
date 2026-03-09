@@ -1,8 +1,8 @@
 {
-  "used_since": "2026-03-09T05:10:45Z",
-  "next_since": "2026-03-09T06:54:04Z",
-  "started_at": "2026-03-09T07:03:00Z",
-  "finished_at": "2026-03-09T07:04:04Z",
+  "used_since": "2026-03-09T06:54:04Z",
+  "next_since": "2026-03-09T08:36:45Z",
+  "started_at": "2026-03-09T08:45:37Z",
+  "finished_at": "2026-03-09T08:46:45Z",
   "overlap": "10m0s",
   "stats": {
     "candidate_total": 66,
@@ -16,9 +16,9 @@
     "gist": {
       "search_hits": 118,
       "gists_scanned": 118,
-      "files_scanned": 219,
-      "non_target_files": 208,
-      "candidate_files": 11,
+      "files_scanned": 224,
+      "non_target_files": 214,
+      "candidate_files": 10,
       "invalid_raw_urls": 0,
       "duplicate_urls": 0,
       "fetch_errors": 1
@@ -32,12 +32,12 @@
       "fallback_x_expanded": 0
     },
     "validation": {
-      "validated_files": 51,
+      "validated_files": 52,
       "valid_urls": 34,
       "invalid_urls": 0,
-      "fetch_errors": 13,
+      "fetch_errors": 12,
       "parse_errors": 5,
-      "too_small_node_sets": 12,
+      "too_small_node_sets": 13,
       "too_large_files": 1,
       "fetch_samples": [
         "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",
