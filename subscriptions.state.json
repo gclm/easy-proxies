@@ -1,28 +1,27 @@
 {
-  "used_since": "2026-03-10T16:48:22Z",
-  "next_since": "2026-03-10T18:42:31Z",
-  "started_at": "2026-03-10T18:50:38Z",
-  "finished_at": "2026-03-10T18:52:31Z",
+  "used_since": "2026-03-10T18:42:31Z",
+  "next_since": "2026-03-10T20:26:08Z",
+  "started_at": "2026-03-10T20:35:24Z",
+  "finished_at": "2026-03-10T20:36:08Z",
   "overlap": "10m0s",
   "stats": {
-    "candidate_total": 85,
-    "candidate_unique": 84,
+    "candidate_total": 66,
+    "candidate_unique": 65,
     "duplicate_candidates": 1,
-    "valid_subscriptions": 35,
+    "valid_subscriptions": 34,
     "total_nodes": 55,
+    "collector_errors": {
+      "gist": "gist search status 429: \u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n  \u003chead\u003e\n    \u003cmeta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"\u003e\n    \u003cmeta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; img-src 'self' data:; script-src 'self'; style-src 'unsafe-inline'\"\u003e\n    \u003cmeta content=\"origin\" name=\"referrer\"\u003e\n    \u003ctitle\u003eToo many requests \u0026middot; GitHub\u003c/title\u003e\n    \u003cmeta name=\"viewport\" content=\"width=device-width\"\u003e\n    \u003cstyle type=\"text/css\" media=\"screen\"\u003e\n      body {\n        background-color: #f6f8fa;\n        color: #24292e;\n        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;\n        font-size: 14px;\n        line-height: 1.5;\n        margin: 0;\n      }\n\n      .container { margin: 50px auto; max-width: 600px; text-align: center; padding: 0 24px; }\n\n      a { color: #0366d6; text-decoration: none; }\n      a:hover { text-decoration: underline; }\n\n      h1 { line-height: 60px; font-si"
+    },
     "gist": {
-      "search_hits": 196,
-      "gists_scanned": 194,
-      "files_scanned": 365,
-      "non_target_files": 346,
-      "candidate_files": 19,
+      "search_hits": 96,
+      "gists_scanned": 96,
+      "files_scanned": 177,
+      "non_target_files": 173,
+      "candidate_files": 4,
       "invalid_raw_urls": 0,
       "duplicate_urls": 0,
-      "fetch_errors": 2,
-      "fetch_samples": [
-        "gist=709c635398e46b8e51e057955531c10a (github api status 502: \u003c!DOCTYPE html\u003e\r\n\u003c!--\r\n\r\nHello future GitHubber! I bet you're here to remove those nasty inline styles,\r\nDRY up these templates and make 'em nice and re-usable, right?\r\n\r\nPlease, don't. https://github.com/styleguide/templates/2.0\r\n\r\n--\u003e\r\n\u003chtml\u003e\r\n  \u003chead\u003e\r\n    \u003ctitle\u003eUnicorn! \u0026middot; GitHub\u003c/title\u003e\r\n    \u003cstyle type=\"text/css\" media=\"screen\"\u003e\r\n      body {\r\n        background-color: #f1f1f1;\r\n        margin: 0;\r\n        font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\r\n      }\r\n\r\n      .container { margin: 50px auto 40px auto; width: 600px; text-align: center; }\r\n\r\n      a { color: #4183c4; text-decoration: none; }\r\n      a:hover { text-decoration: underline; }\r\n\r\n      h1 { letter-spacing: -1px; line-height: 60px; font-size: 60px; font-weight: 100; margin: 0px; text-shadow: 0 1px 0 #fff; }\r\n      p { color: rgba(0, 0, 0, 0.5); margin: 10px 0 10px; font-size: 18px; font-weight: 200; line-height: 1.6em;}\r\n\r\n      ul { list-style: none; margin: 25px 0; padding: 0; }\r\n      li { display: table-cell; f)",
-        "gist=ee2fc264b15342a845afdaabd4c378a3 (github api status 502: \u003c!DOCTYPE html\u003e\r\n\u003c!--\r\n\r\nHello future GitHubber! I bet you're here to remove those nasty inline styles,\r\nDRY up these templates and make 'em nice and re-usable, right?\r\n\r\nPlease, don't. https://github.com/styleguide/templates/2.0\r\n\r\n--\u003e\r\n\u003chtml\u003e\r\n  \u003chead\u003e\r\n    \u003ctitle\u003eUnicorn! \u0026middot; GitHub\u003c/title\u003e\r\n    \u003cstyle type=\"text/css\" media=\"screen\"\u003e\r\n      body {\r\n        background-color: #f1f1f1;\r\n        margin: 0;\r\n        font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\r\n      }\r\n\r\n      .container { margin: 50px auto 40px auto; width: 600px; text-align: center; }\r\n\r\n      a { color: #4183c4; text-decoration: none; }\r\n      a:hover { text-decoration: underline; }\r\n\r\n      h1 { letter-spacing: -1px; line-height: 60px; font-size: 60px; font-weight: 100; margin: 0px; text-shadow: 0 1px 0 #fff; }\r\n      p { color: rgba(0, 0, 0, 0.5); margin: 10px 0 10px; font-size: 18px; font-weight: 200; line-height: 1.6em;}\r\n\r\n      ul { list-style: none; margin: 25px 0; padding: 0; }\r\n      li { display: table-cell; f)"
-      ]
+      "fetch_errors": 1
     },
     "seeds": {
       "input_lines": 66,
@@ -33,12 +32,12 @@
       "fallback_x_expanded": 0
     },
     "validation": {
-      "validated_files": 71,
-      "valid_urls": 35,
+      "validated_files": 52,
+      "valid_urls": 34,
       "invalid_urls": 0,
       "fetch_errors": 12,
       "parse_errors": 5,
-      "too_small_node_sets": 31,
+      "too_small_node_sets": 13,
       "too_large_files": 1,
       "fetch_samples": [
         "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (raw file status 404)",
