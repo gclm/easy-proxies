@@ -7,7 +7,6 @@ https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads
 https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc1.yaml
 https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc2.yaml
 https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc3.yaml
-https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc4.yaml
 https://raw.githubusercontent.com/SoliSpirit/v2ray-configs/main/all_configs.txt
 https://raw.githubusercontent.com/aiboboxx/v2rayfree/refs/heads/main/README.md
 https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/clash.yml

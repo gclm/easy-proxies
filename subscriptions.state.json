@@ -1,20 +1,20 @@
 {
-  "used_since": "2026-03-11T06:45:58Z",
-  "next_since": "2026-03-11T08:33:49Z",
-  "started_at": "2026-03-11T08:42:14Z",
-  "finished_at": "2026-03-11T08:43:49Z",
+  "used_since": "2026-03-11T08:33:49Z",
+  "next_since": "2026-03-11T10:31:35Z",
+  "started_at": "2026-03-11T10:39:58Z",
+  "finished_at": "2026-03-11T10:41:35Z",
   "overlap": "10m0s",
   "stats": {
     "candidate_total": 84,
     "candidate_unique": 83,
     "duplicate_candidates": 1,
-    "valid_subscriptions": 36,
-    "total_nodes": 59,
+    "valid_subscriptions": 35,
+    "total_nodes": 57,
     "gist": {
       "search_hits": 194,
       "gists_scanned": 194,
-      "files_scanned": 363,
-      "non_target_files": 345,
+      "files_scanned": 359,
+      "non_target_files": 341,
       "candidate_files": 18,
       "invalid_raw_urls": 0,
       "duplicate_urls": 0,
@@ -30,11 +30,11 @@
     },
     "validation": {
       "validated_files": 70,
-      "valid_urls": 36,
+      "valid_urls": 35,
       "invalid_urls": 0,
       "fetch_errors": 12,
       "parse_errors": 5,
-      "too_small_node_sets": 29,
+      "too_small_node_sets": 30,
       "too_large_files": 1,
       "fetch_samples": [
         "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",
@@ -46,16 +46,16 @@
       "parse_samples": [
         "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 165: cannot unmarshal !!str `64` into int\n  line 257: cannot unmarshal !!str `64` into int\n  line 1393: cannot unmarshal !!str `0` into int\n  line 1757: cannot unmarshal !!str `0` into int\n  line 1775: cannot unmarshal !!str `0` into int\n  line 1874: cannot unmarshal !!str `0` into int\n  line 1993: cannot unmarshal !!str `0` into int\n  line 2081: cannot unmarshal !!str `0` into int)",
         "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 128: cannot unmarshal !!str `30807` into int)",
-        "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 123: cannot unmarshal !!str `180` into int\n  line 132: cannot unmarshal !!str `12889` into int\n  line 145: cannot unmarshal !!str `30812` into int\n  line 154: cannot unmarshal !!str `30806` into int\n  line 175: cannot unmarshal !!str `30829` into int\n  line 184: cannot unmarshal !!str `30809` into int\n  line 201: cannot unmarshal !!str `30808` into int\n  line 522: cannot unmarshal !!str `30807` into int)",
+        "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 123: cannot unmarshal !!str `180` into int\n  line 132: cannot unmarshal !!str `12889` into int\n  line 145: cannot unmarshal !!str `30812` into int\n  line 154: cannot unmarshal !!str `30806` into int\n  line 175: cannot unmarshal !!str `30829` into int\n  line 184: cannot unmarshal !!str `30809` into int\n  line 201: cannot unmarshal !!str `30808` into int\n  line 506: cannot unmarshal !!str `30807` into int)",
         "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 117: cannot unmarshal !!str `180` into int\n  line 126: cannot unmarshal !!str `12889` into int\n  line 139: cannot unmarshal !!str `30812` into int\n  line 148: cannot unmarshal !!str `30806` into int\n  line 157: cannot unmarshal !!str `30829` into int\n  line 166: cannot unmarshal !!str `30809` into int\n  line 183: cannot unmarshal !!str `30808` into int\n  line 295: cannot unmarshal !!str `30807` into int)",
         "https://gist.githubusercontent.com/corvofeng/5782affb2d534af11f950fb887e570fa/raw/clash_base.yml (parse clash yaml: yaml: did not find expected ',' or '}')"
       ],
       "too_small_samples": [
         "https://gy.xiaozi.us.kg/sub?token=lzj666 (nodes=0)",
         "https://proxypool.link/ss/sub (nodes=0)",
+        "https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc4.yaml (nodes=0)",
         "https://raw.githubusercontent.com/Roywaller/clash_subscription/refs/heads/main/clash_subscription.txt (nodes=0)",
-        "https://raw.githubusercontent.com/a2470982985/getNode/main/clash.yaml (nodes=0)",
-        "https://raw.githubusercontent.com/anaer/Sub/refs/heads/main/clash.yaml (nodes=0)"
+        "https://raw.githubusercontent.com/a2470982985/getNode/main/clash.yaml (nodes=0)"
       ],
       "too_large_samples": [
         "https://raw.githubusercontent.com/mahdibland/ShadowsocksAggregator/master/LogInfo.txt"
@@ -70,11 +70,11 @@
         "shadowshare_clash_http": 0,
         "shadowshare_clash_https": 0,
         "shadowshare_clash_socks5": 0,
-        "shadowshare_server": 18,
+        "shadowshare_server": 16,
         "v2nodes": 25
       },
       "duplicate_nodes": 0,
-      "total_nodes": 59
+      "total_nodes": 57
     }
   }
 }
