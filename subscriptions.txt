@@ -1,4 +1,3 @@
-https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash
 https://cdn.jsdelivr.net/gh/xiaoji235/airport-free/clash/naidounode.txt
 https://cdn.jsdelivr.net/gh/yangxiaoge/tvbox_cust@master/clash/Clash2.yml
 https://igdux.top/5Hna
@@ -33,4 +32,3 @@ https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub
 https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.txt
 https://raw.githubusercontent.com/firefoxmmx2/v2rayshare_subcription/main/subscription/clash_sub.yaml
 https://gist.githubusercontent.com/WuMengxian0/f2530a81c12aba404e635c68d3632107/raw/custom_clash_config.yaml
-https://gist.githubusercontent.com/baimao001/0a115c2f20f38c334bf9ae3e43386fd0/raw/clash.yaml
