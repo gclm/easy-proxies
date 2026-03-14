@@ -1,21 +1,18 @@
 {
-  "candidate_total": 66,
-  "candidate_unique": 65,
+  "candidate_total": 81,
+  "candidate_unique": 80,
   "duplicate_candidates": 1,
   "valid_subscriptions": 34,
   "total_nodes": 62,
-  "collector_errors": {
-    "gist": "gist search status 429: \u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n  \u003chead\u003e\n    \u003cmeta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"\u003e\n    \u003cmeta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; img-src 'self' data:; script-src 'self'; style-src 'unsafe-inline'\"\u003e\n    \u003cmeta content=\"origin\" name=\"referrer\"\u003e\n    \u003ctitle\u003eToo many requests \u0026middot; GitHub\u003c/title\u003e\n    \u003cmeta name=\"viewport\" content=\"width=device-width\"\u003e\n    \u003cstyle type=\"text/css\" media=\"screen\"\u003e\n      body {\n        background-color: #f6f8fa;\n        color: #24292e;\n        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;\n        font-size: 14px;\n        line-height: 1.5;\n        margin: 0;\n      }\n\n      .container { margin: 50px auto; max-width: 600px; text-align: center; padding: 0 24px; }\n\n      a { color: #0366d6; text-decoration: none; }\n      a:hover { text-decoration: underline; }\n\n      h1 { line-height: 60px; font-si"
-  },
   "gist": {
-    "search_hits": 97,
-    "gists_scanned": 97,
-    "files_scanned": 192,
-    "non_target_files": 182,
-    "candidate_files": 10,
+    "search_hits": 197,
+    "gists_scanned": 197,
+    "files_scanned": 428,
+    "non_target_files": 413,
+    "candidate_files": 15,
     "invalid_raw_urls": 0,
     "duplicate_urls": 0,
-    "fetch_errors": 1
+    "fetch_errors": 0
   },
   "seeds": {
     "input_lines": 66,
@@ -26,12 +23,12 @@
     "fallback_x_expanded": 0
   },
   "validation": {
-    "validated_files": 52,
+    "validated_files": 67,
     "valid_urls": 34,
     "invalid_urls": 0,
     "fetch_errors": 12,
-    "parse_errors": 4,
-    "too_small_node_sets": 14,
+    "parse_errors": 6,
+    "too_small_node_sets": 27,
     "too_large_files": 1,
     "fetch_samples": [
       "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",
@@ -43,6 +40,7 @@
     "parse_samples": [
       "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 235: cannot unmarshal !!str `64` into int\n  line 365: cannot unmarshal !!str `64` into int\n  line 849: cannot unmarshal !!str `0` into int\n  line 1140: cannot unmarshal !!str `0` into int\n  line 1257: cannot unmarshal !!str `0` into int\n  line 1362: cannot unmarshal !!str `0` into int\n  line 1472: cannot unmarshal !!str `0` into int\n  line 1629: cannot unmarshal !!str `0` into int\n  line 1765: cannot unmarshal !!str `0` into int\n  line 1957: cannot unmarshal !!str `0` into int\n  line 2326: cannot unmarshal !!str `0` into int\n  line 2875: cannot unmarshal !!str `0` into int\n  line 3079: cannot unmarshal !!str `0` into int\n  line 3157: cannot unmarshal !!str `0` into int\n  line 3185: cannot unmarshal !!str `0` into int\n  line 3259: cannot unmarshal !!str `0` into int\n  line 3333: cannot unmarshal !!str `0` into int\n  line 3381: cannot unmarshal !!str `0` into int\n  line 3397: cannot unmarshal !!str `0` into int\n  line 3461: cannot unmarshal !!str `0` into int\n  line 3909: cannot unmarshal !!str `0` into int\n  line 4084: cannot unmarshal !!str `0` into int\n  line 4302: cannot unmarshal !!str `0` into int\n  line 4433: cannot unmarshal !!str `0` into int\n  line 4552: cannot unmarshal !!str `0` into int\n  line 4596: cannot unmarshal !!str `0` into int\n  line 4633: cannot unmarshal !!str `0` into int\n  line 4797: cannot unmarshal !!str `0` into int)",
       "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 136: cannot unmarshal !!str `30807` into int)",
+      "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml (parse clash yaml: yaml: line 50: did not find expected ',' or '}')",
       "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 375: cannot unmarshal !!str `180` into int\n  line 488: cannot unmarshal !!str `34114` into int\n  line 525: cannot unmarshal !!str `443` into int\n  line 539: cannot unmarshal !!str `443` into int\n  line 589: cannot unmarshal !!str `443` into int\n  line 603: cannot unmarshal !!str `443` into int\n  line 617: cannot unmarshal !!str `2087` into int\n  line 631: cannot unmarshal !!str `443` into int\n  line 645: cannot unmarshal !!str `443` into int\n  line 659: cannot unmarshal !!str `443` into int\n  line 673: cannot unmarshal !!str `443` into int\n  line 687: cannot unmarshal !!str `443` into int\n  line 1078: cannot unmarshal !!str `30807` into int)",
       "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 117: cannot unmarshal !!str `180` into int\n  line 126: cannot unmarshal !!str `34114` into int\n  line 163: cannot unmarshal !!str `443` into int\n  line 177: cannot unmarshal !!str `443` into int\n  line 227: cannot unmarshal !!str `443` into int\n  line 241: cannot unmarshal !!str `443` into int\n  line 255: cannot unmarshal !!str `2087` into int\n  line 269: cannot unmarshal !!str `443` into int\n  line 283: cannot unmarshal !!str `443` into int\n  line 297: cannot unmarshal !!str `443` into int\n  line 311: cannot unmarshal !!str `443` into int\n  line 325: cannot unmarshal !!str `443` into int\n  line 474: cannot unmarshal !!str `30807` into int)"
     ],
