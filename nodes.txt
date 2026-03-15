@@ -1,3 +1,4 @@
+ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@144.217.164.29:12000#🇺🇸[www.v2nodes.com] ss-US-13411343
 ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@144.217.164.29:12000#🇺🇸[www.v2nodes.com] ss-US-13409942
 ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@144.217.164.29:12000#🇺🇸[www.v2nodes.com] ss-US-13409698
 ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@57.128.214.100:12000#🇩🇪[www.v2nodes.com] ss-DE-13409372
@@ -22,7 +23,6 @@ ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@144.217.7.33:12000#🇩�
 ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@144.217.164.29:12000#🇺🇸[www.v2nodes.com] ss-US-13405647
 trojan://ZY07256934@free-duckling.rooster465.autos:443?allowInsecure=0#🇸🇬[www.v2nodes.com] trojan-SG-13404893
 ss://YWVzLTI1Ni1nY206OEpDc1Bzc2ZnUzh0aVJ3aU1saEFSZz09@144.217.164.29:12000#🇺🇸[www.v2nodes.com] ss-US-13404847
-trojan://ZY07256934@delicate-buck.rooster465.autos:443?allowInsecure=0#🇸🇬[www.v2nodes.com] trojan-SG-13404846
 ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpXNzRYRkFMTEx1dzZtNUlB@series-a1.samanehha.co:443#%E7%BE%8E%E5%9B%BD+Microsoft%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83
 ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpXNzRYRkFMTEx1dzZtNUlB@series-a2.samanehha.co:443#%E7%BE%8E%E5%9B%BD+Microsoft%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83
 ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpXNzRYRkFMTEx1dzZtNUlB@51.132.226.113:443#%E8%8B%B1%E5%9B%BD+%E7%A4%BE%E4%BC%9A%E4%BF%9D%E9%99%A9%E5%AE%89%E5%85%A8%E9%83%A8
