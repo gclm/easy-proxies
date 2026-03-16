@@ -1,21 +1,21 @@
 {
-  "used_since": "2026-03-16T07:10:06Z",
-  "next_since": "2026-03-16T08:49:47Z",
-  "started_at": "2026-03-16T08:57:55Z",
-  "finished_at": "2026-03-16T08:59:47Z",
+  "used_since": "2026-03-16T08:49:47Z",
+  "next_since": "2026-03-16T10:45:25Z",
+  "started_at": "2026-03-16T10:53:58Z",
+  "finished_at": "2026-03-16T10:55:25Z",
   "overlap": "10m0s",
   "stats": {
-    "candidate_total": 83,
-    "candidate_unique": 82,
+    "candidate_total": 81,
+    "candidate_unique": 80,
     "duplicate_candidates": 1,
-    "valid_subscriptions": 34,
-    "total_nodes": 105,
+    "valid_subscriptions": 36,
+    "total_nodes": 104,
     "gist": {
-      "search_hits": 194,
-      "gists_scanned": 194,
-      "files_scanned": 410,
-      "non_target_files": 393,
-      "candidate_files": 17,
+      "search_hits": 196,
+      "gists_scanned": 196,
+      "files_scanned": 358,
+      "non_target_files": 343,
+      "candidate_files": 15,
       "invalid_raw_urls": 0,
       "duplicate_urls": 0,
       "fetch_errors": 0
@@ -29,19 +29,19 @@
       "fallback_x_expanded": 0
     },
     "validation": {
-      "validated_files": 69,
-      "valid_urls": 34,
+      "validated_files": 68,
+      "valid_urls": 36,
       "invalid_urls": 0,
-      "fetch_errors": 12,
+      "fetch_errors": 11,
       "parse_errors": 4,
-      "too_small_node_sets": 31,
+      "too_small_node_sets": 28,
       "too_large_files": 1,
       "fetch_samples": [
-        "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",
         "https://raw.githubusercontent.com/aiboboxx/clashfree/refs/heads/main/clash.yml (raw file status 404)",
         "https://sub.fqzsnai.ggff.net/auto (Get \"https://sub.fqzsnai.ggff.net/auto\": dial tcp: lookup sub.fqzsnai.ggff.net on 127.0.0.53:53: no such host)",
         "https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb (Get \"https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb\": dial tcp: lookup sub.mikeone.ggff.net on 127.0.0.53:53: server misbehaving)",
-        "https://v1.mk/HuaplNe (raw file status 404)"
+        "https://v1.mk/HuaplNe (raw file status 404)",
+        "https://raw.githubusercontent.com/aiboboxx/v2rayfree/main/v2 (raw file status 404)"
       ],
       "parse_samples": [
         "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 357: cannot unmarshal !!str `0` into int\n  line 414: cannot unmarshal !!str `0` into int\n  line 496: cannot unmarshal !!str `0` into int\n  line 512: cannot unmarshal !!str `0` into int\n  line 601: cannot unmarshal !!str `0` into int\n  line 682: cannot unmarshal !!str `0` into int\n  line 989: cannot unmarshal !!str `0` into int\n  line 1021: cannot unmarshal !!str `0` into int\n  line 1103: cannot unmarshal !!str `0` into int\n  line 1236: cannot unmarshal !!str `0` into int\n  line 1460: cannot unmarshal !!str `0` into int\n  line 1976: cannot unmarshal !!str `0` into int\n  line 2321: cannot unmarshal !!str `0` into int\n  line 2375: cannot unmarshal !!str `0` into int\n  line 2537: cannot unmarshal !!str `0` into int\n  line 2560: cannot unmarshal !!str `0` into int\n  line 2731: cannot unmarshal !!str `0` into int\n  line 2839: cannot unmarshal !!str `0` into int\n  line 2961: cannot unmarshal !!str `0` into int\n  line 3118: cannot unmarshal !!str `0` into int\n  line 3594: cannot unmarshal !!str `0` into int\n  line 3785: cannot unmarshal !!str `0` into int\n  line 3824: cannot unmarshal !!str `2` into int\n  line 4197: cannot unmarshal !!str `0` into int\n  line 5108: cannot unmarshal !!str `2` into int)",
@@ -50,11 +50,11 @@
         "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 228: cannot unmarshal !!str `30807` into int)"
       ],
       "too_small_samples": [
-        "https://cdn.jsdelivr.net/gh/xiaoji235/airport-free/clash/naidounode.txt (nodes=0)",
         "https://gy.xiaozi.us.kg/sub?token=lzj666 (nodes=0)",
         "https://proxypool.link/ss/sub (nodes=0)",
         "https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc4.yaml (nodes=0)",
-        "https://raw.githubusercontent.com/Roywaller/clash_subscription/refs/heads/main/clash_subscription.txt (nodes=0)"
+        "https://raw.githubusercontent.com/Roywaller/clash_subscription/refs/heads/main/clash_subscription.txt (nodes=0)",
+        "https://raw.githubusercontent.com/a2470982985/getNode/main/clash.yaml (nodes=0)"
       ],
       "too_large_samples": [
         "https://raw.githubusercontent.com/mahdibland/ShadowsocksAggregator/master/LogInfo.txt"
@@ -69,11 +69,11 @@
         "shadowshare_clash_http": 0,
         "shadowshare_clash_https": 0,
         "shadowshare_clash_socks5": 0,
-        "shadowshare_server": 64,
+        "shadowshare_server": 63,
         "v2nodes": 25
       },
       "duplicate_nodes": 0,
-      "total_nodes": 105
+      "total_nodes": 104
     }
   }
 }
