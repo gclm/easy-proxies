@@ -2,6 +2,7 @@ https://cdn.jsdelivr.net/gh/xiaoji235/airport-free/clash/naidounode.txt
 https://cdn.jsdelivr.net/gh/yangxiaoge/tvbox_cust@master/clash/Clash2.yml
 https://igdux.top/5Hna
 https://proxypool.link/trojan/sub
+https://proxypool.link/vmess/sub
 https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc0.yaml
 https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc1.yaml
 https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc2.yaml

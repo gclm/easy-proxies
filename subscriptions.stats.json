@@ -1,15 +1,15 @@
 {
-  "candidate_total": 84,
-  "candidate_unique": 83,
+  "candidate_total": 82,
+  "candidate_unique": 81,
   "duplicate_candidates": 1,
-  "valid_subscriptions": 33,
-  "total_nodes": 56,
+  "valid_subscriptions": 34,
+  "total_nodes": 52,
   "gist": {
     "search_hits": 195,
     "gists_scanned": 195,
-    "files_scanned": 393,
-    "non_target_files": 375,
-    "candidate_files": 18,
+    "files_scanned": 383,
+    "non_target_files": 367,
+    "candidate_files": 16,
     "invalid_raw_urls": 0,
     "duplicate_urls": 0,
     "fetch_errors": 0
@@ -23,12 +23,12 @@
     "fallback_x_expanded": 0
   },
   "validation": {
-    "validated_files": 70,
-    "valid_urls": 33,
+    "validated_files": 68,
+    "valid_urls": 34,
     "invalid_urls": 0,
     "fetch_errors": 12,
     "parse_errors": 5,
-    "too_small_node_sets": 32,
+    "too_small_node_sets": 29,
     "too_large_files": 1,
     "fetch_samples": [
       "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (raw file status 404)",
@@ -47,9 +47,9 @@
     "too_small_samples": [
       "https://gy.xiaozi.us.kg/sub?token=lzj666 (nodes=0)",
       "https://proxypool.link/ss/sub (nodes=0)",
-      "https://proxypool.link/vmess/sub (nodes=2)",
       "https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc4.yaml (nodes=0)",
-      "https://raw.githubusercontent.com/Roywaller/clash_subscription/refs/heads/main/clash_subscription.txt (nodes=0)"
+      "https://raw.githubusercontent.com/Roywaller/clash_subscription/refs/heads/main/clash_subscription.txt (nodes=0)",
+      "https://raw.githubusercontent.com/a2470982985/getNode/main/clash.yaml (nodes=0)"
     ],
     "too_large_samples": [
       "https://raw.githubusercontent.com/mahdibland/ShadowsocksAggregator/master/LogInfo.txt"
@@ -64,10 +64,10 @@
       "shadowshare_clash_http": 0,
       "shadowshare_clash_https": 0,
       "shadowshare_clash_socks5": 0,
-      "shadowshare_server": 15,
+      "shadowshare_server": 11,
       "v2nodes": 25
     },
     "duplicate_nodes": 0,
-    "total_nodes": 56
+    "total_nodes": 52
   }
 }
