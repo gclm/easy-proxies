@@ -22,6 +22,7 @@ https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash
 https://raw.githubusercontent.com/skka3134/Free-servers/refs/heads/main/README.md
 https://raw.githubusercontent.com/snakem982/proxypool/main/source/clash-meta.yaml
 https://raw.githubusercontent.com/vxiaov/free_proxies/main/clash/clash.provider.yaml
+https://raw.githubusercontent.com/xiaoji235/airport-free/refs/heads/main/clash/naidounode.txt
 https://raw.githubusercontent.com/zhangkaiitugithub/passcro/main/speednodes.yaml
 https://sub.reajason.eu.org/clash.yaml
 https://www.freeclashnode.com/uploads/2026/03/0-20260318.yaml
