@@ -1,15 +1,15 @@
 {
-  "candidate_total": 83,
-  "candidate_unique": 82,
+  "candidate_total": 75,
+  "candidate_unique": 74,
   "duplicate_candidates": 1,
   "valid_subscriptions": 33,
   "total_nodes": 63,
   "gist": {
     "search_hits": 197,
     "gists_scanned": 197,
-    "files_scanned": 367,
-    "non_target_files": 350,
-    "candidate_files": 17,
+    "files_scanned": 371,
+    "non_target_files": 362,
+    "candidate_files": 9,
     "invalid_raw_urls": 0,
     "duplicate_urls": 0,
     "fetch_errors": 0
@@ -23,12 +23,12 @@
     "fallback_x_expanded": 0
   },
   "validation": {
-    "validated_files": 70,
+    "validated_files": 62,
     "valid_urls": 33,
     "invalid_urls": 0,
     "fetch_errors": 12,
-    "parse_errors": 6,
-    "too_small_node_sets": 31,
+    "parse_errors": 5,
+    "too_small_node_sets": 24,
     "too_large_files": 0,
     "fetch_samples": [
       "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (raw file status 404)",
@@ -47,9 +47,9 @@
     "too_small_samples": [
       "https://gy.xiaozi.us.kg/sub?token=lzj666 (nodes=0)",
       "https://proxypool.link/ss/sub (nodes=0)",
-      "https://proxypool.link/vmess/sub (nodes=2)",
       "https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc4.yaml (nodes=0)",
-      "https://raw.githubusercontent.com/Roywaller/clash_subscription/refs/heads/main/clash_subscription.txt (nodes=0)"
+      "https://raw.githubusercontent.com/Roywaller/clash_subscription/refs/heads/main/clash_subscription.txt (nodes=0)",
+      "https://raw.githubusercontent.com/a2470982985/getNode/main/clash.yaml (nodes=0)"
     ]
   },
   "proxy_share": {
