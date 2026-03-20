@@ -1,17 +1,17 @@
 {
-  "candidate_total": 76,
-  "candidate_unique": 75,
+  "candidate_total": 77,
+  "candidate_unique": 76,
   "duplicate_candidates": 1,
   "valid_subscriptions": 33,
   "total_nodes": 69,
   "gist": {
     "search_hits": 196,
     "gists_scanned": 196,
-    "files_scanned": 391,
-    "non_target_files": 380,
+    "files_scanned": 384,
+    "non_target_files": 373,
     "candidate_files": 11,
     "invalid_raw_urls": 0,
-    "duplicate_urls": 1,
+    "duplicate_urls": 0,
     "fetch_errors": 0
   },
   "seeds": {
@@ -23,12 +23,12 @@
     "fallback_x_expanded": 0
   },
   "validation": {
-    "validated_files": 62,
+    "validated_files": 63,
     "valid_urls": 33,
     "invalid_urls": 0,
     "fetch_errors": 12,
     "parse_errors": 4,
-    "too_small_node_sets": 25,
+    "too_small_node_sets": 26,
     "too_large_files": 1,
     "fetch_samples": [
       "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (raw file status 404)",
