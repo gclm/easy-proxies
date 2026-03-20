@@ -8,11 +8,11 @@
     "gist": "gist search status 429: \u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n  \u003chead\u003e\n    \u003cmeta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"\u003e\n    \u003cmeta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; img-src 'self' data:; script-src 'self'; style-src 'unsafe-inline'\"\u003e\n    \u003cmeta content=\"origin\" name=\"referrer\"\u003e\n    \u003ctitle\u003eToo many requests \u0026middot; GitHub\u003c/title\u003e\n    \u003cmeta name=\"viewport\" content=\"width=device-width\"\u003e\n    \u003cstyle type=\"text/css\" media=\"screen\"\u003e\n      body {\n        background-color: #f6f8fa;\n        color: #24292e;\n        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;\n        font-size: 14px;\n        line-height: 1.5;\n        margin: 0;\n      }\n\n      .container { margin: 50px auto; max-width: 600px; text-align: center; padding: 0 24px; }\n\n      a { color: #0366d6; text-decoration: none; }\n      a:hover { text-decoration: underline; }\n\n      h1 { line-height: 60px; font-si"
   },
   "gist": {
-    "search_hits": 98,
-    "gists_scanned": 98,
-    "files_scanned": 181,
-    "non_target_files": 174,
-    "candidate_files": 7,
+    "search_hits": 128,
+    "gists_scanned": 128,
+    "files_scanned": 248,
+    "non_target_files": 238,
+    "candidate_files": 10,
     "invalid_raw_urls": 0,
     "duplicate_urls": 0,
     "fetch_errors": 1
@@ -26,19 +26,19 @@
     "fallback_x_expanded": 0
   },
   "validation": {
-    "validated_files": 53,
+    "validated_files": 52,
     "valid_urls": 34,
     "invalid_urls": 0,
-    "fetch_errors": 11,
+    "fetch_errors": 12,
     "parse_errors": 4,
-    "too_small_node_sets": 15,
+    "too_small_node_sets": 14,
     "too_large_files": 1,
     "fetch_samples": [
+      "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (Get \"https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash\": context deadline exceeded (Client.Timeout exceeded while awaiting headers))",
       "https://raw.githubusercontent.com/aiboboxx/clashfree/refs/heads/main/clash.yml (raw file status 404)",
       "https://sub.fqzsnai.ggff.net/auto (Get \"https://sub.fqzsnai.ggff.net/auto\": dial tcp: lookup sub.fqzsnai.ggff.net on 127.0.0.53:53: no such host)",
       "https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb (Get \"https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb\": dial tcp: lookup sub.mikeone.ggff.net on 127.0.0.53:53: server misbehaving)",
-      "https://v1.mk/HuaplNe (raw file status 404)",
-      "https://raw.githubusercontent.com/aiboboxx/v2rayfree/main/v2 (raw file status 404)"
+      "https://v1.mk/HuaplNe (raw file status 404)"
     ],
     "parse_samples": [
       "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 65: cannot unmarshal !!str `64` into int\n  line 157: cannot unmarshal !!str `0` into int\n  line 180: cannot unmarshal !!str `2` into int\n  line 249: cannot unmarshal !!str `0` into int\n  line 303: cannot unmarshal !!str `0` into int\n  line 502: cannot unmarshal !!str `0` into int\n  line 557: cannot unmarshal !!str `0` into int\n  line 580: cannot unmarshal !!str `0` into int\n  line 669: cannot unmarshal !!str `0` into int\n  line 727: cannot unmarshal !!str `0` into int\n  line 743: cannot unmarshal !!str `0` into int\n  line 768: cannot unmarshal !!str `0` into int\n  line 786: cannot unmarshal !!str `0` into int\n  line 802: cannot unmarshal !!str `0` into int\n  line 868: cannot unmarshal !!str `0` into int\n  line 968: cannot unmarshal !!str `0` into int\n  line 984: cannot unmarshal !!str `0` into int\n  line 1040: cannot unmarshal !!str `0` into int\n  line 1112: cannot unmarshal !!str `0` into int\n  line 1142: cannot unmarshal !!str `0` into int\n  line 1192: cannot unmarshal !!str `0` into int\n  line 1252: cannot unmarshal !!str `0` into int\n  line 1270: cannot unmarshal !!str `0` into int\n  line 1294: cannot unmarshal !!str `0` into int\n  line 1326: cannot unmarshal !!str `0` into int\n  line 1342: cannot unmarshal !!str `0` into int\n  line 1358: cannot unmarshal !!str `0` into int\n  line 1402: cannot unmarshal !!str `0` into int\n  line 1438: cannot unmarshal !!str `0` into int\n  line 1557: cannot unmarshal !!str `0` into int\n  line 1578: cannot unmarshal !!str `0` into int\n  line 1654: cannot unmarshal !!str `0` into int\n  line 1745: cannot unmarshal !!str `0` into int\n  line 1785: cannot unmarshal !!str `0` into int\n  line 1823: cannot unmarshal !!str `64` into int\n  line 1879: cannot unmarshal !!str `0` into int\n  line 1895: cannot unmarshal !!str `0` into int\n  line 1911: cannot unmarshal !!str `0` into int\n  line 1977: cannot unmarshal !!str `0` into int\n  line 2089: cannot unmarshal !!str `0` into int\n  line 2279: cannot unmarshal !!str `0` into int\n  line 2396: cannot unmarshal !!str `0` into int\n  line 2484: cannot unmarshal !!str `0` into int\n  line 2500: cannot unmarshal !!str `0` into int\n  line 2516: cannot unmarshal !!str `0` into int\n  line 2544: cannot unmarshal !!str `0` into int\n  line 2562: cannot unmarshal !!str `0` into int\n  line 2622: cannot unmarshal !!str `0` into int\n  line 2662: cannot unmarshal !!str `0` into int\n  line 2692: cannot unmarshal !!str `0` into int\n  line 2708: cannot unmarshal !!str `0` into int\n  line 2763: cannot unmarshal !!str `0` into int\n  line 2779: cannot unmarshal !!str `0` into int\n  line 2841: cannot unmarshal !!str `0` into int\n  line 2907: cannot unmarshal !!str `0` into int\n  line 3235: cannot unmarshal !!str `0` into int\n  line 3437: cannot unmarshal !!str `0` into int\n  line 3457: cannot unmarshal !!str `2` into int\n  line 3524: cannot unmarshal !!str `0` into int\n  line 3590: cannot unmarshal !!str `0` into int\n  line 3798: cannot unmarshal !!str `0` into int\n  line 3981: cannot unmarshal !!str `0` into int\n  line 4126: cannot unmarshal !!str `0` into int\n  line 4277: cannot unmarshal !!str `0` into int\n  line 4367: cannot unmarshal !!str `0` into int\n  line 4585: cannot unmarshal !!str `0` into int\n  line 4960: cannot unmarshal !!str `2` into int\n  line 5148: cannot unmarshal !!str `0` into int\n  line 5166: cannot unmarshal !!str `0` into int)",
@@ -47,11 +47,11 @@
       "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 243: cannot unmarshal !!str `30807` into int\n  line 253: cannot unmarshal !!str `6001` into int)"
     ],
     "too_small_samples": [
-      "https://cdn.jsdelivr.net/gh/xiaoji235/airport-free/clash/naidounode.txt (nodes=0)",
       "https://gy.xiaozi.us.kg/sub?token=lzj666 (nodes=0)",
       "https://proxypool.link/ss/sub (nodes=0)",
       "https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc4.yaml (nodes=0)",
-      "https://raw.githubusercontent.com/Roywaller/clash_subscription/refs/heads/main/clash_subscription.txt (nodes=0)"
+      "https://raw.githubusercontent.com/Roywaller/clash_subscription/refs/heads/main/clash_subscription.txt (nodes=0)",
+      "https://raw.githubusercontent.com/a2470982985/getNode/main/clash.yaml (nodes=0)"
     ],
     "too_large_samples": [
       "https://raw.githubusercontent.com/mahdibland/ShadowsocksAggregator/master/LogInfo.txt"
