@@ -1,15 +1,15 @@
 {
-  "candidate_total": 77,
-  "candidate_unique": 76,
+  "candidate_total": 83,
+  "candidate_unique": 82,
   "duplicate_candidates": 1,
-  "valid_subscriptions": 33,
-  "total_nodes": 69,
+  "valid_subscriptions": 35,
+  "total_nodes": 54,
   "gist": {
     "search_hits": 196,
     "gists_scanned": 196,
-    "files_scanned": 384,
-    "non_target_files": 373,
-    "candidate_files": 11,
+    "files_scanned": 383,
+    "non_target_files": 366,
+    "candidate_files": 17,
     "invalid_raw_urls": 0,
     "duplicate_urls": 0,
     "fetch_errors": 0
@@ -23,12 +23,12 @@
     "fallback_x_expanded": 0
   },
   "validation": {
-    "validated_files": 63,
-    "valid_urls": 33,
+    "validated_files": 69,
+    "valid_urls": 35,
     "invalid_urls": 0,
     "fetch_errors": 12,
     "parse_errors": 4,
-    "too_small_node_sets": 26,
+    "too_small_node_sets": 30,
     "too_large_files": 1,
     "fetch_samples": [
       "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (raw file status 404)",
@@ -44,11 +44,11 @@
       "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 243: cannot unmarshal !!str `30807` into int\n  line 253: cannot unmarshal !!str `6001` into int)"
     ],
     "too_small_samples": [
-      "https://cdn.jsdelivr.net/gh/xiaoji235/airport-free/clash/naidounode.txt (nodes=0)",
       "https://gy.xiaozi.us.kg/sub?token=lzj666 (nodes=0)",
       "https://proxypool.link/ss/sub (nodes=0)",
       "https://raw.githubusercontent.com/Q3dlaXpoaQ/V2rayN_Clash_Node_Getter/refs/heads/main/APIs/sc4.yaml (nodes=0)",
-      "https://raw.githubusercontent.com/Roywaller/clash_subscription/refs/heads/main/clash_subscription.txt (nodes=0)"
+      "https://raw.githubusercontent.com/Roywaller/clash_subscription/refs/heads/main/clash_subscription.txt (nodes=0)",
+      "https://raw.githubusercontent.com/a2470982985/getNode/main/clash.yaml (nodes=0)"
     ],
     "too_large_samples": [
       "https://raw.githubusercontent.com/mahdibland/ShadowsocksAggregator/master/LogInfo.txt"
@@ -63,10 +63,10 @@
       "shadowshare_clash_http": 0,
       "shadowshare_clash_https": 0,
       "shadowshare_clash_socks5": 0,
-      "shadowshare_server": 28,
+      "shadowshare_server": 13,
       "v2nodes": 25
     },
     "duplicate_nodes": 0,
-    "total_nodes": 69
+    "total_nodes": 54
   }
 }
