@@ -1,18 +1,21 @@
 {
-  "candidate_total": 77,
-  "candidate_unique": 76,
+  "candidate_total": 66,
+  "candidate_unique": 65,
   "duplicate_candidates": 1,
   "valid_subscriptions": 33,
   "total_nodes": 72,
+  "collector_errors": {
+    "gist": "gist search status 429: \u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n  \u003chead\u003e\n    \u003cmeta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"\u003e\n    \u003cmeta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; img-src 'self' data:; script-src 'self'; style-src 'unsafe-inline'\"\u003e\n    \u003cmeta content=\"origin\" name=\"referrer\"\u003e\n    \u003ctitle\u003eToo many requests \u0026middot; GitHub\u003c/title\u003e\n    \u003cmeta name=\"viewport\" content=\"width=device-width\"\u003e\n    \u003cstyle type=\"text/css\" media=\"screen\"\u003e\n      body {\n        background-color: #f6f8fa;\n        color: #24292e;\n        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;\n        font-size: 14px;\n        line-height: 1.5;\n        margin: 0;\n      }\n\n      .container { margin: 50px auto; max-width: 600px; text-align: center; padding: 0 24px; }\n\n      a { color: #0366d6; text-decoration: none; }\n      a:hover { text-decoration: underline; }\n\n      h1 { line-height: 60px; font-si"
+  },
   "gist": {
-    "search_hits": 197,
-    "gists_scanned": 197,
-    "files_scanned": 388,
-    "non_target_files": 377,
-    "candidate_files": 11,
+    "search_hits": 98,
+    "gists_scanned": 98,
+    "files_scanned": 210,
+    "non_target_files": 204,
+    "candidate_files": 6,
     "invalid_raw_urls": 0,
     "duplicate_urls": 0,
-    "fetch_errors": 0
+    "fetch_errors": 1
   },
   "seeds": {
     "input_lines": 66,
@@ -23,22 +26,22 @@
     "fallback_x_expanded": 0
   },
   "validation": {
-    "validated_files": 64,
+    "validated_files": 54,
     "valid_urls": 33,
     "invalid_urls": 0,
-    "fetch_errors": 12,
-    "parse_errors": 6,
-    "too_small_node_sets": 25,
+    "fetch_errors": 11,
+    "parse_errors": 5,
+    "too_small_node_sets": 16,
     "too_large_files": 0,
     "fetch_samples": [
-      "https://c7dabe95.proxy-978.pages.dev/767b6340-96dc-4aa0-8013-a8af7513d920?clash (raw file status 404)",
       "https://raw.githubusercontent.com/aiboboxx/clashfree/refs/heads/main/clash.yml (raw file status 404)",
       "https://sub.fqzsnai.ggff.net/auto (Get \"https://sub.fqzsnai.ggff.net/auto\": dial tcp: lookup sub.fqzsnai.ggff.net on 127.0.0.53:53: no such host)",
       "https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb (Get \"https://sub.mikeone.ggff.net/sub?token=6e300fe82f12874e439b76693aa179fb\": dial tcp: lookup sub.mikeone.ggff.net on 127.0.0.53:53: server misbehaving)",
-      "https://v1.mk/HuaplNe (raw file status 404)"
+      "https://v1.mk/HuaplNe (raw file status 404)",
+      "https://raw.githubusercontent.com/aiboboxx/v2rayfree/main/v2 (raw file status 404)"
     ],
     "parse_samples": [
-      "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 50: cannot unmarshal !!str `64` into int\n  line 182: cannot unmarshal !!str `0` into int\n  line 211: cannot unmarshal !!str `0` into int\n  line 325: cannot unmarshal !!str `0` into int\n  line 453: cannot unmarshal !!str `0` into int\n  line 471: cannot unmarshal !!str `0` into int\n  line 511: cannot unmarshal !!str `0` into int\n  line 548: cannot unmarshal !!str `0` into int\n  line 615: cannot unmarshal !!str `0` into int\n  line 716: cannot unmarshal !!str `0` into int\n  line 746: cannot unmarshal !!str `0` into int\n  line 770: cannot unmarshal !!str `0` into int\n  line 843: cannot unmarshal !!str `0` into int\n  line 855: cannot unmarshal !!str `0` into int\n  line 871: cannot unmarshal !!str `0` into int\n  line 901: cannot unmarshal !!str `0` into int\n  line 933: cannot unmarshal !!str `0` into int\n  line 985: cannot unmarshal !!str `0` into int\n  line 1024: cannot unmarshal !!str `0` into int\n  line 1115: cannot unmarshal !!str `0` into int\n  line 1131: cannot unmarshal !!str `0` into int\n  line 1147: cannot unmarshal !!str `0` into int\n  line 1207: cannot unmarshal !!str `0` into int\n  line 1225: cannot unmarshal !!str `0` into int\n  line 1241: cannot unmarshal !!str `0` into int\n  line 1330: cannot unmarshal !!str `0` into int\n  line 1365: cannot unmarshal !!str `0` into int\n  line 1393: cannot unmarshal !!str `0` into int\n  line 1456: cannot unmarshal !!str `0` into int\n  line 1486: cannot unmarshal !!str `0` into int\n  line 1568: cannot unmarshal !!str `0` into int\n  line 1589: cannot unmarshal !!str `0` into int\n  line 1601: cannot unmarshal !!str `0` into int\n  line 1649: cannot unmarshal !!str `0` into int\n  line 1665: cannot unmarshal !!str `0` into int\n  line 1707: cannot unmarshal !!str `0` into int\n  line 1735: cannot unmarshal !!str `0` into int\n  line 1779: cannot unmarshal !!str `0` into int\n  line 1801: cannot unmarshal !!str `0` into int\n  line 1854: cannot unmarshal !!str `0` into int\n  line 1903: cannot unmarshal !!str `64` into int\n  line 2010: cannot unmarshal !!str `0` into int\n  line 2026: cannot unmarshal !!str `0` into int\n  line 2080: cannot unmarshal !!str `0` into int\n  line 2111: cannot unmarshal !!str `0` into int\n  line 2172: cannot unmarshal !!str `0` into int\n  line 2237: cannot unmarshal !!str `0` into int\n  line 2314: cannot unmarshal !!str `0` into int\n  line 2359: cannot unmarshal !!str `0` into int\n  line 2446: cannot unmarshal !!str `0` into int\n  line 2462: cannot unmarshal !!str `0` into int\n  line 2492: cannot unmarshal !!str `0` into int\n  line 2581: cannot unmarshal !!str `0` into int\n  line 2597: cannot unmarshal !!str `0` into int\n  line 2658: cannot unmarshal !!str `0` into int\n  line 2712: cannot unmarshal !!str `0` into int\n  line 2728: cannot unmarshal !!str `0` into int\n  line 2782: cannot unmarshal !!str `0` into int\n  line 2798: cannot unmarshal !!str `0` into int\n  line 2851: cannot unmarshal !!str `0` into int\n  line 2893: cannot unmarshal !!str `0` into int\n  line 3047: cannot unmarshal !!str `0` into int\n  line 3197: cannot unmarshal !!str `0` into int\n  line 3295: cannot unmarshal !!str `0` into int\n  line 3437: cannot unmarshal !!str `0` into int\n  line 3455: cannot unmarshal !!str `0` into int\n  line 3519: cannot unmarshal !!str `0` into int\n  line 3601: cannot unmarshal !!str `0` into int\n  line 3725: cannot unmarshal !!str `0` into int\n  line 3913: cannot unmarshal !!str `0` into int\n  line 3977: cannot unmarshal !!str `0` into int\n  line 4242: cannot unmarshal !!str `0` into int\n  line 4556: cannot unmarshal !!str `0` into int\n  line 4578: cannot unmarshal !!str `0` into int\n  line 5089: cannot unmarshal !!str `0` into int\n  line 5107: cannot unmarshal !!str `0` into int\n  line 5397: cannot unmarshal !!str `0` into int\n  line 5504: cannot unmarshal !!str `0` into int\n  line 5555: cannot unmarshal !!str `0` into int)",
+      "https://raw.githubusercontent.com/Ruk1ng001/freeSub/main/clash.yaml (parse clash yaml: yaml: unmarshal errors:\n  line 65: cannot unmarshal !!str `64` into int\n  line 157: cannot unmarshal !!str `0` into int\n  line 180: cannot unmarshal !!str `2` into int\n  line 249: cannot unmarshal !!str `0` into int\n  line 303: cannot unmarshal !!str `0` into int\n  line 502: cannot unmarshal !!str `0` into int\n  line 557: cannot unmarshal !!str `0` into int\n  line 580: cannot unmarshal !!str `0` into int\n  line 669: cannot unmarshal !!str `0` into int\n  line 727: cannot unmarshal !!str `0` into int\n  line 743: cannot unmarshal !!str `0` into int\n  line 768: cannot unmarshal !!str `0` into int\n  line 786: cannot unmarshal !!str `0` into int\n  line 802: cannot unmarshal !!str `0` into int\n  line 868: cannot unmarshal !!str `0` into int\n  line 968: cannot unmarshal !!str `0` into int\n  line 984: cannot unmarshal !!str `0` into int\n  line 1040: cannot unmarshal !!str `0` into int\n  line 1112: cannot unmarshal !!str `0` into int\n  line 1142: cannot unmarshal !!str `0` into int\n  line 1192: cannot unmarshal !!str `0` into int\n  line 1252: cannot unmarshal !!str `0` into int\n  line 1270: cannot unmarshal !!str `0` into int\n  line 1294: cannot unmarshal !!str `0` into int\n  line 1326: cannot unmarshal !!str `0` into int\n  line 1342: cannot unmarshal !!str `0` into int\n  line 1358: cannot unmarshal !!str `0` into int\n  line 1402: cannot unmarshal !!str `0` into int\n  line 1438: cannot unmarshal !!str `0` into int\n  line 1557: cannot unmarshal !!str `0` into int\n  line 1578: cannot unmarshal !!str `0` into int\n  line 1654: cannot unmarshal !!str `0` into int\n  line 1745: cannot unmarshal !!str `0` into int\n  line 1785: cannot unmarshal !!str `0` into int\n  line 1823: cannot unmarshal !!str `64` into int\n  line 1879: cannot unmarshal !!str `0` into int\n  line 1895: cannot unmarshal !!str `0` into int\n  line 1911: cannot unmarshal !!str `0` into int\n  line 1977: cannot unmarshal !!str `0` into int\n  line 2089: cannot unmarshal !!str `0` into int\n  line 2279: cannot unmarshal !!str `0` into int\n  line 2396: cannot unmarshal !!str `0` into int\n  line 2484: cannot unmarshal !!str `0` into int\n  line 2500: cannot unmarshal !!str `0` into int\n  line 2516: cannot unmarshal !!str `0` into int\n  line 2544: cannot unmarshal !!str `0` into int\n  line 2562: cannot unmarshal !!str `0` into int\n  line 2622: cannot unmarshal !!str `0` into int\n  line 2662: cannot unmarshal !!str `0` into int\n  line 2692: cannot unmarshal !!str `0` into int\n  line 2708: cannot unmarshal !!str `0` into int\n  line 2763: cannot unmarshal !!str `0` into int\n  line 2779: cannot unmarshal !!str `0` into int\n  line 2841: cannot unmarshal !!str `0` into int\n  line 2907: cannot unmarshal !!str `0` into int\n  line 3235: cannot unmarshal !!str `0` into int\n  line 3437: cannot unmarshal !!str `0` into int\n  line 3457: cannot unmarshal !!str `2` into int\n  line 3524: cannot unmarshal !!str `0` into int\n  line 3590: cannot unmarshal !!str `0` into int\n  line 3798: cannot unmarshal !!str `0` into int\n  line 3981: cannot unmarshal !!str `0` into int\n  line 4126: cannot unmarshal !!str `0` into int\n  line 4277: cannot unmarshal !!str `0` into int\n  line 4367: cannot unmarshal !!str `0` into int\n  line 4585: cannot unmarshal !!str `0` into int\n  line 4960: cannot unmarshal !!str `2` into int\n  line 5148: cannot unmarshal !!str `0` into int\n  line 5166: cannot unmarshal !!str `0` into int)",
       "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.yml (parse clash yaml: yaml: unmarshal errors:\n  line 151: cannot unmarshal !!str `30807` into int\n  line 161: cannot unmarshal !!str `6001` into int)",
       "https://raw.githubusercontent.com/mfuu/v2ray/master/clash.yaml (parse clash yaml: yaml: line 57: did not find expected ',' or '}')",
       "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml (parse clash yaml: yaml: unmarshal errors:\n  line 27: cannot unmarshal !!str `80` into int\n  line 36: cannot unmarshal !!str `81` into int\n  line 45: cannot unmarshal !!str `82` into int\n  line 54: cannot unmarshal !!str `83` into int\n  line 63: cannot unmarshal !!str `84` into int\n  line 72: cannot unmarshal !!str `85` into int\n  line 81: cannot unmarshal !!str `86` into int\n  line 90: cannot unmarshal !!str `87` into int\n  line 99: cannot unmarshal !!str `88` into int\n  line 108: cannot unmarshal !!str `89` into int\n  line 351: cannot unmarshal !!str `30807` into int\n  line 361: cannot unmarshal !!str `6001` into int)",
