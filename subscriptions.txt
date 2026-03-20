@@ -1,3 +1,4 @@
+https://cdn.jsdelivr.net/gh/xiaoji235/airport-free/clash/naidounode.txt
 https://cdn.jsdelivr.net/gh/yangxiaoge/tvbox_cust@master/clash/Clash2.yml
 https://igdux.top/5Hna
 https://proxypool.link/trojan/sub
